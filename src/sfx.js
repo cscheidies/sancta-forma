@@ -138,6 +138,31 @@ export function absorbCross(absorbedElement) {
   src.start(now);
 }
 
+// ── Transform (transit absorption — element shift) ─────────────────────────
+// A shimmering pitch-shift shimmer: you are becoming something else
+export function transform(newElement) {
+  const c = ctx();
+  const now = c.currentTime;
+  const freqs = { square: 200, circle: 350, triangle: 520 };
+  const base = freqs[newElement] || 280;
+
+  // Rising shimmer — two detuned sine sweeps
+  [0, 7].forEach(detuneCents => {
+    const osc = c.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(base * 0.75, now);
+    osc.frequency.exponentialRampToValueAtTime(base * 1.5, now + 0.25);
+    osc.detune.value = detuneCents;
+    const g = c.createGain();
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(0.08, now + 0.05);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.30);
+    osc.connect(g); g.connect(c.destination);
+    osc.start(now); osc.stop(now + 0.35);
+  });
+  noise(0.03, 3000, 0.12, now);
+}
+
 // ── Safe transit ───────────────────────────────────────────────────────────
 // Soft whoosh — lowpass-filtered noise sweep
 export function absorbSafe() {
@@ -184,70 +209,98 @@ export function win() {
 }
 
 // ── Death ──────────────────────────────────────────────────────────────────
-// Unmissable: sub-bass impact + screaming pitch dive + noise crash + horror chord
+// Orchestral string sting: sudden fortissimo cluster chord, tremolo sustain,
+// bass impact, then long resonant decay — like a horror film stinger.
 export function death() {
   const c = ctx();
   const now = c.currentTime;
 
-  // ① Sub-bass BOOM — hits immediately, physical impact
-  const sub = c.createOscillator();
-  sub.type = 'sine';
-  sub.frequency.setValueAtTime(120, now);
-  sub.frequency.exponentialRampToValueAtTime(28, now + 0.55);
-  const subG = c.createGain();
-  subG.gain.setValueAtTime(0.9, now);
-  subG.gain.exponentialRampToValueAtTime(0.001, now + 0.60);
-  sub.connect(subG); subG.connect(c.destination);
-  sub.start(now); sub.stop(now + 0.65);
-
-  // ② Distorted sawtooth pitch dive (the "scream")
-  const ws = c.createWaveShaper();
-  const curve = new Float32Array(512);
-  for (let i = 0; i < 512; i++) {
-    const x = (i * 2) / 512 - 1;
-    curve[i] = (Math.PI + 300) * x / (Math.PI + 300 * Math.abs(x));
-  }
-  ws.curve = curve;
-  const saw = c.createOscillator();
-  saw.type = 'sawtooth';
-  saw.frequency.setValueAtTime(600, now);
-  saw.frequency.exponentialRampToValueAtTime(40, now + 0.80);
-  const sawG = c.createGain();
-  sawG.gain.setValueAtTime(0.55, now);
-  sawG.gain.exponentialRampToValueAtTime(0.001, now + 0.85);
-  saw.connect(ws); ws.connect(sawG); sawG.connect(c.destination);
-  saw.start(now); saw.stop(now + 0.90);
-
-  // ③ White noise crash (full-spectrum impact)
-  noise(0.55, 6000, 0.08, now);          // initial crack
-  noise(0.30, 2000, 0.45, now + 0.04);  // rumble tail
-  noise(0.15, 500,  0.70, now + 0.08);  // low rumble
-
-  // ④ Horror chord (minor 2nd cluster, dark and unresolved)
-  [[110, 0.18], [116.5, 0.14], [130.8, 0.12]].forEach(([freq, gain], i) => {
-    const o = c.createOscillator();
-    o.type = 'triangle';
-    o.frequency.value = freq;
+  // ── Master reverb (simple comb-filter simulation) ─────────────────────
+  // Two slightly-delayed copies of everything for spatial width
+  function reverbSend(node, delayTime, gainVal) {
+    const d = c.createDelay(0.5);
+    d.delayTime.value = delayTime;
     const g = c.createGain();
-    g.gain.setValueAtTime(0, now + 0.05);
-    g.gain.linearRampToValueAtTime(gain, now + 0.15);
-    g.gain.exponentialRampToValueAtTime(0.001, now + 1.80);
-    o.connect(g); g.connect(c.destination);
-    o.start(now + 0.05); o.stop(now + 1.85);
+    g.gain.value = gainVal;
+    node.connect(g); g.connect(d); d.connect(c.destination);
+  }
+
+  // ── String voices: 5-voice cluster, E4–Bb5 tritone ───────────────────
+  // Violins + violas in upper register: sharp, dissonant, held fortissimo
+  const stringVoices = [
+    { freq: 329.6, gain: 0.22, detune:  0  }, // E4 — low strings entry
+    { freq: 493.9, gain: 0.20, detune:  4  }, // B4
+    { freq: 659.3, gain: 0.18, detune: -3  }, // E5
+    { freq: 698.5, gain: 0.15, detune:  8  }, // F5 — minor 2nd from E5 (dissonance)
+    { freq: 932.3, gain: 0.13, detune: -5  }, // Bb5 — tritone (maximum tension)
+  ];
+
+  stringVoices.forEach((v, i) => {
+    const osc = c.createOscillator();
+    osc.type = 'sawtooth'; // bowed strings = sawtooth-rich harmonics
+    osc.frequency.value = v.freq;
+    osc.detune.value = v.detune;
+
+    // Warm LP filter (strings don't have raw sawtooth harshness)
+    const lpf = c.createBiquadFilter();
+    lpf.type = 'lowpass';
+    lpf.frequency.setValueAtTime(2400, now);
+    lpf.frequency.exponentialRampToValueAtTime(1400, now + 0.4); // tone darkens over time
+
+    // Tremolo: fast bowing motion at ~10-12 Hz
+    const lfo = c.createOscillator();
+    lfo.type = 'sine';
+    lfo.frequency.value = 10.2 + i * 0.55; // each voice trembles at slightly different rate
+    const lfoAmt = c.createGain();
+    lfoAmt.gain.value = v.gain * 0.15; // tremolo depth ±15%
+
+    // Amplitude envelope: snap attack, hold, long decay
+    const env = c.createGain();
+    env.gain.setValueAtTime(0, now);
+    env.gain.linearRampToValueAtTime(v.gain, now + 0.012 + i * 0.006); // staggered arrival
+    env.gain.setValueAtTime(v.gain, now + 0.3);
+    env.gain.exponentialRampToValueAtTime(v.gain * 0.5, now + 1.0);
+    env.gain.exponentialRampToValueAtTime(0.001, now + 2.8);
+
+    lfo.connect(lfoAmt);
+    lfoAmt.connect(env.gain); // LFO modulates envelope gain → tremolo
+
+    osc.connect(lpf); lpf.connect(env); env.connect(c.destination);
+    reverbSend(env, 0.06 + i * 0.015, 0.10);
+
+    osc.start(now); osc.stop(now + 3.0);
+    lfo.start(now); lfo.stop(now + 3.0);
   });
 
-  // ⑤ High metallic sting (cuts through)
-  const sting = c.createOscillator();
-  sting.type = 'square';
-  sting.frequency.setValueAtTime(880, now);
-  sting.frequency.exponentialRampToValueAtTime(220, now + 0.30);
-  const stingF = c.createBiquadFilter();
-  stingF.type = 'bandpass'; stingF.frequency.value = 1400; stingF.Q.value = 3;
-  const stingG = c.createGain();
-  stingG.gain.setValueAtTime(0.22, now);
-  stingG.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-  sting.connect(stingF); stingF.connect(stingG); stingG.connect(c.destination);
-  sting.start(now); sting.stop(now + 0.40);
+  // ── Cello section: powerful E3 → downward slide ──────────────────────
+  const cello = c.createOscillator();
+  cello.type = 'sawtooth';
+  cello.frequency.setValueAtTime(164.8, now);       // E3
+  cello.frequency.exponentialRampToValueAtTime(110, now + 1.2); // slide down to A2
+  const celloLpf = c.createBiquadFilter();
+  celloLpf.type = 'lowpass';
+  celloLpf.frequency.value = 900;
+  const celloEnv = c.createGain();
+  celloEnv.gain.setValueAtTime(0.32, now);
+  celloEnv.gain.exponentialRampToValueAtTime(0.001, now + 2.0);
+  cello.connect(celloLpf); celloLpf.connect(celloEnv); celloEnv.connect(c.destination);
+  reverbSend(celloEnv, 0.08, 0.12);
+  cello.start(now); cello.stop(now + 2.1);
+
+  // ── Double-bass sub impact ────────────────────────────────────────────
+  const bass = c.createOscillator();
+  bass.type = 'sine';
+  bass.frequency.setValueAtTime(82.4, now);  // E2
+  bass.frequency.exponentialRampToValueAtTime(41.2, now + 0.6);
+  const bassEnv = c.createGain();
+  bassEnv.gain.setValueAtTime(0.55, now);
+  bassEnv.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
+  bass.connect(bassEnv); bassEnv.connect(c.destination);
+  bass.start(now); bass.stop(now + 0.75);
+
+  // ── Bow-strike transient (the initial attack crack) ───────────────────
+  noise(0.20, 5000, 0.04, now);           // bright initial crack
+  noise(0.08, 1000, 0.25, now + 0.02);   // body resonance tail
 }
 
 // ── Stuck (no valid moves) ─────────────────────────────────────────────────

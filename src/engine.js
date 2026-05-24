@@ -63,6 +63,7 @@ export function initState(level) {
       corruption: 0,
       position: [...level.playerStart],
       score: 0,
+      transformed: false,  // true after absorbing a transit cell — must absorb original type next
     },
     grid,
     winScore: level.winScore ?? 50,
@@ -93,39 +94,82 @@ export function applyMove(state, dir) {
   const nr = r + dr, nc = c + dc;
 
   const absorbedType = state.grid[nr][nc].type;
-  const rule = RULES[state.player.element].absorb[absorbedType];
+  const currentEl  = state.player.element;
+  const originalEl = state.player.originalElement;
+
+  // Transit pairs: square ↔ triangle (circle has no safe-transit)
+  const TRANSIT_MAP = { square: 'triangle', triangle: 'square' };
+  const transitTarget = TRANSIT_MAP[currentEl]; // what type transforms this player
+
+  let rule, newElement, newTransformed, absorbType;
+
+  if (state.player.transformed) {
+    // ── TRANSFORMED STATE ────────────────────────────────────────────────
+    if (absorbedType === currentEl) {
+      // Absorbing same-as-current while transformed → instant death
+      const newGrid2 = state.grid.map(row => row.map(c => c ? { type: c.type } : null));
+      newGrid2[nr][nc] = null;
+      const killPlayer = { ...state.player, position: [nr, nc] };
+      const killEvent  = { dir, absorbed: absorbedType, type: 'nemesis', scoreDelta: 0, corruptionDelta: 0, newScore: state.player.score, newCorruption: state.player.corruption };
+      return { ...state, player: killPlayer, grid: newGrid2, lastEvent: killEvent, status: 'lose-death' };
+    } else if (absorbedType === originalEl) {
+      // Absorbing original element while transformed → REVERT, award kin bonus
+      rule         = RULES[originalEl].absorb[originalEl]; // kin rule (+10, -1 corr)
+      newElement   = originalEl;
+      newTransformed = false;
+      absorbType   = 'same';
+    } else {
+      // Absorbing a cross/neutral cell — normal rules for current (transformed) element
+      rule         = RULES[currentEl].absorb[absorbedType];
+      newElement   = currentEl;
+      newTransformed = true;
+      absorbType   = RULES[currentEl].nemesis === absorbedType ? 'nemesis' : 'cross';
+    }
+  } else if (transitTarget && absorbedType === transitTarget) {
+    // ── TRANSIT ABSORPTION → TRANSFORM ──────────────────────────────────
+    rule         = { score: 0, corruptionDelta: 0 }; // no score or corruption for transit
+    newElement   = transitTarget;
+    newTransformed = true;
+    absorbType   = 'transform';
+  } else {
+    // ── NORMAL ABSORPTION ────────────────────────────────────────────────
+    rule         = RULES[currentEl].absorb[absorbedType];
+    newElement   = currentEl;
+    newTransformed = false;
+    const isNemesis = RULES[currentEl].nemesis === absorbedType;
+    absorbType   = absorbedType === currentEl ? 'same'
+      : isNemesis ? 'nemesis'
+      : rule.score === 0 && rule.corruptionDelta === 0 ? 'safe'
+      : 'cross';
+  }
 
   const newGrid = state.grid.map(row => row.map(cell => cell ? { type: cell.type } : null));
   newGrid[nr][nc] = null;
 
-  const newScore = state.player.score + rule.score;
+  const newScore      = state.player.score + rule.score;
   const newCorruption = Math.max(0, state.player.corruption + rule.corruptionDelta);
 
   const newPlayer = {
     ...state.player,
-    position: [nr, nc],
-    score: newScore,
-    corruption: newCorruption,
+    element:     newElement,
+    transformed: newTransformed,
+    position:    [nr, nc],
+    score:       newScore,
+    corruption:  newCorruption,
   };
-
-  // Classify absorption type for UI/SFX
-  const isNemesis  = RULES[state.player.element].nemesis === absorbedType;
-  const absorbType = rule.score === 0 && rule.corruptionDelta === 0 ? 'safe'
-    : absorbedType === state.player.element ? 'same'
-    : isNemesis ? 'nemesis'
-    : 'cross';
 
   const event = {
     dir, absorbed: absorbedType, type: absorbType,
     scoreDelta: rule.score, corruptionDelta: rule.corruptionDelta,
     newScore, newCorruption,
+    transformed: newTransformed,
   };
 
   const newState = { ...state, player: newPlayer, grid: newGrid, lastEvent: event };
 
-  if (newScore >= newState.winScore)                               return { ...newState, status: 'win' };
-  if (newCorruption >= RULES[state.player.element].deathAt)       return { ...newState, status: 'lose-death' };
-  if (getValidMoves(newState).length === 0)                       return { ...newState, status: 'lose-stuck' };
+  if (newScore >= newState.winScore)                            return { ...newState, status: 'win' };
+  if (newCorruption >= RULES[newElement].deathAt)              return { ...newState, status: 'lose-death' };
+  if (getValidMoves(newState).length === 0)                    return { ...newState, status: 'lose-stuck' };
 
   return newState;
 }

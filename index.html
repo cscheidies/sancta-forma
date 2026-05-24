@@ -241,8 +241,8 @@
     .hud {
       width: 100%;
       max-width: 400px;
-      background: rgba(8, 6, 18, 0.88);
-      backdrop-filter: blur(8px);
+      background: rgba(8, 6, 18, 0.48);
+      backdrop-filter: blur(12px);
       border: 1px solid var(--border2);
       box-shadow: 0 0 20px rgba(100,50,200,0.10), inset 0 0 30px rgba(80,40,160,0.05);
       border-radius: 10px;
@@ -359,6 +359,22 @@
       display: block;
       border-radius: 8px;
       border: 1px solid var(--border);
+      background: rgba(4, 3, 10, 0.45);
+      backdrop-filter: blur(4px);
+    }
+
+    /* ── In-game floating sigil ─────────────────────────── */
+    .game-sigil-wrap {
+      display: flex;
+      justify-content: center;
+      opacity: 0.72;
+    }
+    .game-sigil {
+      width: 56px;
+      height: 52px;
+      animation: sf-sigil-spin 90s linear infinite,
+                 sf-sigil-pulse 4s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 6px rgba(160,80,255,0.5));
     }
 
     /* ── D-Pad ──────────────────────────────────────────── */
@@ -376,7 +392,7 @@
     .dpad-btn {
       width: 52px;
       height: 52px;
-      background: rgba(20,10,45,0.80);
+      background: rgba(20,10,45,0.40);
       border: 1px solid var(--border2);
       border-radius: 6px;
       color: var(--arcane-dim);
