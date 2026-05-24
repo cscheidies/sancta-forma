@@ -41,17 +41,29 @@
       overflow-x: hidden;
     }
 
-    #starfield {
+    #bg-layer {
       position: fixed;
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      background: radial-gradient(ellipse at 20% 15%, #0f1a3a 0%, #07112a 35%, #040810 70%);
+      background-color: #06070d;
+      background-size: cover;
+      background-position: center;
+      transition: background-image 0.8s ease, opacity 0.8s ease;
+    }
+
+    #starfield {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      /* dark overlay + stars particle canvas */
+      transition: opacity 0.8s ease;
     }
 
     #app {
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
 
     #app {
@@ -703,6 +715,7 @@
     }
   </style>
 </head>
+<div id="bg-layer"></div>
 <canvas id="starfield"></canvas>
 <div id="app"></div>
 <button id="music-btn" title="Toggle music">🔇</button>
@@ -1209,7 +1222,8 @@
     'Snowy Day at Home',
   ];
 
-  let idx     = 0;
+  // Start on a random track each page load
+  let idx     = Math.floor(Math.random() * TRACKS.length);
   let playing = false;
   let audio   = null;
 

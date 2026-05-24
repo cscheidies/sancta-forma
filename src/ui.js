@@ -3,27 +3,35 @@
 import { initState, getValidMoves, applyMove, RULES } from './engine.js';
 import * as sfx from './sfx.js';
 
-// Per-rite background images (add more here as artwork arrives)
+// Per-rite background images
 const LEVEL_BACKGROUNDS = {
   1: './bg_rite1.jpg',
+  2: './bg_rite2.jpg',
+  3: './bg_rite3.jpg',
+  4: './bg_rite4.jpg',
+  5: './bg_rite5.jpg',
+  6: './bg_rite6.jpg',
 };
 
 function setLevelBg(levelId) {
+  const bgLayer   = document.getElementById('bg-layer');
   const starfield = document.getElementById('starfield');
   const bg = LEVEL_BACKGROUNDS[levelId];
-  if (bg) {
-    document.body.style.backgroundImage = `url("${bg}")`;
-    document.body.style.backgroundSize  = 'cover';
-    document.body.style.backgroundPosition = 'center';
-    if (starfield) starfield.style.opacity = '0.12';
-  } else {
-    document.body.style.backgroundImage = '';
-    if (starfield) starfield.style.opacity = '1';
+  if (bgLayer) {
+    if (bg) {
+      bgLayer.style.backgroundImage = `url("${bg}")`;
+      // dim the starfield overlay so the art shows through
+      if (starfield) starfield.style.opacity = '0.18';
+    } else {
+      bgLayer.style.backgroundImage = '';
+      if (starfield) starfield.style.opacity = '1';
+    }
   }
 }
 
 function clearLevelBg() {
-  document.body.style.backgroundImage = '';
+  const bgLayer = document.getElementById('bg-layer');
+  if (bgLayer) bgLayer.style.backgroundImage = '';
   const starfield = document.getElementById('starfield');
   if (starfield) starfield.style.opacity = '1';
 }
