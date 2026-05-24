@@ -358,45 +358,59 @@ export function highlightValidMoves(svg, validMoves, state) {
   for (const dir of validMoves) {
     const [dr, dc] = DIRS[dir];
     const nr = pr + dr, nc = pc + dc;
+    const cellType = state.grid[nr][nc]?.type;
+
+    // Determine if this move is lethal
+    const currentEl = state.player.element;
+    const corr      = state.player.corruption;
+    let lethal = false;
+    if (cellType && RULES[currentEl]?.absorb[cellType]) {
+      const delta = RULES[currentEl].absorb[cellType].corruptionDelta;
+      const newCorr = Math.max(0, corr + delta);
+      if (newCorr >= RULES[currentEl].deathAt) lethal = true;
+    }
+    // While transformed: absorbing same-as-current = instant death
+    if (state.player.transformed && cellType === currentEl) lethal = true;
+
+    const borderColor = lethal ? '#ff3030' : '#c070ff';
+    const fillColor   = lethal ? 'rgba(255,30,30,0.10)' : 'rgba(160,80,255,0.12)';
+    const arrowColor  = lethal ? 'rgba(255,100,100,0.70)' : 'rgba(200,140,255,0.55)';
+
     // Full-cell tap target
-    const tapTarget = svgEl('rect', {
+    fxLayer.appendChild(svgEl('rect', {
       x: nc * CELL_SIZE, y: nr * CELL_SIZE,
       width: CELL_SIZE, height: CELL_SIZE,
       fill: 'transparent',
       class: 'move-hint move-hint-tap',
       style: 'cursor:pointer',
-    });
-    fxLayer.appendChild(tapTarget);
+    }));
 
-    // Bright pulsing hint border
-    const hint = svgEl('rect', {
-      x: nc * CELL_SIZE + 3,
-      y: nr * CELL_SIZE + 3,
-      width: CELL_SIZE - 6,
-      height: CELL_SIZE - 6,
-      fill: 'rgba(160,80,255,0.12)',
-      stroke: '#c070ff',
+    // Pulsing border (purple = safe, red = lethal)
+    fxLayer.appendChild(svgEl('rect', {
+      x: nc * CELL_SIZE + 3, y: nr * CELL_SIZE + 3,
+      width: CELL_SIZE - 6, height: CELL_SIZE - 6,
+      fill: fillColor,
+      stroke: borderColor,
       'stroke-width': '2',
       rx: '4',
       class: 'move-hint move-hint-pulse',
       style: 'pointer-events:none',
-    });
-    fxLayer.appendChild(hint);
+    }));
 
-    // Direction arrow in the center of the cell
+    // Direction arrow
     const arrowMap = { U:'↑', D:'↓', L:'←', R:'→' };
     const cx = nc * CELL_SIZE + CELL_SIZE / 2;
-    const cy = nr * CELL_SIZE + CELL_SIZE / 2 + 5; // +5 for visual centering
-    const arrow = svgEl('text', {
+    const cy = nr * CELL_SIZE + CELL_SIZE / 2 + 5;
+    const arrowEl = svgEl('text', {
       x: cx, y: cy,
       'text-anchor': 'middle',
       'font-size': '22',
-      fill: 'rgba(200,140,255,0.55)',
+      fill: arrowColor,
       class: 'move-hint',
       style: 'pointer-events:none; user-select:none;',
     });
-    arrow.textContent = arrowMap[dir];
-    fxLayer.appendChild(arrow);
+    arrowEl.textContent = arrowMap[dir];
+    fxLayer.appendChild(arrowEl);
   }
 }
 
