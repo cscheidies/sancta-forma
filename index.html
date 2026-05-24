@@ -1194,266 +1194,79 @@
 
 
 // ══════════════════════════════════════════════════════════════════════════
-//  AMBIENT MUSIC  — 5 procedural eerie tracks, auto-cycling
+//  AMBIENT MUSIC  — real tracks, sequential loop forever
 // ══════════════════════════════════════════════════════════════════════════
 (function () {
-  const btn = document.getElementById('music-btn');
-  let audioCtx  = null;
-  let masterGain = null;
-  let playing   = false;
-  let trackNodes = [];
-  let trackIdx  = Math.floor(Math.random() * 5);
-  let cycleTimer = null;
-
-  const TRACK_NAMES = [
-    'The Hollow', 'The Waking Dread', 'Stones of Memory',
-    'Before the Void', 'The Rite Begins'
+  const btn     = document.getElementById('music-btn');
+  const TRACKS  = [
+    '/music/asleep_in_dreams.ogg',
+    '/music/journey_is_too_long.ogg',
   ];
-  const TRACK_DURATION = 160000; // ms before auto-cycling
+  const NAMES = [
+    'Asleep in Dreams',
+    'Journey is Too Long',
+  ];
 
-  function r(a,b){ return a + Math.random()*(b-a); }
-
-  function makeReverb(ctx) {
-    const len = ctx.sampleRate * 4.5;
-    const buf = ctx.createBuffer(2, len, ctx.sampleRate);
-    for (let ch=0; ch<2; ch++) {
-      const d = buf.getChannelData(ch);
-      for (let i=0; i<len; i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, 2.3);
-    }
-    const conv = ctx.createConvolver();
-    conv.buffer = buf;
-    return conv;
-  }
-
-  // ─ Track 1: The Hollow ──────────────────────────────────────────────────
-  // Deep sub drones + sparse glass chimes through cavernous reverb
-  function buildHollow(ctx, rev, dry) {
-    const nodes = [];
-    [[40,0.18],[55,0.10],[80,0.06]].forEach(([freq,gain]) => {
-      const osc = ctx.createOscillator(); osc.type='sine'; osc.frequency.value=freq;
-      const lfo = ctx.createOscillator(); lfo.frequency.value = r(0.02,0.05);
-      const lG  = ctx.createGain();       lG.gain.value = 0.6;
-      lfo.connect(lG); lG.connect(osc.frequency); lfo.start();
-      const g = ctx.createGain(); g.gain.value=gain;
-      osc.connect(g); g.connect(rev); g.connect(dry);
-      osc.start(); nodes.push(osc,lfo);
-    });
-    const GLASS = [261.6,329.6,392,440,523.3,659.3,783.9];
-    let ct;
-    function chime(){
-      const f = GLASS[Math.floor(Math.random()*GLASS.length)];
-      const when = ctx.currentTime;
-      const o = ctx.createOscillator(); o.type='sine'; o.frequency.value=f;
-      const e = ctx.createGain();
-      e.gain.setValueAtTime(0,when);
-      e.gain.linearRampToValueAtTime(0.045,when+0.06);
-      e.gain.exponentialRampToValueAtTime(0.0001,when+4.5);
-      o.connect(e); e.connect(rev);
-      o.start(when); o.stop(when+4.6);
-      ct = setTimeout(chime, r(3500,9000));
-    }
-    ct = setTimeout(chime, r(1500,3000));
-    nodes.push({ stop() { clearTimeout(ct); } });
-    return nodes;
-  }
-
-  // ─ Track 2: The Waking Dread ────────────────────────────────────────────
-  // Chromatic cluster + slow tremolo + filtered noise sweep — pure tension
-  function buildDread(ctx, rev, dry) {
-    const nodes = [];
-    [[196,0.055],[208,0.048],[220,0.048],[246.9,0.025]].forEach(([freq,gain]) => {
-      const osc = ctx.createOscillator(); osc.type='triangle'; osc.frequency.value=freq;
-      const lfo = ctx.createOscillator(); lfo.frequency.value=0.04;
-      const lG  = ctx.createGain(); lG.gain.value=gain*0.7;
-      const bG  = ctx.createGain(); bG.gain.value=gain;
-      lfo.connect(lG); lG.connect(bG.gain); lfo.start();
-      osc.connect(bG); bG.connect(rev); bG.connect(dry);
-      osc.start(); nodes.push(osc,lfo);
-    });
-    // Noise band sweep
-    const nBuf = ctx.createBuffer(1, ctx.sampleRate*5, ctx.sampleRate);
-    const nd   = nBuf.getChannelData(0);
-    for (let i=0;i<nd.length;i++) nd[i]=Math.random()*2-1;
-    const nSrc = ctx.createBufferSource(); nSrc.buffer=nBuf; nSrc.loop=true;
-    const filt = ctx.createBiquadFilter(); filt.type='bandpass'; filt.frequency.value=600; filt.Q.value=4;
-    const fLFO = ctx.createOscillator(); fLFO.frequency.value=0.04;
-    const fLG  = ctx.createGain(); fLG.gain.value=700;
-    fLFO.connect(fLG); fLG.connect(filt.frequency); fLFO.start();
-    const nG   = ctx.createGain(); nG.gain.value=0.028;
-    nSrc.connect(filt); filt.connect(nG); nG.connect(rev); nG.connect(dry);
-    nSrc.start(); nodes.push(nSrc,fLFO);
-    return nodes;
-  }
-
-  // ─ Track 3: Stones of Memory ────────────────────────────────────────────
-  // Slow Dorian melody + pedal tone + long echoes — ancient, meditative
-  function buildAncient(ctx, rev, dry) {
-    const nodes = [];
-    const pedal = ctx.createOscillator(); pedal.type='sine'; pedal.frequency.value=82.4; // E2
-    const pG = ctx.createGain(); pG.gain.value=0.10;
-    pedal.connect(pG); pG.connect(rev); pG.connect(dry); pedal.start(); nodes.push(pedal);
-
-    const DORIAN = [110,130.8,146.8,164.8,196,220,261.6,293.7,329.6,392,440];
-    let mi=0, mt;
-    function note(){
-      const f = DORIAN[mi%DORIAN.length]; mi++;
-      const when=ctx.currentTime;
-      const o=ctx.createOscillator(); o.type='triangle'; o.frequency.value=f;
-      const e=ctx.createGain();
-      e.gain.setValueAtTime(0,when);
-      e.gain.linearRampToValueAtTime(0.065,when+0.4);
-      e.gain.exponentialRampToValueAtTime(0.0001,when+5.5);
-      o.connect(e); e.connect(rev); o.start(when); o.stop(when+5.6);
-      mt = setTimeout(note, r(1200,2600));
-    }
-    mt = setTimeout(note, r(800,2000));
-    nodes.push({ stop(){ clearTimeout(mt); } });
-    return nodes;
-  }
-
-  // ─ Track 4: Before the Void ─────────────────────────────────────────────
-  // Sub-bass + ultra-high shimmer + desolate tritone — the silence between stars
-  function buildVoid(ctx, rev, dry) {
-    const nodes = [];
-    [[36,0.15],[72,0.07],[144,0.03]].forEach(([f,g]) => {
-      const o=ctx.createOscillator(); o.type='sine'; o.frequency.value=f;
-      const gn=ctx.createGain(); gn.gain.value=g;
-      o.connect(gn); gn.connect(dry); gn.connect(rev); o.start(); nodes.push(o);
-    });
-    // High glass shimmer
-    const hi = ctx.createOscillator(); hi.type='sine'; hi.frequency.value=1760;
-    const hLFO=ctx.createOscillator(); hLFO.frequency.value=0.05;
-    const hLG =ctx.createGain(); hLG.gain.value=0.014;
-    const hG  =ctx.createGain(); hG.gain.value=0.018;
-    hLFO.connect(hLG); hLG.connect(hG.gain); hLFO.start();
-    hi.connect(hG); hG.connect(rev); hi.start(); nodes.push(hi,hLFO);
-    // Dissonant tritone mid
-    const tri=ctx.createOscillator(); tri.type='sine'; tri.frequency.value=153.4; // tritone above 108Hz
-    const tG=ctx.createGain(); tG.gain.value=0.03;
-    tri.connect(tG); tG.connect(rev); tri.start(); nodes.push(tri);
-    return nodes;
-  }
-
-  // ─ Track 5: The Rite Begins ─────────────────────────────────────────────
-  // Rhythmic pulse + distorted drone pair + slow ascending phrase
-  function buildRitual(ctx, rev, dry) {
-    const nodes = [];
-    // Soft distortion waveshaper
-    const ws=ctx.createWaveShaper();
-    const crv=new Float32Array(256);
-    for(let i=0;i<256;i++){const x=i*2/256-1; crv[i]=Math.tanh(x*1.8);}
-    ws.curve=crv;
-
-    const d1=ctx.createOscillator(); d1.type='sawtooth'; d1.frequency.value=110;
-    const pG=ctx.createGain(); pG.gain.value=0.08;
-    const pLFO=ctx.createOscillator(); pLFO.type='sine'; pLFO.frequency.value=0.65;
-    const pLG =ctx.createGain(); pLG.gain.value=0.065;
-    pLFO.connect(pLG); pLG.connect(pG.gain); pLFO.start();
-    d1.connect(ws); ws.connect(pG); pG.connect(rev); pG.connect(dry);
-    d1.start(); nodes.push(d1,pLFO);
-
-    const d2=ctx.createOscillator(); d2.type='triangle'; d2.frequency.value=164.8; // E3
-    const d2G=ctx.createGain(); d2G.gain.value=0.04;
-    d2.connect(d2G); d2G.connect(rev); d2.start(); nodes.push(d2);
-
-    // Ascending chromatic phrase
-    const RISE=[164.8,174.6,185,196,207.7,220,233.1,246.9,261.6];
-    let ri=0, rt;
-    function riseNote(){
-      const f=RISE[ri%RISE.length]; ri++;
-      const when=ctx.currentTime;
-      const o=ctx.createOscillator(); o.type='sine'; o.frequency.value=f;
-      const e=ctx.createGain();
-      e.gain.setValueAtTime(0,when);
-      e.gain.linearRampToValueAtTime(0.032,when+0.5);
-      e.gain.exponentialRampToValueAtTime(0.0001,when+2.8);
-      o.connect(e); e.connect(rev); o.start(when); o.stop(when+2.9);
-      const gap = ri%RISE.length===0 ? r(3000,5000) : r(700,1100);
-      rt=setTimeout(riseNote,gap);
-    }
-    rt=setTimeout(riseNote,r(1000,2500));
-    nodes.push({ stop(){ clearTimeout(rt); } });
-    return nodes;
-  }
-
-  // ── Control ─────────────────────────────────────────────────────────────
-  const BUILDERS = [buildHollow,buildDread,buildAncient,buildVoid,buildRitual];
-
-  function stopNodes(arr) {
-    arr.forEach(n => {
-      if (!n) return;
-      if (typeof n.stop === 'function') try { n.stop(); } catch(e){}
-      if (typeof n.disconnect === 'function') try { n.disconnect(); } catch(e){}
-    });
-  }
+  let idx     = 0;
+  let playing = false;
+  let audio   = null;
 
   function showName(name) {
     const el = document.createElement('div');
-    el.style.cssText = 'position:fixed;bottom:72px;right:16px;font-size:0.72rem;color:#9060ff;opacity:0;transition:opacity 0.5s;pointer-events:none;font-family:var(--font-eerie);letter-spacing:0.1em;text-align:right;text-shadow:0 0 8px rgba(140,60,220,0.6);';
     el.textContent = name;
+    el.style.cssText = 'position:fixed;bottom:72px;right:16px;font-size:0.72rem;' +
+      'color:#9060ff;opacity:0;transition:opacity 0.5s;pointer-events:none;' +
+      'font-family:var(--font-eerie);letter-spacing:0.1em;text-align:right;' +
+      'text-shadow:0 0 8px rgba(140,60,220,0.6);z-index:100;';
     document.body.appendChild(el);
-    requestAnimationFrame(() => el.style.opacity='1');
-    setTimeout(() => { el.style.opacity='0'; setTimeout(()=>el.remove(), 600); }, 3500);
+    requestAnimationFrame(() => el.style.opacity = '1');
+    setTimeout(() => {
+      el.style.opacity = '0';
+      setTimeout(() => el.remove(), 600);
+    }, 3500);
   }
 
-  function launchTrack(idx) {
-    stopNodes(trackNodes); trackNodes=[];
-    if (!audioCtx || !masterGain) return;
-    const rev  = makeReverb(audioCtx);
-    const revG = audioCtx.createGain(); revG.gain.value=0.50;
-    rev.connect(revG); revG.connect(masterGain);
-    const dry  = audioCtx.createGain(); dry.gain.value=0.50;
-    dry.connect(masterGain);
-    const newNodes = BUILDERS[idx](audioCtx, rev, dry);
-    trackNodes = [rev, revG, dry, ...newNodes];
-
-    clearTimeout(cycleTimer);
-    cycleTimer = setTimeout(() => {
-      if (!playing) return;
-      // Fade out → crossfade into next
-      masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
-      masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 3.5);
-      setTimeout(() => {
-        if (!playing) return;
-        trackIdx = (trackIdx+1) % 5;
-        masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
-        masterGain.gain.linearRampToValueAtTime(0.52, audioCtx.currentTime + 3);
-        launchTrack(trackIdx);
-        showName(TRACK_NAMES[trackIdx]);
-      }, 4000);
-    }, TRACK_DURATION);
+  function loadTrack(trackIdx) {
+    if (audio) { audio.pause(); audio.src = ''; }
+    audio = new Audio(TRACKS[trackIdx]);
+    audio.volume = 0.72;
+    audio.addEventListener('ended', () => {
+      idx = (idx + 1) % TRACKS.length;
+      loadTrack(idx);
+      if (playing) {
+        audio.play().catch(() => {});
+        showName(NAMES[idx]);
+      }
+    });
+    audio.addEventListener('error', () => {
+      // Skip broken track gracefully
+      idx = (idx + 1) % TRACKS.length;
+      loadTrack(idx);
+      if (playing) audio.play().catch(() => {});
+    });
   }
 
   function startMusic() {
-    audioCtx    = new (window.AudioContext || window.webkitAudioContext)();
-    masterGain  = audioCtx.createGain();
-    masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(0.52, audioCtx.currentTime + 3);
-    masterGain.connect(audioCtx.destination);
-    launchTrack(trackIdx);
-    playing = true;
-    btn.textContent = '🔊';
-    showName(TRACK_NAMES[trackIdx]);
+    if (!audio) loadTrack(idx);
+    audio.play().then(() => {
+      playing = true;
+      btn.textContent = '🔊';
+      showName(NAMES[idx]);
+    }).catch(() => {});
   }
 
   function stopMusic() {
-    clearTimeout(cycleTimer);
-    if (audioCtx && masterGain) {
-      masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
-      masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
-      setTimeout(() => {
-        stopNodes(trackNodes); trackNodes=[];
-        if (audioCtx) { audioCtx.close(); audioCtx=null; }
-        masterGain=null;
-      }, 1700);
-    }
-    playing=false;
-    btn.textContent='🔇';
+    if (audio) audio.pause();
+    playing = false;
+    btn.textContent = '🔇';
   }
+
+  // Pre-load first track
+  loadTrack(idx);
 
   btn.addEventListener('click', () => { if (playing) stopMusic(); else startMusic(); });
 
-  // Auto-start music on first user interaction (covers mobile tap-to-unlock AudioContext)
+  // Auto-start on first user interaction (mobile AudioContext unlock)
   function onFirstInteraction() {
     if (!playing) startMusic();
     document.removeEventListener('click', onFirstInteraction);
