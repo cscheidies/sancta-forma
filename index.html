@@ -1408,10 +1408,11 @@
       const total = n.fadeIn + n.hold + n.fadeOut;
       if (age > total) { narrTexts.splice(i, 1); continue; }
 
+      const maxAlpha = window.sfPhotoMode ? 0.11 : 0.065;
       let alpha;
-      if (age < n.fadeIn)                    alpha = (age / n.fadeIn) * 0.065;
-      else if (age < n.fadeIn + n.hold)      alpha = 0.065;
-      else                                   alpha = (1 - (age - n.fadeIn - n.hold) / n.fadeOut) * 0.065;
+      if (age < n.fadeIn)                    alpha = (age / n.fadeIn) * maxAlpha;
+      else if (age < n.fadeIn + n.hold)      alpha = maxAlpha;
+      else                                   alpha = (1 - (age - n.fadeIn - n.hold) / n.fadeOut) * maxAlpha;
 
       C.fillStyle = `rgba(200,190,240,${alpha})`;
       C.fillText(n.text, n.x, n.y);
@@ -1476,13 +1477,11 @@
       C.fillStyle=`rgba(240,235,255,${s.life*0.85})`;C.fill();
     }
 
-    // Floating narrative text (only in full generated scene)
-    if (!window.sfPhotoMode) {
-      if (now - narrLastSpawn > narrNextSpawn) {
-        spawnNarrText(now); narrLastSpawn = now; narrNextSpawn = rand(6000, 14000);
-      }
-      drawNarrTexts(now);
+    // Floating narrative text — always on, alpha adjusts per sfPhotoMode
+    if (now - narrLastSpawn > narrNextSpawn) {
+      spawnNarrText(now); narrLastSpawn = now; narrNextSpawn = rand(6000, 14000);
     }
+    drawNarrTexts(now);
 
     requestAnimationFrame(draw);
   }
