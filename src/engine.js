@@ -74,18 +74,12 @@ export function initState(level) {
 export function getValidMoves(state) {
   if (state.status !== 'playing') return [];
   const [r, c] = state.player.position;
-  const rules = RULES[state.player.element];
   return DIR_KEYS.filter(dir => {
     const [dr, dc] = DIRS[dir];
     const nr = r + dr, nc = c + dc;
     if (nr < 0 || nr >= 5 || nc < 0 || nc >= 5) return false;
     const cell = state.grid[nr][nc];
-    if (!cell) return false;
-    // Block moves that would cause guaranteed instant death.
-    // Nemesis cells (e.g. moon for circle player) function as impassable walls.
-    const rule = rules.absorb[cell.type];
-    const newCorruption = Math.max(0, state.player.corruption + rule.corruptionDelta);
-    return newCorruption < rules.deathAt;
+    return cell !== null; // any non-empty cell is enterable; applyMove handles death
   });
 }
 
