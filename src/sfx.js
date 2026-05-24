@@ -262,6 +262,20 @@ export function stuck() {
 
 // ── Near-death warning ─────────────────────────────────────────────────────
 // Ominous heartbeat — two thumps + high warning whine
+export function blocked() {
+  const c = ctx();
+  const now = c.currentTime;
+  const osc = c.createOscillator();
+  const g   = c.createGain();
+  osc.type = 'square';
+  osc.frequency.setValueAtTime(90, now);
+  osc.frequency.linearRampToValueAtTime(60, now + 0.07);
+  g.gain.setValueAtTime(0.04, now);
+  g.gain.exponentialRampToValueAtTime(0.0001, now + 0.10);
+  osc.connect(g); g.connect(c.destination);
+  osc.start(now); osc.stop(now + 0.10);
+}
+
 export function nearDeath(element) {
   const c = ctx();
   const now = c.currentTime;

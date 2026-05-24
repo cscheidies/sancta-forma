@@ -435,7 +435,7 @@ export class GameScreen {
     if (!this.state || this.state.status !== 'playing') return;
 
     const valid = getValidMoves(this.state);
-    if (!valid.includes(dir)) return;
+    if (!valid.includes(dir)) { sfx.blocked(); return; }
 
     // Pre-absorb data for FX
     const [dr, dc] = { U: [-1, 0], D: [1, 0], L: [0, -1], R: [0, 1] }[dir];

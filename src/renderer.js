@@ -323,25 +323,26 @@ export function flashCell(svg, row, col, color) {
 }
 
 export function showScorePopup(svg, row, col, delta) {
-  if (delta === 0) return;
   const fxLayer = svg.querySelector('#layer-fx');
+  const isTransit = delta === 0;
+
   const text = svgEl('text', {
     x: col * CELL_SIZE + CELL_SIZE / 2,
     y: row * CELL_SIZE + CELL_SIZE / 2,
     'text-anchor': 'middle',
-    fill: delta > 0 ? '#69ff47' : '#ff4747',
-    'font-size': '18',
+    fill: isTransit ? 'rgba(255,255,255,0.35)' : delta > 0 ? '#69ff47' : '#ff4747',
+    'font-size': isTransit ? '13' : '18',
     'font-family': 'Share Tech Mono, monospace',
     'font-weight': 'bold',
   });
-  text.textContent = delta > 0 ? `+${delta}` : `${delta}`;
+  text.textContent = isTransit ? 'PASS' : delta > 0 ? `+${delta}` : `${delta}`;
   fxLayer.appendChild(text);
   text.animate(
     [
-      { transform: 'translateY(0px)', opacity: 1 },
-      { transform: 'translateY(-28px)', opacity: 0 },
+      { transform: 'translateY(0px)', opacity: isTransit ? 0.5 : 1 },
+      { transform: 'translateY(-22px)', opacity: 0 },
     ],
-    { duration: 550, fill: 'forwards' }
+    { duration: isTransit ? 400 : 550, fill: 'forwards' }
   ).onfinish = () => text.remove();
 }
 
