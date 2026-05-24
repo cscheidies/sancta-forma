@@ -221,8 +221,8 @@ export function createGridSVG() {
         y: r * CELL_SIZE + 1,
         width: CELL_SIZE - 2,
         height: CELL_SIZE - 2,
-        fill: 'rgba(8,6,15,0.28)',
-        stroke: 'rgba(50,30,90,0.55)',
+        fill: 'rgba(8,6,15,0.10)',
+        stroke: 'rgba(50,30,90,0.35)',
         'stroke-width': '1',
         rx: '3',
       }));
