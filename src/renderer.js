@@ -267,6 +267,7 @@ export function renderState(svg, state) {
   playerLayer.innerHTML = '';
 
   const { grid, player } = state;
+  const nemesisType = RULES[player.element].nemesis;
 
   // Draw all grid shapes
   for (let r = 0; r < 5; r++) {
@@ -274,6 +275,22 @@ export function renderState(svg, state) {
       const cell = grid[r][c];
       if (cell) {
         shapesLayer.appendChild(drawGridShape(cell.type, c, r));
+
+        // Danger overlay: nemesis cells are impassable walls — mark them clearly
+        if (cell.type === nemesisType) {
+          const dangerRect = svgEl('rect', {
+            x: c * CELL_SIZE + 2,
+            y: r * CELL_SIZE + 2,
+            width:  CELL_SIZE - 4,
+            height: CELL_SIZE - 4,
+            fill:   'rgba(220,30,30,0.08)',
+            stroke: 'rgba(220,30,30,0.50)',
+            'stroke-width': '1.5',
+            rx: '4',
+            'pointer-events': 'none',
+          });
+          shapesLayer.appendChild(dangerRect);
+        }
       }
     }
   }
