@@ -358,32 +358,45 @@ export function highlightValidMoves(svg, validMoves, state) {
   for (const dir of validMoves) {
     const [dr, dc] = DIRS[dir];
     const nr = pr + dr, nc = pc + dc;
-    // Invisible full-cell tap target (touch-friendly hit area)
+    // Full-cell tap target
     const tapTarget = svgEl('rect', {
-      x: nc * CELL_SIZE,
-      y: nr * CELL_SIZE,
-      width: CELL_SIZE,
-      height: CELL_SIZE,
+      x: nc * CELL_SIZE, y: nr * CELL_SIZE,
+      width: CELL_SIZE, height: CELL_SIZE,
       fill: 'transparent',
       class: 'move-hint move-hint-tap',
       style: 'cursor:pointer',
     });
     fxLayer.appendChild(tapTarget);
-    // Visible hint ring
+
+    // Bright pulsing hint border
     const hint = svgEl('rect', {
-      x: nc * CELL_SIZE + 2,
-      y: nr * CELL_SIZE + 2,
-      width: CELL_SIZE - 4,
-      height: CELL_SIZE - 4,
-      fill: 'rgba(255,255,255,0.04)',
-      stroke: '#ffffff',
-      'stroke-width': '1.5',
-      'stroke-opacity': '0.25',
+      x: nc * CELL_SIZE + 3,
+      y: nr * CELL_SIZE + 3,
+      width: CELL_SIZE - 6,
+      height: CELL_SIZE - 6,
+      fill: 'rgba(160,80,255,0.12)',
+      stroke: '#c070ff',
+      'stroke-width': '2',
       rx: '4',
-      class: 'move-hint',
+      class: 'move-hint move-hint-pulse',
       style: 'pointer-events:none',
     });
     fxLayer.appendChild(hint);
+
+    // Direction arrow in the center of the cell
+    const arrowMap = { U:'↑', D:'↓', L:'←', R:'→' };
+    const cx = nc * CELL_SIZE + CELL_SIZE / 2;
+    const cy = nr * CELL_SIZE + CELL_SIZE / 2 + 5; // +5 for visual centering
+    const arrow = svgEl('text', {
+      x: cx, y: cy,
+      'text-anchor': 'middle',
+      'font-size': '22',
+      fill: 'rgba(200,140,255,0.55)',
+      class: 'move-hint',
+      style: 'pointer-events:none; user-select:none;',
+    });
+    arrow.textContent = arrowMap[dir];
+    fxLayer.appendChild(arrow);
   }
 }
 

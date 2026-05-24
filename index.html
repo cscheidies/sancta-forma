@@ -362,6 +362,15 @@
       background: transparent;
     }
 
+    /* ── Valid-move hint pulse ─────────────────────────────── */
+    .move-hint-pulse {
+      animation: hint-pulse 1.2s ease-in-out infinite alternate;
+    }
+    @keyframes hint-pulse {
+      from { opacity: 0.5; }
+      to   { opacity: 1.0; }
+    }
+
     /* ── Transform hint toast ─────────────────────────────── */
     #transform-hint {
       position: fixed;
