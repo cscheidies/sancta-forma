@@ -41,7 +41,8 @@
       overflow-x: hidden;
     }
 
-    #bg-layer {
+    /* Two bg layers for smooth crossfade */
+    .bg-layer {
       position: fixed;
       inset: 0;
       z-index: 0;
@@ -49,21 +50,35 @@
       background-color: #06070d;
       background-size: cover;
       background-position: center;
-      transition: background-image 0.8s ease, opacity 0.8s ease;
+      transition: opacity 1.4s ease;
+    }
+
+    /* Vignette — edges fade to pure black */
+    #bg-vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: radial-gradient(
+        ellipse 90% 85% at 50% 50%,
+        transparent 30%,
+        rgba(0,0,0,0.45) 65%,
+        rgba(0,0,0,0.88) 85%,
+        #000 100%
+      );
     }
 
     #starfield {
       position: fixed;
       inset: 0;
-      z-index: 1;
+      z-index: 3;
       pointer-events: none;
-      /* dark overlay + stars particle canvas */
-      transition: opacity 0.8s ease;
+      transition: opacity 1.0s ease;
     }
 
     #app {
       position: relative;
-      z-index: 2;
+      z-index: 4;
     }
 
     #app {
@@ -715,7 +730,9 @@
     }
   </style>
 </head>
-<div id="bg-layer"></div>
+<div class="bg-layer" id="bg-a"></div>
+<div class="bg-layer" id="bg-b" style="opacity:0"></div>
+<div id="bg-vignette"></div>
 <canvas id="starfield"></canvas>
 <div id="app"></div>
 <button id="music-btn" title="Toggle music">🔇</button>

@@ -4,7 +4,7 @@
     "name": "The First Rite",
     "playerElement": "square",
     "playerStart": [2, 2],
-    "winScore": 40,
+    "winScore": 50,
     "lore": [
       "You are Square. Grounded. Unyielding.",
       "Triangles yield before you — safe passage, not prey.",
@@ -80,7 +80,7 @@
     "name": "The Lattice",
     "playerElement": "triangle",
     "playerStart": [2, 2],
-    "winScore": 40,
+    "winScore": 50,
     "lore": [
       "You are Triangle. Sharp. Fractal.",
       "Squares dissolve before you — hollow, harmless.",

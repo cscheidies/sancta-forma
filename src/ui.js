@@ -13,25 +13,37 @@ const LEVEL_BACKGROUNDS = {
   6: './bg_rite6.jpg',
 };
 
+// Active bg layer tracker (crossfade: swap between bg-a and bg-b)
+let _activeBgId = 'bg-a';
+
 function setLevelBg(levelId) {
-  const bgLayer   = document.getElementById('bg-layer');
-  const starfield = document.getElementById('starfield');
   const bg = LEVEL_BACKGROUNDS[levelId];
-  if (bgLayer) {
-    if (bg) {
-      bgLayer.style.backgroundImage = `url("${bg}")`;
-      // dim the starfield overlay so the art shows through
-      if (starfield) starfield.style.opacity = '0.18';
-    } else {
-      bgLayer.style.backgroundImage = '';
-      if (starfield) starfield.style.opacity = '1';
-    }
+  const starfield = document.getElementById('starfield');
+  const nextId  = _activeBgId === 'bg-a' ? 'bg-b' : 'bg-a';
+  const current = document.getElementById(_activeBgId);
+  const next    = document.getElementById(nextId);
+
+  if (bg && next && current) {
+    next.style.backgroundImage = `url("${bg}")`;
+    next.style.opacity  = '0';
+    // Tiny delay so the browser registers the new bg-image before we transition opacity
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      next.style.opacity    = '1';
+      current.style.opacity = '0';
+    }));
+    _activeBgId = nextId;
+    if (starfield) starfield.style.opacity = '0.15';
+  } else if (current) {
+    current.style.opacity = '0';
+    if (starfield) starfield.style.opacity = '1';
   }
 }
 
 function clearLevelBg() {
-  const bgLayer = document.getElementById('bg-layer');
-  if (bgLayer) bgLayer.style.backgroundImage = '';
+  const a = document.getElementById('bg-a');
+  const b = document.getElementById('bg-b');
+  if (a) a.style.opacity = '0';
+  if (b) b.style.opacity = '0';
   const starfield = document.getElementById('starfield');
   if (starfield) starfield.style.opacity = '1';
 }
