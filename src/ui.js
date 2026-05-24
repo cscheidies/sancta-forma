@@ -418,7 +418,7 @@ export class GameScreen {
     screen.className = 'screen level-select';
 
     screen.innerHTML = `
-      <div class="screen-header" style="height:96px;flex-shrink:0"></div>
+      <div class="screen-header" style="height:128px;flex-shrink:0"></div>
 
       <!-- REMOVED inline sigil — replaced by #global-logo fixed element -->
       <div style="display:none">
