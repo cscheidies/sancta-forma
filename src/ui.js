@@ -3,6 +3,31 @@
 import { initState, getValidMoves, applyMove, RULES } from './engine.js';
 import * as sfx from './sfx.js';
 
+// Per-rite background images (add more here as artwork arrives)
+const LEVEL_BACKGROUNDS = {
+  1: './bg_rite1.jpg',
+};
+
+function setLevelBg(levelId) {
+  const starfield = document.getElementById('starfield');
+  const bg = LEVEL_BACKGROUNDS[levelId];
+  if (bg) {
+    document.body.style.backgroundImage = `url("${bg}")`;
+    document.body.style.backgroundSize  = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    if (starfield) starfield.style.opacity = '0.12';
+  } else {
+    document.body.style.backgroundImage = '';
+    if (starfield) starfield.style.opacity = '1';
+  }
+}
+
+function clearLevelBg() {
+  document.body.style.backgroundImage = '';
+  const starfield = document.getElementById('starfield');
+  if (starfield) starfield.style.opacity = '1';
+}
+
 import {
   createGridSVG, renderState, flashCell, showScorePopup,
   highlightValidMoves, ELEMENT_COLORS, CELL_SIZE,
@@ -107,6 +132,7 @@ export class GameScreen {
   }
 
   showNarrative() {
+    clearLevelBg();
     this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
 
@@ -214,6 +240,7 @@ export class GameScreen {
   }
 
   showLevelSelect() {
+    clearLevelBg();
     this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
 
@@ -336,6 +363,7 @@ export class GameScreen {
     const level = this.levels.find(l => l.id === levelId);
     if (!level) return;
 
+    setLevelBg(levelId);
     this.container.innerHTML = '';
     this.state = initState(level);
 
