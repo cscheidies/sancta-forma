@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shape Absorption Puzzle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Share+Tech+Mono&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #06070d;
+      --surface:   #0d0f18;
+      --surface2:  #111420;
+      --border:    #1e1a30;
+      --border2:   #2a2040;
+      --text:      #ddd5f0;
+      --text-dim:  #6b6080;
+      --cyan:      #00e5ff;
+      --magenta:   #e040fb;
+      --green:     #69ff47;
+      --yellow:    #ffcc00;
+      --red:       #ff4747;
+      --arcane:    #9060ff;
+      --arcane-dim:#4a2a9a;
+      --font-mono: 'Share Tech Mono', monospace;
+      --font-main: 'Space Grotesk', sans-serif;
+      --font-eerie:'Cormorant Garamond', serif;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    #starfield {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 20% 15%, #0f1a3a 0%, #07112a 35%, #040810 70%);
+    }
+
+    #app {
+      position: relative;
+      z-index: 1;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 720px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Level Select ──────────────────────────────────── */
+    .screen { width: 100%; padding: 24px 16px; }
+
+    .screen-header { text-align: center; margin-bottom: 28px; }
+
+    /* ── Sancta Forma logo ──────────────────────────────── */
+    .sf-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .sf-sigil {
+      width: 160px;
+      height: 146px;
+      animation: sf-sigil-spin 90s linear infinite,
+                 sf-sigil-pulse 4s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 8px rgba(160,80,255,0.5));
+    }
+    @keyframes sf-sigil-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @keyframes sf-sigil-pulse {
+      from { filter: drop-shadow(0 0 6px rgba(160,80,255,0.40)); }
+      to   { filter: drop-shadow(0 0 18px rgba(160,80,255,0.80)); }
+    }
+
+    .sf-title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1;
+      margin-top: -8px;
+      gap: 2px;
+    }
+    .sf-sancta {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      letter-spacing: 0.45em;
+      color: #c8a8ff;
+      text-shadow:
+        0 0 12px rgba(180,100,255,0.90),
+        0 0 28px rgba(140,60,220,0.60),
+        0 0 55px rgba(120,40,200,0.30);
+      animation: sf-flicker 6s infinite;
+    }
+    .sf-forma {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      color: #f0e8ff;
+      text-shadow:
+        0 0 10px rgba(200,160,255,1.0),
+        0 0 30px rgba(160,80,255,0.70),
+        0 0 70px rgba(120,40,220,0.40),
+        0 2px 4px rgba(0,0,0,0.8);
+      animation: sf-flicker 6s infinite 0.4s;
+    }
+    @keyframes sf-flicker {
+      0%,100% { opacity: 1; }
+      88%  { opacity: 1; }
+      89%  { opacity: 0.55; }
+      90%  { opacity: 1; }
+      93%  { opacity: 0.75; }
+      94%  { opacity: 1; }
+    }
+
+    .sf-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      color: rgba(180,140,255,0.45);
+      margin-top: 10px;
+      text-transform: uppercase;
+    }
+
+    .level-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .level-card {
+      background: rgba(10, 8, 22, 0.82);
+      backdrop-filter: blur(6px);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      padding: 20px 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+    .level-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9px;
+      box-shadow: inset 0 0 0 1px var(--elem-color);
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .level-card:not(.locked):hover::before { opacity: 0.5; }
+    .level-card:not(.locked):hover { transform: translateY(-2px); background: #1c2330; }
+    .level-card.locked { opacity: 0.4; cursor: default; }
+    .level-card.completed { border-color: var(--green); }
+
+    .card-rite {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+    .card-num {
+      font-family: var(--font-eerie);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--elem-color, var(--text));
+      text-shadow: 0 0 12px var(--elem-color, rgba(180,120,255,0.6));
+    }
+    .card-elem {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      color: var(--text-dim);
+    }
+    .card-status { font-size: 1rem; }
+
+    /* ── Game Layout ──────────────────────────────────── */
+    .game-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 12px;
+    }
+
+    /* ── HUD ──────────────────────────────────────────── */
+    .hud {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(8, 6, 18, 0.88);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border2);
+      box-shadow: 0 0 20px rgba(100,50,200,0.10), inset 0 0 30px rgba(80,40,160,0.05);
+      border-radius: 10px;
+      padding: 10px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .hud-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hud-top {
+      justify-content: space-between;
+    }
+    .hud-level {
+      font-family: var(--font-eerie);
+      font-size: 0.68rem;
+      color: var(--arcane);
+      letter-spacing: 0.12em;
+      text-shadow: 0 0 8px rgba(140,80,255,0.5);
+    }
+    .hud-back { font-size: 0.70rem; padding: 3px 8px; }
+
+    /* Identity panel — YOUR FORM → CORRUPTED STATE */
+    .hud-identity {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(60,30,120,0.08);
+      border: 1px solid rgba(120,60,220,0.20);
+      border-radius: 6px;
+      padding: 8px 10px;
+      position: relative;
+    }
+    .hud-identity::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 5px;
+      background: linear-gradient(135deg, rgba(100,50,200,0.04), transparent);
+      pointer-events: none;
+    }
+    .hud-identity-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      flex: 1;
+    }
+    .hud-identity-label {
+      font-family: var(--font-eerie);
+      font-size: 0.50rem;
+      color: var(--arcane-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .hud-identity-shape {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .hud-origin-name, .hud-current-name {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+    }
+    .hud-identity-arrow {
+      font-size: 1rem;
+      color: #3d4d5e;
+      transition: color 0.3s;
+      flex-shrink: 0;
+    }
+
+    /* Stats row */
+    .hud-stats-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .hud-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .hud-stat-right { align-items: flex-end; }
+    .hud-stat-label {
+      font-family: var(--font-eerie);
+      font-size: 0.50rem;
+      color: var(--arcane-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .hud-corruption {
+      font-family: var(--font-mono);
+      font-size: 0.90rem;
+      font-weight: bold;
+    }
+    .hud-score {
+      font-family: var(--font-mono);
+      font-size: 0.90rem;
+      font-weight: bold;
+      color: var(--text);
+    }
+
+    /* ── Grid SVG ──────────────────────────────────────── */
+    .game-grid {
+      max-width: 400px;
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── D-Pad ──────────────────────────────────────────── */
+    .dpad {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      user-select: none;
+    }
+    .dpad-row {
+      display: flex;
+      gap: 4px;
+    }
+    .dpad-btn {
+      width: 52px;
+      height: 52px;
+      background: rgba(20,10,45,0.80);
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      color: var(--arcane-dim);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.10s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 8px rgba(80,40,160,0.12);
+    }
+    .dpad-btn:active, .dpad-btn:focus-visible {
+      background: rgba(60,20,120,0.70);
+      border-color: var(--arcane);
+      color: var(--arcane);
+      box-shadow: 0 0 12px rgba(120,60,255,0.40);
+      outline: none;
+    }
+    .dpad-center {
+      background: transparent;
+      border-color: transparent;
+      cursor: default;
+      color: rgba(80,50,120,0.40);
+      font-size: 0.6rem;
+      box-shadow: none;
+    }
+
+    /* ── Overlay (win/lose) ─────────────────────────────── */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(13, 17, 23, 0.88);
+      backdrop-filter: blur(4px);
+      z-index: 10;
+      border-radius: 12px;
+    }
+    .overlay-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 32px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      max-width: 300px;
+    }
+    .overlay-win .overlay-box   {
+      border-color: #6a3fff;
+      background: rgba(8,4,22,0.97);
+      box-shadow: 0 0 40px rgba(100,60,255,0.25), inset 0 0 30px rgba(80,40,200,0.08);
+    }
+    .overlay-lose .overlay-box  {
+      border-color: #3a2060;
+      background: rgba(6,4,16,0.97);
+    }
+    .overlay-death .overlay-box {
+      border-color: #880000;
+      background: rgba(12, 4, 4, 0.96);
+      box-shadow: 0 0 40px rgba(180,0,0,0.35), inset 0 0 30px rgba(100,0,0,0.15);
+    }
+
+    .overlay-icon {
+      font-size: 2.4rem;
+      line-height: 1;
+    }
+    .overlay-win .overlay-icon  { color: var(--green); }
+    .overlay-lose .overlay-icon { color: var(--red); }
+
+    .overlay-box h2 {
+      font-size: 1.1rem;
+      letter-spacing: 0.14em;
+      font-family: var(--font-eerie);
+    }
+    .eerie-h2 {
+      font-family: var(--font-eerie) !important;
+      font-size: 1.1rem;
+      letter-spacing: 0.14em;
+      color: #c8a8ff;
+      text-shadow: 0 0 14px rgba(160,80,255,0.7);
+      text-align: center;
+      line-height: 1.3;
+    }
+    .win-sub-title {
+      display: block;
+      font-size: 0.65em;
+      letter-spacing: 0.30em;
+      color: rgba(200,170,255,0.60);
+    }
+    .win-icon {
+      color: var(--arcane) !important;
+      text-shadow: 0 0 20px rgba(140,80,255,0.9);
+      animation: win-pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes win-pulse {
+      0%,100% { transform: scale(1);    opacity: 1; }
+      50%      { transform: scale(1.15); opacity: 0.8; }
+    }
+    .bound-icon {
+      color: #5a3080 !important;
+      font-size: 2rem !important;
+    }
+    .overlay-score {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+    .overlay-reason {
+      font-size: 0.85rem;
+      color: var(--red);
+      font-family: var(--font-mono);
+    }
+    .overlay-sub {
+      font-size: 0.85rem;
+      color: var(--green);
+      font-family: var(--font-mono);
+    }
+
+    /* ── Death overlay ──────────────────────────────────── */
+    .death-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .death-skull {
+      filter: drop-shadow(0 0 12px rgba(255,30,30,0.8));
+      animation: skull-pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes skull-pulse {
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(255,30,30,0.7)); transform: scale(1); }
+      50%       { filter: drop-shadow(0 0 22px rgba(255,30,30,1.0)); transform: scale(1.04); }
+    }
+    .death-title {
+      font-family: var(--font-mono);
+      font-size: 2rem !important;
+      letter-spacing: 0.25em !important;
+      color: #ff2222 !important;
+      text-shadow: 0 0 18px rgba(255,30,30,0.9), 0 0 40px rgba(200,0,0,0.5);
+      animation: death-flicker 3.5s infinite;
+    }
+    @keyframes death-flicker {
+      0%,100% { opacity: 1; }
+      92%     { opacity: 1; }
+      93%     { opacity: 0.4; }
+      94%     { opacity: 1; }
+      96%     { opacity: 0.6; }
+      97%     { opacity: 1; }
+    }
+    .death-sub {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: #883333;
+      letter-spacing: 0.08em;
+    }
+    .btn-danger {
+      background: #880000;
+      color: #ffcccc;
+      border: 1px solid #cc0000;
+      border-radius: 8px;
+      padding: 10px 24px;
+      font-family: var(--font-main);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: all 0.15s;
+    }
+    .btn-danger:hover { background: #aa0000; border-color: #ff2222; color: #fff; }
+
+    /* ── Buttons ────────────────────────────────────────── */
+    .btn-primary {
+      background: linear-gradient(135deg, #3a1a80, #5a2aaa);
+      color: #e0d0ff;
+      border: 1px solid #6a3fff;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-family: var(--font-eerie);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.10em;
+      text-shadow: 0 0 8px rgba(180,120,255,0.6);
+      box-shadow: 0 0 16px rgba(100,50,220,0.30);
+      transition: all 0.15s;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #4a2a90, #7a3acc);
+      box-shadow: 0 0 24px rgba(120,60,255,0.50);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      padding: 8px 18px;
+      font-family: var(--font-eerie);
+      font-size: 0.60rem;
+      letter-spacing: 0.10em;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--arcane-dim); color: var(--arcane); }
+
+    /* ── Narrative intro screen ────────────────────────── */
+    .narrative-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      width: 100%;
+    }
+    .narrative-wrap {
+      width: min(720px, 96vw);
+      max-width: none;
+      text-align: center;
+      padding: 32px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .narr-heading {
+      font-family: var(--font-eerie);
+      font-size: 0.85rem;
+      letter-spacing: 0.38em;
+      color: var(--arcane-dim);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .narr-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+    .narr-line {
+      font-family: var(--font-eerie);
+      font-size: 1.15rem;
+      font-style: italic;
+      letter-spacing: 0.04em;
+      line-height: 1.85;
+      opacity: 0;
+      animation: narr-line-in 2.2s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    @keyframes narr-line-in {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+        filter: blur(8px);
+        text-shadow: 0 0 50px rgba(200,100,255,1.0), 0 0 100px rgba(160,50,230,0.8), 0 0 180px rgba(120,30,200,0.5);
+        color: rgba(220,180,255,0.6);
+      }
+      30% {
+        opacity: 0.85;
+        transform: translateY(4px);
+        filter: blur(1px);
+        text-shadow: 0 0 24px rgba(180,80,255,0.7), 0 0 55px rgba(140,40,210,0.4);
+        color: rgba(230,210,255,0.9);
+      }
+      65% {
+        text-shadow: 0 0 12px rgba(150,60,220,0.35), 0 0 28px rgba(120,30,190,0.2);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+        text-shadow: 0 0 6px rgba(120,50,200,0.12);
+        color: rgba(218,208,248,0.88);
+      }
+    }
+    .narr-wrap-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .narr-wrap-inner.narr-exiting {
+      opacity: 0 !important;
+      transform: translateY(-16px) !important;
+    }
+    .narr-wrap-inner.narr-entering {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    .narr-wrap-inner.narr-entered {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s;
+    }
+    .narr-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      animation: narr-line-in 1.4s ease forwards;
+      margin-top: 14px;
+    }
+
+    /* ── Floating narrative text (canvas layer handled in JS) ── */
+    /* (no CSS needed — drawn directly on canvas) */
+
+    /* ── Music button ──────────────────────────────────── */
+    #music-btn {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      z-index: 50;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(22, 27, 34, 0.80);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, transform 0.15s;
+      line-height: 1;
+    }
+    #music-btn:hover { border-color: var(--cyan); transform: scale(1.08); }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 420px) {
+      .screen-header h1 { font-size: 1.8rem; }
+      .dpad-btn { width: 46px; height: 46px; }
+      .game-grid { max-width: 360px; }
+    }
+  </style>
+</head>
+<canvas id="starfield"></canvas>
+<div id="app"></div>
+<button id="music-btn" title="Toggle music">🔇</button>
+
+<script type="module" src="/src/main.js"></script>
+<script>
+// ══════════════════════════════════════════════════════════════════════════
+//  SPACE BACKGROUND  v2 — pixel-rendered planets, spiral galaxies
+// ══════════════════════════════════════════════════════════════════════════
+(function () {
+  const canvas = document.getElementById('starfield');
+  const C = canvas.getContext('2d');
+  let W, H;
+
+  function rand(a, b) { return a + Math.random() * (b - a); }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+  function h2(ix, iy) {
+    const n = Math.sin(ix * 127.1 + iy * 311.7) * 43758.5453;
+    return n - Math.floor(n);
+  }
+  function sn(x, y, sc) {
+    const ix = Math.floor(x/sc), iy = Math.floor(y/sc);
+    const fx = x/sc-ix, fy = y/sc-iy;
+    const sx = fx*fx*(3-2*fx), sy = fy*fy*(3-2*fy);
+    return lerp(lerp(h2(ix,iy),h2(ix+1,iy),sx), lerp(h2(ix,iy+1),h2(ix+1,iy+1),sx), sy);
+  }
+
+  // ── Stars ─────────────────────────────────────────────────────────────
+  const STAR_LAYERS = [
+    {n:200, speed:0.06, minR:0.2, maxR:0.65, baseA:0.30},
+    {n: 60, speed:0.18, minR:0.65, maxR:1.30, baseA:0.50},
+    {n: 18, speed:0.40, minR:1.30, maxR:2.00, baseA:0.70},
+  ];
+  let stars = [];
+  function initStars() {
+    stars = [];
+    for (const L of STAR_LAYERS) for (let i=0; i<L.n; i++)
+      stars.push({ x:rand(0,W), y:rand(0,H*0.65),
+        r:rand(L.minR,L.maxR), spd:L.speed*rand(0.85,1.15),
+        baseA:L.baseA*rand(0.6,1.4), ph:rand(0,Math.PI*2), phSpd:rand(0.004,0.018) });
+  }
+
+  // ── Shooting stars ────────────────────────────────────────────────────
+  let shooters=[], nextShoot=rand(3000,8000), lastShoot=0;
+  function spawnShooter() {
+    const ang=rand(22,52)*Math.PI/180;
+    shooters.push({ x:rand(0,W*0.8), y:rand(0,H*0.35),
+      vx:Math.cos(ang)*rand(9,16), vy:Math.sin(ang)*rand(9,16),
+      len:rand(80,220), life:1, decay:rand(0.018,0.036), w:rand(1.0,1.8) });
+  }
+
+  // ── Static scene canvas (mountains + stones) ──────────────────────────
+  let sceneCanvas = null;
+
+  function buildScene() {
+    sceneCanvas = document.createElement('canvas');
+    sceneCanvas.width = W; sceneCanvas.height = H;
+    const sc = sceneCanvas.getContext('2d');
+
+    // ── Sky gradient (solid base — mountains silhouette against this) ──
+    const skyFill = sc.createLinearGradient(0,0, 0,H*0.72);
+    skyFill.addColorStop(0,    '#07112e');  // midnight navy
+    skyFill.addColorStop(0.30, '#0b0d28');  // deep indigo
+    skyFill.addColorStop(0.60, '#08091a');  // dark horizon
+    skyFill.addColorStop(1,    '#030408');  // near-black at ground
+    sc.fillStyle = skyFill;
+    sc.fillRect(0, 0, W, H*0.72);
+
+    // ── Moon glow (upper-left — more visible) ──
+    const moonX = W*0.18, moonY = H*0.12;
+    const moonGlow = sc.createRadialGradient(moonX,moonY,0, moonX,moonY,H*0.32);
+    moonGlow.addColorStop(0,   'rgba(255,248,210,0.22)');
+    moonGlow.addColorStop(0.25,'rgba(220,205,255,0.12)');
+    moonGlow.addColorStop(0.55,'rgba(140,100,220,0.06)');
+    moonGlow.addColorStop(1,   'rgba(80,60,120,0)');
+    sc.fillStyle=moonGlow;
+    sc.fillRect(0,0,W,H*0.72);
+
+    // Moon disc
+    const moonDisc = sc.createRadialGradient(moonX,moonY,0, moonX,moonY,28);
+    moonDisc.addColorStop(0,  'rgba(255,250,220,0.95)');
+    moonDisc.addColorStop(0.5,'rgba(240,235,200,0.60)');
+    moonDisc.addColorStop(1,  'rgba(200,190,160,0)');
+    sc.fillStyle=moonDisc;
+    sc.beginPath(); sc.arc(moonX,moonY,28,0,Math.PI*2); sc.fill();
+
+    // ── Mountain ranges (3 depth layers) ──
+    const mtLayers = [
+      { seed:1, peaks:9,  base:0.48, height:0.18, col:'rgba(5,3,14,0.96)'   }, // far — pure dark
+      { seed:2, peaks:7,  base:0.52, height:0.22, col:'rgba(4,2,10,0.98)'   }, // mid
+      { seed:3, peaks:6,  base:0.58, height:0.20, col:'rgba(2,1,6,1.00)'    }, // near — blackest
+    ];
+
+    for (const L of mtLayers) {
+      sc.beginPath(); sc.moveTo(0, H*L.base);
+      // Generate mountain silhouette points
+      const pts = [];
+      for (let i=0; i<=200; i++) {
+        const x = i/200;
+        const n1 = sn(x*8 + L.seed*3.7, L.seed, 1)*0.55;
+        const n2 = sn(x*20 + L.seed*7.1, L.seed+1, 1)*0.30;
+        const n3 = sn(x*50 + L.seed*12, L.seed+2, 1)*0.15;
+        const h  = (n1+n2+n3) * L.height;
+        pts.push({ x:x*W, y:H*(L.base - h) });
+      }
+      for (const p of pts) sc.lineTo(p.x, p.y);
+      sc.lineTo(W, H); sc.lineTo(0, H); sc.closePath();
+      sc.fillStyle = L.col; sc.fill();
+    }
+
+    // ── Ground plane ──
+    const groundY = H*0.72;
+    const gGrad = sc.createLinearGradient(0,groundY, 0,H);
+    gGrad.addColorStop(0,  'rgba(5,3,14,0.98)');
+    gGrad.addColorStop(0.3,'rgba(3,2,10,1.0)');
+    gGrad.addColorStop(1,  '#020108');
+    sc.fillStyle=gGrad;
+    sc.fillRect(0,groundY,W,H-groundY);
+
+    // ── Standing stones ──
+    drawStones(sc, W, H);
+  }
+
+  // Pre-computed stone shapes (set once, deterministic)
+  let stoneShapes = null;
+
+  function buildStoneShapes(W, H) {
+    // Each stone defined as polygon points
+    const groundY = H*0.72;
+    const shapes = [];
+
+    // Seed-based jitter (deterministic)
+    let _seed = 42;
+    function jrand() {
+      _seed = (_seed * 1664525 + 1013904223) & 0xffffffff;
+      return ((_seed >>> 0) / 0xffffffff);
+    }
+    function jitter(scale) { return (jrand()-0.5)*scale; }
+
+    function stoneRect(cx, baseY, w, h, tiltRad, roughness) {
+      // Returns a polygon of ~8 points (slightly irregular rect)
+      const hw = w/2;
+      const dx = Math.sin(tiltRad)*h;
+      const midSegs = 2; // points per side for roughness
+      const pts = [];
+
+      // Bottom-left to bottom-right
+      pts.push({x: cx-hw+jitter(roughness), y: baseY+jitter(roughness*0.3)});
+      pts.push({x: cx+hw+jitter(roughness), y: baseY+jitter(roughness*0.3)});
+      // Right side upward
+      for (let i=midSegs; i>=1; i--) {
+        const t=i/midSegs;
+        pts.push({x: cx+hw-dx*(1-t)+jitter(roughness*0.5), y: baseY-h*t+jitter(roughness*0.4)});
+      }
+      // Top-right to top-left
+      pts.push({x: cx+hw-dx+jitter(roughness), y: baseY-h+jitter(roughness)});
+      pts.push({x: cx-hw-dx+jitter(roughness), y: baseY-h+jitter(roughness*0.8)});
+      // Left side downward
+      for (let i=1; i<=midSegs; i++) {
+        const t=i/midSegs;
+        pts.push({x: cx-hw-dx*(1-t)+jitter(roughness*0.5), y: baseY-h*(1-t)+jitter(roughness*0.4)});
+      }
+      return pts;
+    }
+
+    // ── Define Stonehenge arrangement ──
+    // Scale everything to current W/H
+    const unit = Math.min(W, H) * 0.01;
+
+    // Outer ring (background, smaller) — 8 stones across
+    const outerY  = groundY - unit*0.5;
+    const outerStones = [
+      {cx:0.08, w:2.0, h:12},
+      {cx:0.18, w:2.2, h:14, pair:true},
+      {cx:0.28, w:1.8, h:11},
+      {cx:0.38, w:2.0, h:13, pair:true},
+      {cx:0.62, w:2.0, h:13, pair:true},
+      {cx:0.72, w:1.8, h:11},
+      {cx:0.82, w:2.2, h:14, pair:true},
+      {cx:0.92, w:2.0, h:12},
+    ];
+    for (const s of outerStones) {
+      const cx = W*s.cx, w=s.w*unit, h=s.h*unit;
+      const tilt=(jrand()-0.5)*0.06;
+      shapes.push({pts:stoneRect(cx,outerY,w,h,tilt,unit*0.15), layer:'outer'});
+      if (s.pair) {
+        // Lintel on top
+        const lw = w*2.4, lh = h*0.28;
+        shapes.push({pts:stoneRect(cx,outerY-h+lh*0.2,lw,lh,0,unit*0.10), layer:'outer-lintel'});
+      }
+    }
+
+    // Inner trilithons (foreground, taller)
+    const innerDefs = [
+      {cx:0.25, h:24, spread:4.0},
+      {cx:0.38, h:30, spread:4.5},  // tallest, centre-left
+      {cx:0.50, h:34, spread:5.0},  // tallest, centre
+      {cx:0.62, h:30, spread:4.5},
+      {cx:0.75, h:24, spread:4.0},
+    ];
+    for (const s of innerDefs) {
+      const cx=W*s.cx, h=s.h*unit, w=2.8*unit, spread=s.spread*unit;
+      const innerY = groundY + unit*0.8;
+
+      // Left upright
+      const tiltL=(jrand()-0.5)*0.05;
+      shapes.push({pts:stoneRect(cx-spread,innerY,w,h,tiltL,unit*0.25), layer:'inner'});
+      // Right upright
+      const tiltR=(jrand()-0.5)*0.05;
+      shapes.push({pts:stoneRect(cx+spread,innerY,w,h,tiltR,unit*0.25), layer:'inner'});
+      // Lintel
+      const lw=spread*2+w*2, lh=h*0.22;
+      shapes.push({pts:stoneRect(cx,innerY-h,lw,lh,0,unit*0.15), layer:'inner-lintel'});
+    }
+
+    // Single leaning stones (scattered)
+    const singles = [
+      {cx:0.05, h:16, tilt: 0.12},
+      {cx:0.12, h:12, tilt:-0.08},
+      {cx:0.88, h:14, tilt: 0.10},
+      {cx:0.95, h:10, tilt:-0.14},
+      {cx:0.44, h:8,  tilt: 0.18}, // fallen/leaning
+    ];
+    for (const s of singles) {
+      const cx=W*s.cx, h=s.h*unit, w=2.2*unit;
+      shapes.push({pts:stoneRect(cx,groundY+unit,w,h,s.tilt,unit*0.20), layer:'outer'});
+    }
+
+    return shapes;
+  }
+
+  function drawStones(sc, W, H) {
+    if (!stoneShapes) stoneShapes = buildStoneShapes(W, H);
+
+    const moonX = W*0.18;
+
+    for (const shape of stoneShapes) {
+      const pts = shape.pts;
+      if (!pts || pts.length < 3) continue;
+
+      sc.beginPath();
+      sc.moveTo(pts[0].x, pts[0].y);
+      for (let i=1; i<pts.length; i++) sc.lineTo(pts[i].x, pts[i].y);
+      sc.closePath();
+
+      // Fill: dark stone gradient, lighter on moon-facing side
+      const minX = Math.min(...pts.map(p=>p.x));
+      const maxX = Math.max(...pts.map(p=>p.x));
+      const stoneGrad = sc.createLinearGradient(minX,0, maxX,0);
+
+      if (shape.layer === 'inner' || shape.layer === 'inner-lintel') {
+        stoneGrad.addColorStop(0,  '#141020'); // moonlit left edge
+        stoneGrad.addColorStop(0.2,'#0c0a18');
+        stoneGrad.addColorStop(1,  '#050410');
+      } else {
+        stoneGrad.addColorStop(0,  '#0e0c1c');
+        stoneGrad.addColorStop(0.3,'#070610');
+        stoneGrad.addColorStop(1,  '#040309');
+      }
+      sc.fillStyle = stoneGrad;
+      sc.fill();
+
+      // Moonlit left edge highlight
+      const isLeftFacing = minX < W*0.5;
+      if (shape.layer === 'inner' || shape.layer === 'outer') {
+        sc.beginPath();
+        sc.moveTo(pts[0].x, pts[0].y);
+        for (let i=1; i<pts.length; i++) sc.lineTo(pts[i].x, pts[i].y);
+        sc.closePath();
+        sc.strokeStyle = shape.layer === 'inner' ? 'rgba(200,185,255,0.30)' : 'rgba(180,165,220,0.18)';
+        sc.lineWidth = shape.layer === 'inner' ? 1.5 : 1;
+        sc.stroke();
+      }
+
+      // Subtle inner crack/texture on large stones
+      if (shape.layer === 'inner') {
+        const cx2 = (minX+maxX)/2;
+        const minY = Math.min(...pts.map(p=>p.y));
+        const maxY = Math.max(...pts.map(p=>p.y));
+        sc.beginPath();
+        sc.moveTo(cx2+rand(-3,3), maxY);
+        sc.bezierCurveTo(cx2+rand(-4,4),lerp(maxY,minY,0.3),
+                         cx2+rand(-4,4),lerp(maxY,minY,0.6),
+                         cx2+rand(-5,5),lerp(maxY,minY,0.85));
+        sc.strokeStyle='rgba(30,20,50,0.6)';
+        sc.lineWidth=0.7;
+        sc.stroke();
+      }
+    }
+  }
+
+  // ── Mist layers (animated) ────────────────────────────────────────────
+  const MIST = [
+    // Background mist between mountains and stones
+    {ox:0.50, oy:0.64, rx:0.55, ry:0.055, maxA:0.11, speed:0.000014, phase:0.0},
+    {ox:0.30, oy:0.66, rx:0.42, ry:0.050, maxA:0.09, speed:-0.000011,phase:1.4},
+    {ox:0.70, oy:0.68, rx:0.38, ry:0.045, maxA:0.08, speed:0.000016, phase:2.8},
+    // Ground-level mist at stone bases (denser, lower)
+    {ox:0.50, oy:0.73, rx:0.70, ry:0.065, maxA:0.20, speed:0.000009, phase:0.6},
+    {ox:0.35, oy:0.76, rx:0.60, ry:0.055, maxA:0.18, speed:-0.000013,phase:1.9},
+    {ox:0.65, oy:0.75, rx:0.55, ry:0.050, maxA:0.16, speed:0.000010, phase:3.2},
+    // Foreground wisps at bottom
+    {ox:0.20, oy:0.82, rx:0.30, ry:0.040, maxA:0.25, speed:-0.000007,phase:0.3},
+    {ox:0.80, oy:0.83, rx:0.28, ry:0.038, maxA:0.22, speed:0.000008, phase:2.1},
+    {ox:0.50, oy:0.85, rx:0.45, ry:0.035, maxA:0.28, speed:-0.000010,phase:1.0},
+  ];
+
+  function drawMist(now) {
+    for (const m of MIST) {
+      // Drift x slowly
+      const xDrift = Math.sin(now * m.speed + m.phase) * 0.06;
+      const cx = (m.ox + xDrift) * W;
+      const cy = m.oy * H;
+      const rx = m.rx * W;
+      const ry = m.ry * H;
+
+      // Alpha pulses slowly — in AND out independently
+      const alpha = m.maxA * (0.45 + 0.55 * Math.sin(now * 0.00025 + m.phase));
+
+      C.save();
+      C.translate(cx, cy);
+      C.scale(rx/100, ry/100);
+
+      const g = C.createRadialGradient(0,0,0, 0,0,100);
+      g.addColorStop(0,   `rgba(200,195,240,${alpha})`);
+      g.addColorStop(0.5, `rgba(180,175,220,${alpha*0.5})`);
+      g.addColorStop(1,   'rgba(150,145,200,0)');
+      C.fillStyle = g;
+      C.beginPath(); C.arc(0,0,100,0,Math.PI*2); C.fill();
+      C.restore();
+    }
+  }
+
+  // ── Nebulae (dim, purple/red only — fits the mood) ────────────────────
+  let nebCanvas = null;
+  function buildNebulae() {
+    nebCanvas = document.createElement('canvas');
+    nebCanvas.width=W; nebCanvas.height=H;
+    const nc = nebCanvas.getContext('2d');
+    const defs = [
+      {x:0.12,y:0.18,rx:0.24,ry:0.16, r:100,g:20, b:160,a:0.045},
+      {x:0.78,y:0.22,rx:0.20,ry:0.15, r:160,g:20, b:80, a:0.038},
+      {x:0.50,y:0.30,rx:0.32,ry:0.12, r:60, g:30, b:140,a:0.030},
+    ];
+    for (const n of defs) {
+      nc.save();
+      nc.translate(n.x*W, n.y*H);
+      nc.scale(n.rx*W/100, n.ry*H/100);
+      const g=nc.createRadialGradient(0,0,0, 0,0,100);
+      g.addColorStop(0,   `rgba(${n.r},${n.g},${n.b},${n.a})`);
+      g.addColorStop(0.6, `rgba(${n.r},${n.g},${n.b},${n.a*0.3})`);
+      g.addColorStop(1,   'rgba(0,0,0,0)');
+      nc.fillStyle=g;
+      nc.beginPath(); nc.arc(0,0,100,0,Math.PI*2); nc.fill();
+      nc.restore();
+    }
+  }
+
+  // ── Floating narrative text ───────────────────────────────────────────
+  const NARR_PHRASES = [
+    'Before, there were three forms.',
+    'The Circle, perfect and unbroken.',
+    'The Square, balanced and certain.',
+    'The Triangle, sharp and resolute.',
+    'The world forgot what the three forms were.',
+    'The sacred forms went unhonored.',
+    'The disrespect built and built.',
+    'Even the sleeping forms could feel it.',
+    'The Hexagon, with its imitation of order.',
+    'The Star, with its arrogant geometry.',
+    'The Moon, hollow where roundness should be.',
+    'Each one a hunter.',
+    'The universe had drifted from grammar into noise.',
+    'They are themselves but barely.',
+    'Walk the line between strength and dissolution.',
+    'They remember being three.',
+    'The grammar of reality is spoken again.',
+    'The world remembers.',
+    'Every stone, every star was built from these.',
+    'To restore the universe, they must outlast the hunters.',
+  ];
+
+  const MAX_NARR = 2;
+  let narrTexts = [];
+  let narrNextSpawn = rand(4000, 9000);
+  let narrLastSpawn = 0;
+
+  function spawnNarrText(now) {
+    if (narrTexts.length >= MAX_NARR) return;
+    const phrase = NARR_PHRASES[Math.floor(rand(0, NARR_PHRASES.length))];
+    narrTexts.push({
+      text: phrase,
+      x: rand(0.06, 0.70) * W,
+      y: rand(0.08, 0.55) * H,
+      birth: now,
+      fadeIn: 3000,
+      hold: rand(6000, 11000),
+      fadeOut: 3500,
+    });
+  }
+
+  function drawNarrTexts(now) {
+    C.save();
+    C.font = `400 ${Math.max(11, W * 0.013)}px 'Cinzel Decorative', serif`;
+    C.textAlign = 'left';
+    for (let i = narrTexts.length - 1; i >= 0; i--) {
+      const n = narrTexts[i];
+      const age = now - n.birth;
+      const total = n.fadeIn + n.hold + n.fadeOut;
+      if (age > total) { narrTexts.splice(i, 1); continue; }
+
+      let alpha;
+      if (age < n.fadeIn)                    alpha = (age / n.fadeIn) * 0.065;
+      else if (age < n.fadeIn + n.hold)      alpha = 0.065;
+      else                                   alpha = (1 - (age - n.fadeIn - n.hold) / n.fadeOut) * 0.065;
+
+      C.fillStyle = `rgba(200,190,240,${alpha})`;
+      C.fillText(n.text, n.x, n.y);
+    }
+    C.restore();
+  }
+
+  // ── Init & main loop ──────────────────────────────────────────────────
+  function init() {
+    W=canvas.width =window.innerWidth;
+    H=canvas.height=window.innerHeight;
+    stoneShapes=null; // rebuild on resize
+    initStars();
+    buildNebulae();
+    buildScene();
+  }
+
+  function draw(now) {
+    C.clearRect(0,0,W,H);
+
+    // Stars (upper half only)
+    for (const s of stars) {
+      s.y+=s.spd; if(s.y>H*0.65+s.r){s.y=-s.r;s.x=rand(0,W);}
+      s.ph+=s.phSpd;
+      const a=Math.max(0.03,s.baseA*(0.70+0.30*Math.sin(s.ph)));
+      C.beginPath(); C.arc(s.x,s.y,s.r,0,Math.PI*2);
+      C.fillStyle=`rgba(220,215,255,${a})`; C.fill();
+    }
+
+    // Nebulae (faint)
+    C.globalAlpha=0.75+0.25*Math.sin(now*0.00022);
+    C.drawImage(nebCanvas,0,0);
+    C.globalAlpha=1;
+
+    // Static scene (mountains + stones)
+    C.drawImage(sceneCanvas,0,0);
+
+    // Mist (animated, between and around stones)
+    drawMist(now);
+
+    // Shooting stars (rare)
+    if(now-lastShoot>nextShoot){spawnShooter();lastShoot=now;nextShoot=rand(4000,10000);}
+    for(let i=shooters.length-1;i>=0;i--){
+      const s=shooters[i];
+      s.x+=s.vx;s.y+=s.vy;s.life-=s.decay;
+      if(s.life<=0){shooters.splice(i,1);continue;}
+      const spd=Math.sqrt(s.vx*s.vx+s.vy*s.vy);
+      const tx=s.x-s.vx*(s.len/spd)*0.55;
+      const ty=s.y-s.vy*(s.len/spd)*0.55;
+      const gr=C.createLinearGradient(tx,ty,s.x,s.y);
+      gr.addColorStop(0,'rgba(255,255,255,0)');
+      gr.addColorStop(0.65,`rgba(210,200,255,${s.life*0.5})`);
+      gr.addColorStop(1,`rgba(255,255,255,${s.life})`);
+      C.beginPath();C.moveTo(tx,ty);C.lineTo(s.x,s.y);
+      C.strokeStyle=gr;C.lineWidth=s.w*s.life;C.stroke();
+      C.beginPath();C.arc(s.x,s.y,s.w*s.life*1.4,0,Math.PI*2);
+      C.fillStyle=`rgba(240,235,255,${s.life*0.85})`;C.fill();
+    }
+
+    // Floating narrative text
+    if (now - narrLastSpawn > narrNextSpawn) {
+      spawnNarrText(now); narrLastSpawn = now; narrNextSpawn = rand(6000, 14000);
+    }
+    drawNarrTexts(now);
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', init);
+  init();
+  requestAnimationFrame(draw);
+})();
+
+
+// ══════════════════════════════════════════════════════════════════════════
+//  AMBIENT MUSIC  — 5 procedural eerie tracks, auto-cycling
+// ══════════════════════════════════════════════════════════════════════════
+(function () {
+  const btn = document.getElementById('music-btn');
+  let audioCtx  = null;
+  let masterGain = null;
+  let playing   = false;
+  let trackNodes = [];
+  let trackIdx  = Math.floor(Math.random() * 5);
+  let cycleTimer = null;
+
+  const TRACK_NAMES = [
+    'The Hollow', 'The Waking Dread', 'Stones of Memory',
+    'Before the Void', 'The Rite Begins'
+  ];
+  const TRACK_DURATION = 160000; // ms before auto-cycling
+
+  function r(a,b){ return a + Math.random()*(b-a); }
+
+  function makeReverb(ctx) {
+    const len = ctx.sampleRate * 4.5;
+    const buf = ctx.createBuffer(2, len, ctx.sampleRate);
+    for (let ch=0; ch<2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i=0; i<len; i++) d[i] = (Math.random()*2-1) * Math.pow(1 - i/len, 2.3);
+    }
+    const conv = ctx.createConvolver();
+    conv.buffer = buf;
+    return conv;
+  }
+
+  // ─ Track 1: The Hollow ──────────────────────────────────────────────────
+  // Deep sub drones + sparse glass chimes through cavernous reverb
+  function buildHollow(ctx, rev, dry) {
+    const nodes = [];
+    [[40,0.18],[55,0.10],[80,0.06]].forEach(([freq,gain]) => {
+      const osc = ctx.createOscillator(); osc.type='sine'; osc.frequency.value=freq;
+      const lfo = ctx.createOscillator(); lfo.frequency.value = r(0.02,0.05);
+      const lG  = ctx.createGain();       lG.gain.value = 0.6;
+      lfo.connect(lG); lG.connect(osc.frequency); lfo.start();
+      const g = ctx.createGain(); g.gain.value=gain;
+      osc.connect(g); g.connect(rev); g.connect(dry);
+      osc.start(); nodes.push(osc,lfo);
+    });
+    const GLASS = [261.6,329.6,392,440,523.3,659.3,783.9];
+    let ct;
+    function chime(){
+      const f = GLASS[Math.floor(Math.random()*GLASS.length)];
+      const when = ctx.currentTime;
+      const o = ctx.createOscillator(); o.type='sine'; o.frequency.value=f;
+      const e = ctx.createGain();
+      e.gain.setValueAtTime(0,when);
+      e.gain.linearRampToValueAtTime(0.045,when+0.06);
+      e.gain.exponentialRampToValueAtTime(0.0001,when+4.5);
+      o.connect(e); e.connect(rev);
+      o.start(when); o.stop(when+4.6);
+      ct = setTimeout(chime, r(3500,9000));
+    }
+    ct = setTimeout(chime, r(1500,3000));
+    nodes.push({ stop() { clearTimeout(ct); } });
+    return nodes;
+  }
+
+  // ─ Track 2: The Waking Dread ────────────────────────────────────────────
+  // Chromatic cluster + slow tremolo + filtered noise sweep — pure tension
+  function buildDread(ctx, rev, dry) {
+    const nodes = [];
+    [[196,0.055],[208,0.048],[220,0.048],[246.9,0.025]].forEach(([freq,gain]) => {
+      const osc = ctx.createOscillator(); osc.type='triangle'; osc.frequency.value=freq;
+      const lfo = ctx.createOscillator(); lfo.frequency.value=0.04;
+      const lG  = ctx.createGain(); lG.gain.value=gain*0.7;
+      const bG  = ctx.createGain(); bG.gain.value=gain;
+      lfo.connect(lG); lG.connect(bG.gain); lfo.start();
+      osc.connect(bG); bG.connect(rev); bG.connect(dry);
+      osc.start(); nodes.push(osc,lfo);
+    });
+    // Noise band sweep
+    const nBuf = ctx.createBuffer(1, ctx.sampleRate*5, ctx.sampleRate);
+    const nd   = nBuf.getChannelData(0);
+    for (let i=0;i<nd.length;i++) nd[i]=Math.random()*2-1;
+    const nSrc = ctx.createBufferSource(); nSrc.buffer=nBuf; nSrc.loop=true;
+    const filt = ctx.createBiquadFilter(); filt.type='bandpass'; filt.frequency.value=600; filt.Q.value=4;
+    const fLFO = ctx.createOscillator(); fLFO.frequency.value=0.04;
+    const fLG  = ctx.createGain(); fLG.gain.value=700;
+    fLFO.connect(fLG); fLG.connect(filt.frequency); fLFO.start();
+    const nG   = ctx.createGain(); nG.gain.value=0.028;
+    nSrc.connect(filt); filt.connect(nG); nG.connect(rev); nG.connect(dry);
+    nSrc.start(); nodes.push(nSrc,fLFO);
+    return nodes;
+  }
+
+  // ─ Track 3: Stones of Memory ────────────────────────────────────────────
+  // Slow Dorian melody + pedal tone + long echoes — ancient, meditative
+  function buildAncient(ctx, rev, dry) {
+    const nodes = [];
+    const pedal = ctx.createOscillator(); pedal.type='sine'; pedal.frequency.value=82.4; // E2
+    const pG = ctx.createGain(); pG.gain.value=0.10;
+    pedal.connect(pG); pG.connect(rev); pG.connect(dry); pedal.start(); nodes.push(pedal);
+
+    const DORIAN = [110,130.8,146.8,164.8,196,220,261.6,293.7,329.6,392,440];
+    let mi=0, mt;
+    function note(){
+      const f = DORIAN[mi%DORIAN.length]; mi++;
+      const when=ctx.currentTime;
+      const o=ctx.createOscillator(); o.type='triangle'; o.frequency.value=f;
+      const e=ctx.createGain();
+      e.gain.setValueAtTime(0,when);
+      e.gain.linearRampToValueAtTime(0.065,when+0.4);
+      e.gain.exponentialRampToValueAtTime(0.0001,when+5.5);
+      o.connect(e); e.connect(rev); o.start(when); o.stop(when+5.6);
+      mt = setTimeout(note, r(1200,2600));
+    }
+    mt = setTimeout(note, r(800,2000));
+    nodes.push({ stop(){ clearTimeout(mt); } });
+    return nodes;
+  }
+
+  // ─ Track 4: Before the Void ─────────────────────────────────────────────
+  // Sub-bass + ultra-high shimmer + desolate tritone — the silence between stars
+  function buildVoid(ctx, rev, dry) {
+    const nodes = [];
+    [[36,0.15],[72,0.07],[144,0.03]].forEach(([f,g]) => {
+      const o=ctx.createOscillator(); o.type='sine'; o.frequency.value=f;
+      const gn=ctx.createGain(); gn.gain.value=g;
+      o.connect(gn); gn.connect(dry); gn.connect(rev); o.start(); nodes.push(o);
+    });
+    // High glass shimmer
+    const hi = ctx.createOscillator(); hi.type='sine'; hi.frequency.value=1760;
+    const hLFO=ctx.createOscillator(); hLFO.frequency.value=0.05;
+    const hLG =ctx.createGain(); hLG.gain.value=0.014;
+    const hG  =ctx.createGain(); hG.gain.value=0.018;
+    hLFO.connect(hLG); hLG.connect(hG.gain); hLFO.start();
+    hi.connect(hG); hG.connect(rev); hi.start(); nodes.push(hi,hLFO);
+    // Dissonant tritone mid
+    const tri=ctx.createOscillator(); tri.type='sine'; tri.frequency.value=153.4; // tritone above 108Hz
+    const tG=ctx.createGain(); tG.gain.value=0.03;
+    tri.connect(tG); tG.connect(rev); tri.start(); nodes.push(tri);
+    return nodes;
+  }
+
+  // ─ Track 5: The Rite Begins ─────────────────────────────────────────────
+  // Rhythmic pulse + distorted drone pair + slow ascending phrase
+  function buildRitual(ctx, rev, dry) {
+    const nodes = [];
+    // Soft distortion waveshaper
+    const ws=ctx.createWaveShaper();
+    const crv=new Float32Array(256);
+    for(let i=0;i<256;i++){const x=i*2/256-1; crv[i]=Math.tanh(x*1.8);}
+    ws.curve=crv;
+
+    const d1=ctx.createOscillator(); d1.type='sawtooth'; d1.frequency.value=110;
+    const pG=ctx.createGain(); pG.gain.value=0.08;
+    const pLFO=ctx.createOscillator(); pLFO.type='sine'; pLFO.frequency.value=0.65;
+    const pLG =ctx.createGain(); pLG.gain.value=0.065;
+    pLFO.connect(pLG); pLG.connect(pG.gain); pLFO.start();
+    d1.connect(ws); ws.connect(pG); pG.connect(rev); pG.connect(dry);
+    d1.start(); nodes.push(d1,pLFO);
+
+    const d2=ctx.createOscillator(); d2.type='triangle'; d2.frequency.value=164.8; // E3
+    const d2G=ctx.createGain(); d2G.gain.value=0.04;
+    d2.connect(d2G); d2G.connect(rev); d2.start(); nodes.push(d2);
+
+    // Ascending chromatic phrase
+    const RISE=[164.8,174.6,185,196,207.7,220,233.1,246.9,261.6];
+    let ri=0, rt;
+    function riseNote(){
+      const f=RISE[ri%RISE.length]; ri++;
+      const when=ctx.currentTime;
+      const o=ctx.createOscillator(); o.type='sine'; o.frequency.value=f;
+      const e=ctx.createGain();
+      e.gain.setValueAtTime(0,when);
+      e.gain.linearRampToValueAtTime(0.032,when+0.5);
+      e.gain.exponentialRampToValueAtTime(0.0001,when+2.8);
+      o.connect(e); e.connect(rev); o.start(when); o.stop(when+2.9);
+      const gap = ri%RISE.length===0 ? r(3000,5000) : r(700,1100);
+      rt=setTimeout(riseNote,gap);
+    }
+    rt=setTimeout(riseNote,r(1000,2500));
+    nodes.push({ stop(){ clearTimeout(rt); } });
+    return nodes;
+  }
+
+  // ── Control ─────────────────────────────────────────────────────────────
+  const BUILDERS = [buildHollow,buildDread,buildAncient,buildVoid,buildRitual];
+
+  function stopNodes(arr) {
+    arr.forEach(n => {
+      if (!n) return;
+      if (typeof n.stop === 'function') try { n.stop(); } catch(e){}
+      if (typeof n.disconnect === 'function') try { n.disconnect(); } catch(e){}
+    });
+  }
+
+  function showName(name) {
+    const el = document.createElement('div');
+    el.style.cssText = 'position:fixed;bottom:72px;right:16px;font-size:0.72rem;color:#9060ff;opacity:0;transition:opacity 0.5s;pointer-events:none;font-family:var(--font-eerie);letter-spacing:0.1em;text-align:right;text-shadow:0 0 8px rgba(140,60,220,0.6);';
+    el.textContent = name;
+    document.body.appendChild(el);
+    requestAnimationFrame(() => el.style.opacity='1');
+    setTimeout(() => { el.style.opacity='0'; setTimeout(()=>el.remove(), 600); }, 3500);
+  }
+
+  function launchTrack(idx) {
+    stopNodes(trackNodes); trackNodes=[];
+    if (!audioCtx || !masterGain) return;
+    const rev  = makeReverb(audioCtx);
+    const revG = audioCtx.createGain(); revG.gain.value=0.50;
+    rev.connect(revG); revG.connect(masterGain);
+    const dry  = audioCtx.createGain(); dry.gain.value=0.50;
+    dry.connect(masterGain);
+    const newNodes = BUILDERS[idx](audioCtx, rev, dry);
+    trackNodes = [rev, revG, dry, ...newNodes];
+
+    clearTimeout(cycleTimer);
+    cycleTimer = setTimeout(() => {
+      if (!playing) return;
+      // Fade out → crossfade into next
+      masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
+      masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 3.5);
+      setTimeout(() => {
+        if (!playing) return;
+        trackIdx = (trackIdx+1) % 5;
+        masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+        masterGain.gain.linearRampToValueAtTime(0.52, audioCtx.currentTime + 3);
+        launchTrack(trackIdx);
+        showName(TRACK_NAMES[trackIdx]);
+      }, 4000);
+    }, TRACK_DURATION);
+  }
+
+  function startMusic() {
+    audioCtx    = new (window.AudioContext || window.webkitAudioContext)();
+    masterGain  = audioCtx.createGain();
+    masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    masterGain.gain.linearRampToValueAtTime(0.52, audioCtx.currentTime + 3);
+    masterGain.connect(audioCtx.destination);
+    launchTrack(trackIdx);
+    playing = true;
+    btn.textContent = '🔊';
+    showName(TRACK_NAMES[trackIdx]);
+  }
+
+  function stopMusic() {
+    clearTimeout(cycleTimer);
+    if (audioCtx && masterGain) {
+      masterGain.gain.setValueAtTime(masterGain.gain.value, audioCtx.currentTime);
+      masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
+      setTimeout(() => {
+        stopNodes(trackNodes); trackNodes=[];
+        if (audioCtx) { audioCtx.close(); audioCtx=null; }
+        masterGain=null;
+      }, 1700);
+    }
+    playing=false;
+    btn.textContent='🔇';
+  }
+
+  btn.addEventListener('click', () => { if (playing) stopMusic(); else startMusic(); });
+})();
+</script>
+</body>
+</html>

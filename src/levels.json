@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "name": "The Circle Stirs",
+    "playerElement": "circle",
+    "playerStart": [2, 2],
+    "winScore": 40,
+    "grid": [
+      ["moon","circle","circle","moon","moon"],
+      ["moon","circle","moon",  "moon","moon"],
+      ["moon","circle","circle","moon","moon"],
+      ["moon","moon",  "moon",  "moon","moon"],
+      ["moon","moon",  "moon",  "moon","moon"]
+    ]
+  },
+  {
+    "id": 2,
+    "name": "The Square Stirs",
+    "playerElement": "square",
+    "playerStart": [2, 2],
+    "winScore": 40,
+    "grid": [
+      ["square","square","square","moon","moon"],
+      ["moon",  "moon",  "square","moon","moon"],
+      ["moon",  "moon",  "square","moon","moon"],
+      ["moon",  "moon",  "moon",  "moon","moon"],
+      ["moon",  "moon",  "moon",  "moon","moon"]
+    ]
+  },
+  {
+    "id": 3,
+    "name": "The Triangle Stirs",
+    "playerElement": "triangle",
+    "playerStart": [2, 2],
+    "winScore": 40,
+    "grid": [
+      ["star","star","star",    "triangle","triangle"],
+      ["star","star","star",    "triangle","star"    ],
+      ["star","star","triangle","triangle","star"    ],
+      ["star","star","star",    "star",    "star"    ],
+      ["star","star","star",    "star",    "star"    ]
+    ]
+  },
+  {
+    "id": 4,
+    "name": "The Moon Descends",
+    "playerElement": "circle",
+    "playerStart": [2, 2],
+    "winScore": 50,
+    "grid": [
+      ["circle","circle","moon","moon","moon"],
+      ["circle","moon",  "moon","moon","moon"],
+      ["circle","circle","circle","moon","moon"],
+      ["moon",  "moon",  "moon", "moon","moon"],
+      ["moon",  "moon",  "moon", "moon","moon"]
+    ]
+  },
+  {
+    "id": 5,
+    "name": "The Hexagon Claims",
+    "playerElement": "square",
+    "playerStart": [2, 2],
+    "winScore": 50,
+    "grid": [
+      ["square","square","moon","moon","moon"],
+      ["square","moon",  "moon","moon","moon"],
+      ["square","square","square","moon","moon"],
+      ["moon",  "moon",  "moon", "moon","moon"],
+      ["moon",  "moon",  "moon", "moon","moon"]
+    ]
+  },
+  {
+    "id": 6,
+    "name": "The Star Arises",
+    "playerElement": "triangle",
+    "playerStart": [2, 2],
+    "winScore": 50,
+    "grid": [
+      ["star","triangle","triangle","star","star"],
+      ["star","star",    "triangle","triangle","star"],
+      ["star","star",    "triangle","triangle","star"],
+      ["star","star",    "star",    "star",    "star"],
+      ["star","star",    "star",    "star",    "star"]
+    ]
+  }
+]
