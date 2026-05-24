@@ -309,18 +309,51 @@ export function renderState(svg, state) {
 
 export function flashCell(svg, row, col, color) {
   const fxLayer = svg.querySelector('#layer-fx');
+  const cx = col * CELL_SIZE + CELL_SIZE / 2;
+  const cy = row * CELL_SIZE + CELL_SIZE / 2;
+
+  // Brief colour flash on the cell (kept short)
   const flash = svgEl('rect', {
-    x: col * CELL_SIZE + 1,
-    y: row * CELL_SIZE + 1,
-    width: CELL_SIZE - 2,
-    height: CELL_SIZE - 2,
-    fill: color,
-    'fill-opacity': '0.4',
-    rx: '4',
+    x: col * CELL_SIZE + 1, y: row * CELL_SIZE + 1,
+    width: CELL_SIZE - 2, height: CELL_SIZE - 2,
+    fill: color, 'fill-opacity': '0.35', rx: '4',
   });
   fxLayer.appendChild(flash);
-  flash.animate([{ opacity: 0.4 }, { opacity: 0 }], { duration: 200, fill: 'forwards' })
+  flash.animate([{ opacity: 0.35 }, { opacity: 0 }], { duration: 180, fill: 'forwards' })
     .onfinish = () => flash.remove();
+
+  // Expanding ripple ring — smooth, subtle
+  const ring = svgEl('circle', {
+    cx, cy, r: '4',
+    fill: 'none',
+    stroke: color,
+    'stroke-width': '2',
+    'stroke-opacity': '0.7',
+  });
+  fxLayer.appendChild(ring);
+  const maxR = CELL_SIZE * 0.62;
+  ring.animate(
+    [
+      { r: '4',         strokeOpacity: '0.7', strokeWidth: '2.5' },
+      { r: `${maxR}`,   strokeOpacity: '0',   strokeWidth: '0.5' },
+    ],
+    { duration: 440, easing: 'ease-out', fill: 'forwards' }
+  ).onfinish = () => ring.remove();
+
+  // Soft inner pulse — small filled circle that fades
+  const dot = svgEl('circle', {
+    cx, cy, r: `${CELL_SIZE * 0.18}`,
+    fill: color,
+    'fill-opacity': '0.55',
+  });
+  fxLayer.appendChild(dot);
+  dot.animate(
+    [
+      { r: `${CELL_SIZE * 0.18}`, fillOpacity: '0.55' },
+      { r: `${CELL_SIZE * 0.38}`, fillOpacity: '0' },
+    ],
+    { duration: 300, easing: 'ease-out', fill: 'forwards' }
+  ).onfinish = () => dot.remove();
 }
 
 export function showScorePopup(svg, row, col, delta) {
