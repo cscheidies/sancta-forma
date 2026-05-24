@@ -345,7 +345,7 @@ export class GameScreen {
             <span class="sf-sancta">SANCTA</span>
             <span class="sf-forma">FORMA</span>
           </div>
-          <p class="sf-tagline">Six rites of absorption</p>
+          <p class="sf-tagline">Restore the balance</p>
         </div>
       </div>
       <div class="level-grid"></div>
@@ -464,7 +464,7 @@ export class GameScreen {
           <span class="sf-sancta">SANCTA</span>
           <span class="sf-forma">FORMA</span>
         </div>
-        <p class="sf-tagline">Six rites of absorption</p>
+        <p class="sf-tagline">Restore the balance</p>
       </div>`;
     // Order: logo → grid → HUD (scoring below grid, no d-pad)
     wrapper.insertBefore(logoWrap, wrapper.firstChild);
