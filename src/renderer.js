@@ -358,17 +358,30 @@ export function highlightValidMoves(svg, validMoves, state) {
   for (const dir of validMoves) {
     const [dr, dc] = DIRS[dir];
     const nr = pr + dr, nc = pc + dc;
+    // Invisible full-cell tap target (touch-friendly hit area)
+    const tapTarget = svgEl('rect', {
+      x: nc * CELL_SIZE,
+      y: nr * CELL_SIZE,
+      width: CELL_SIZE,
+      height: CELL_SIZE,
+      fill: 'transparent',
+      class: 'move-hint move-hint-tap',
+      style: 'cursor:pointer',
+    });
+    fxLayer.appendChild(tapTarget);
+    // Visible hint ring
     const hint = svgEl('rect', {
-      x: nc * CELL_SIZE + 1,
-      y: nr * CELL_SIZE + 1,
-      width: CELL_SIZE - 2,
-      height: CELL_SIZE - 2,
-      fill: 'none',
+      x: nc * CELL_SIZE + 2,
+      y: nr * CELL_SIZE + 2,
+      width: CELL_SIZE - 4,
+      height: CELL_SIZE - 4,
+      fill: 'rgba(255,255,255,0.04)',
       stroke: '#ffffff',
-      'stroke-width': '1',
-      'stroke-opacity': '0.2',
+      'stroke-width': '1.5',
+      'stroke-opacity': '0.25',
       rx: '4',
       class: 'move-hint',
+      style: 'pointer-events:none',
     });
     fxLayer.appendChild(hint);
   }

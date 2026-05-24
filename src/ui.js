@@ -143,6 +143,7 @@ export class GameScreen {
     clearLevelBg();
     this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
+    if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
 
     const passages = [
       {
@@ -251,6 +252,7 @@ export class GameScreen {
     clearLevelBg();
     this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
+    if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
 
     const screen = document.createElement('div');
     screen.className = 'screen level-select';
@@ -449,6 +451,30 @@ export class GameScreen {
     wrapper.appendChild(dpad);
     this.container.appendChild(wrapper);
 
+    // Tap-to-move: translate pointer position → grid cell → direction
+    this._tapHandler = (e) => {
+      if (this.state.status !== 'playing') return;
+      e.preventDefault();
+      const rect = this.svg.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const svgW = rect.width;
+      const svgH = rect.height;
+      // SVG viewBox is (CELL_SIZE*5) x (CELL_SIZE*5), map to logical coords
+      const lx = (clientX - rect.left) / svgW * (CELL_SIZE * 5);
+      const ly = (clientY - rect.top)  / svgH * (CELL_SIZE * 5);
+      const tappedCol = Math.floor(lx / CELL_SIZE);
+      const tappedRow = Math.floor(ly / CELL_SIZE);
+      const [pr, pc] = this.state.player.position;
+      const dr = tappedRow - pr;
+      const dc = tappedCol - pc;
+      const dirMap = { '-1,0': 'U', '1,0': 'D', '0,-1': 'L', '0,1': 'R' };
+      const dir = dirMap[`${dr},${dc}`];
+      if (dir) this._move(dir);
+    };
+    this.svg.addEventListener('pointerdown', this._tapHandler);
+    this.svg.style.touchAction = 'none'; // prevent scroll-on-drag eating taps
+
     // Keyboard
     document.addEventListener('keydown', this._keyHandler);
 
@@ -529,6 +555,7 @@ export class GameScreen {
 
   _showWin() {
     document.removeEventListener('keydown', this._keyHandler);
+    if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
     const levelId = this.levels.find(l =>
       l.playerElement === this.state.player.originalElement
     )?.id ?? this.hud.dataset.level;
@@ -561,6 +588,7 @@ export class GameScreen {
 
   _showLose(reason) {
     document.removeEventListener('keydown', this._keyHandler);
+    if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
     const id = parseInt(this.hud.dataset.level);
     const isDeath = reason === 'lose-death';
 
