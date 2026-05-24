@@ -212,7 +212,8 @@ function drawOriginalGhost(originalElement, col, row) {
 
 // ─── Public API ────────────────────────────────────────────────────────────
 
-export function createGridSVG() {
+export function createGridSVG(opts = {}) {
+  const cellFillOpacity = opts.cellFillOpacity ?? 0.22;
   const size = CELL_SIZE * 5;
   const svg = svgEl('svg', {
     viewBox: `0 0 ${size} ${size}`,
@@ -240,8 +241,8 @@ export function createGridSVG() {
         y: r * CELL_SIZE + 1,
         width: CELL_SIZE - 2,
         height: CELL_SIZE - 2,
-        fill: 'rgba(8,6,15,0.22)',
-        stroke: 'rgba(50,30,90,0.50)',
+        fill: `rgba(8,6,15,${cellFillOpacity})`,
+        stroke: `rgba(50,30,90,${Math.min(1, cellFillOpacity * 2.2).toFixed(2)})`,
         'stroke-width': '1',
         rx: '3',
       }));

@@ -451,48 +451,49 @@
       ],
       [
         "circle",
-        "triangle",
+        "square",
         "circle",
-        "triangle",
+        "square",
         "circle"
       ],
       [
-        "triangle",
+        "circle",
         "circle",
         null,
         "circle",
-        "triangle"
+        "circle"
       ],
       [
         "circle",
-        "triangle",
+        "square",
         "circle",
-        "triangle",
+        "square",
         "circle"
       ],
       [
         "square",
-        "triangle",
+        "circle",
         "square",
-        "triangle",
+        "circle",
         "square"
       ]
     ],
-    "lesson": "Second Square level. Adjacents are all circles (+3 / +1 curve each). Two hexagons gate the north squares. Square dies at 3 curves - must absorb a square to cleanse before stacking too many circles. Sparse squares mean every same-element absorb counts.",
+    "lesson": "Second Square level. Circles surround the grid interior — each costs +1 Curve. Two hexagons gate the north corner squares. Squares act as Curve resets: absorb a circle, then quickly reach a square to recover. Never let Curves stack to 3.",
     "shapeCounts": {
-      "square": 5,
-      "circle": 9,
-      "triangle": 8,
-      "hexagon": 2
+      "square": 9,
+      "hexagon": 2,
+      "circle": 13
     },
     "solverResult": {
       "solvable": true,
-      "shortestPath": "DLLDRRRRUUUU",
-      "shortestPathMoves": 12,
-      "distinctCellsets": 24,
-      "corruptionRequired": true,
+      "shortestPath": "ULDDDRUR",
+      "shortestPathMoves": 8,
+      "distinctCellsets": 184,
+      "corruptionRequired": false,
       "hexagonRequired": false,
-      "hexagonUsedInAnyWin": true
+      "hexagonUsedInAnyWin": true,
+      "truncated": false,
+      "nodesVisited": -1
     }
   },
   {

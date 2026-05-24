@@ -19,6 +19,19 @@ const LEVEL_BACKGROUNDS = {
   12: './bg_rite12.jpg',
 };
 
+// Cell fill opacity per level — higher = darker grid (use when bg is bright/light)
+const LEVEL_CELL_OPACITY = {
+  7: 0.52,
+  8: 0.52,
+  9: 0.42,
+  10: 0.42,
+  11: 0.42,
+  12: 0.38,
+};
+function levelCellOpacity(levelId) {
+  return LEVEL_CELL_OPACITY[levelId] ?? 0.22;
+}
+
 // Active bg layer tracker (crossfade: swap between bg-a and bg-b)
 let _activeBgId = 'bg-a';
 
@@ -594,7 +607,7 @@ export class GameScreen {
     this.hud.querySelector('.hud-back').addEventListener('click', () => this.showLevelSelect());
 
     // Grid SVG
-    this.svg = createGridSVG();
+    this.svg = createGridSVG({ cellFillOpacity: levelCellOpacity(levelId) });
 
     // Spacer so the grid sits below the fixed global logo
     const logoWrap = document.createElement('div');
