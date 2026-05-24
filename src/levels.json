@@ -1,86 +1,314 @@
 [
   {
     "id": 1,
-    "name": "The Circle Stirs",
+    "name": "The First Rite",
     "playerElement": "circle",
-    "playerStart": [2, 2],
+    "playerStart": [
+      2,
+      2
+    ],
     "winScore": 40,
+    "lore": [
+      "You are Circle. Pure. Boundless.",
+      "The hunters have scattered your kin.",
+      "Reclaim them. Begin."
+    ],
     "grid": [
-      ["moon","circle","circle","moon","moon"],
-      ["moon","circle","moon",  "moon","moon"],
-      ["moon","circle","circle","moon","moon"],
-      ["moon","moon",  "moon",  "moon","moon"],
-      ["moon","moon",  "moon",  "moon","moon"]
+      [
+        "moon",
+        "moon",
+        "moon",
+        "moon",
+        "moon"
+      ],
+      [
+        "moon",
+        "triangle",
+        "circle",
+        "square",
+        "moon"
+      ],
+      [
+        "moon",
+        "circle",
+        "circle",
+        "circle",
+        "moon"
+      ],
+      [
+        "moon",
+        "square",
+        "circle",
+        "triangle",
+        "moon"
+      ],
+      [
+        "moon",
+        "moon",
+        "moon",
+        "moon",
+        "moon"
+      ]
     ]
   },
   {
     "id": 2,
-    "name": "The Square Stirs",
+    "name": "The Bridge",
     "playerElement": "square",
-    "playerStart": [2, 2],
-    "winScore": 40,
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "lore": [
+      "You are Square. Grounded. Unyielding.",
+      "Triangles fear you not \u2014 they yield, become passage.",
+      "Cross them freely. Reach your kin."
+    ],
     "grid": [
-      ["square","square","square","moon","moon"],
-      ["moon",  "moon",  "square","moon","moon"],
-      ["moon",  "moon",  "square","moon","moon"],
-      ["moon",  "moon",  "moon",  "moon","moon"],
-      ["moon",  "moon",  "moon",  "moon","moon"]
+      [
+        "moon",
+        "triangle",
+        "circle",
+        "triangle",
+        "moon"
+      ],
+      [
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "square",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle"
+      ],
+      [
+        "moon",
+        "triangle",
+        "circle",
+        "triangle",
+        "moon"
+      ]
     ]
   },
   {
     "id": 3,
-    "name": "The Triangle Stirs",
+    "name": "The Web",
     "playerElement": "triangle",
-    "playerStart": [2, 2],
-    "winScore": 40,
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "lore": [
+      "You are Triangle. Sharp. Fractal.",
+      "Squares dissolve before you \u2014 harmless, hollow.",
+      "Walk through them to reach your own."
+    ],
     "grid": [
-      ["star","star","star",    "triangle","triangle"],
-      ["star","star","star",    "triangle","star"    ],
-      ["star","star","triangle","triangle","star"    ],
-      ["star","star","star",    "star",    "star"    ],
-      ["star","star","star",    "star",    "star"    ]
+      [
+        "moon",
+        "square",
+        "circle",
+        "square",
+        "moon"
+      ],
+      [
+        "square",
+        "triangle",
+        "square",
+        "triangle",
+        "square"
+      ],
+      [
+        "circle",
+        "square",
+        "triangle",
+        "square",
+        "circle"
+      ],
+      [
+        "square",
+        "triangle",
+        "square",
+        "triangle",
+        "square"
+      ],
+      [
+        "moon",
+        "square",
+        "circle",
+        "square",
+        "moon"
+      ]
     ]
   },
   {
     "id": 4,
-    "name": "The Moon Descends",
+    "name": "The Second Rite",
     "playerElement": "circle",
-    "playerStart": [2, 2],
+    "playerStart": [
+      2,
+      2
+    ],
     "winScore": 50,
+    "lore": [
+      "The circle returns, deeper.",
+      "More kin scattered further.",
+      "The hunters grow bolder."
+    ],
     "grid": [
-      ["circle","circle","moon","moon","moon"],
-      ["circle","moon",  "moon","moon","moon"],
-      ["circle","circle","circle","moon","moon"],
-      ["moon",  "moon",  "moon", "moon","moon"],
-      ["moon",  "moon",  "moon", "moon","moon"]
+      [
+        "moon",
+        "moon",
+        "circle",
+        "moon",
+        "moon"
+      ],
+      [
+        "moon",
+        "triangle",
+        "circle",
+        "square",
+        "moon"
+      ],
+      [
+        "square",
+        "circle",
+        "circle",
+        "circle",
+        "triangle"
+      ],
+      [
+        "moon",
+        "square",
+        "circle",
+        "triangle",
+        "moon"
+      ],
+      [
+        "moon",
+        "moon",
+        "circle",
+        "moon",
+        "moon"
+      ]
     ]
   },
   {
     "id": 5,
-    "name": "The Hexagon Claims",
+    "name": "Convergence",
     "playerElement": "square",
-    "playerStart": [2, 2],
-    "winScore": 50,
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 60,
+    "lore": [
+      "Five remain. Five must be found.",
+      "The triangles form a lattice of safe passage.",
+      "Circles tempt. Resist, or cleanse quickly."
+    ],
     "grid": [
-      ["square","square","moon","moon","moon"],
-      ["square","moon",  "moon","moon","moon"],
-      ["square","square","square","moon","moon"],
-      ["moon",  "moon",  "moon", "moon","moon"],
-      ["moon",  "moon",  "moon", "moon","moon"]
+      [
+        "circle",
+        "triangle",
+        "square",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle"
+      ],
+      [
+        "square",
+        "triangle",
+        "square",
+        "triangle",
+        "square"
+      ],
+      [
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "square",
+        "triangle",
+        "circle"
+      ]
     ]
   },
   {
     "id": 6,
-    "name": "The Star Arises",
+    "name": "The Final Form",
     "playerElement": "triangle",
-    "playerStart": [2, 2],
-    "winScore": 50,
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 60,
+    "lore": [
+      "All angles converge.",
+      "Squares are the silence between notes.",
+      "Walk through silence. Gather the sharp ones. Become whole."
+    ],
     "grid": [
-      ["star","triangle","triangle","star","star"],
-      ["star","star",    "triangle","triangle","star"],
-      ["star","star",    "triangle","triangle","star"],
-      ["star","star",    "star",    "star",    "star"],
-      ["star","star",    "star",    "star",    "star"]
+      [
+        "circle",
+        "square",
+        "triangle",
+        "square",
+        "circle"
+      ],
+      [
+        "square",
+        "triangle",
+        "square",
+        "triangle",
+        "square"
+      ],
+      [
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle"
+      ],
+      [
+        "square",
+        "circle",
+        "square",
+        "circle",
+        "square"
+      ],
+      [
+        "circle",
+        "square",
+        "triangle",
+        "square",
+        "circle"
+      ]
     ]
   }
 ]
