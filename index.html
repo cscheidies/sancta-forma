@@ -133,6 +133,56 @@
       border-color: rgba(160,80,255,0.55);
     }
 
+    /* ── Realm navigation ── */
+    .realm-nav-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      justify-content: center;
+    }
+    .realm-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      max-width: 440px;
+    }
+    .realm-label {
+      font-family: var(--font-mono);
+      font-size: 0.60rem;
+      letter-spacing: 0.20em;
+      color: rgba(160,80,255,0.65);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .realm-arrow {
+      background: rgba(20,10,40,0.50);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(160,80,255,0.25);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.6rem;
+      color: rgba(200,160,255,0.75);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .realm-arrow:hover {
+      color: rgba(230,190,255,1.0);
+      border-color: rgba(160,80,255,0.60);
+      background: rgba(60,20,100,0.50);
+    }
+    .realm-arrow-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
     /* ── How-to-play screen ── */
     .howto-screen {
       max-width: 520px;

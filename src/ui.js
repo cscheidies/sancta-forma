@@ -66,6 +66,24 @@ import {
   highlightValidMoves, ELEMENT_COLORS, CELL_SIZE,
 } from './renderer.js';
 
+// ── Realm definitions ─────────────────────────────────────────────────────
+const REALMS = [
+  { id: 1, name: 'The First Rites',    levelIds: [1,2,3,4,5,6]   },
+  { id: 2, name: 'The Hexagon Rites',  levelIds: [7,8,9,10,11,12] },
+  // Future realms appended here
+];
+
+function getRealmForLevel(levelId) {
+  return REALMS.find(r => r.levelIds.includes(levelId)) || REALMS[0];
+}
+
+function isRealmUnlocked(realmId, progress) {
+  if (realmId === 1) return true;
+  const prev = REALMS.find(r => r.id === realmId - 1);
+  if (!prev) return false;
+  return prev.levelIds.every(id => progress.completed.includes(id));
+}
+
 const STORAGE_KEY = 'shape-puzzle-progress';
 
 function loadProgress() {
@@ -162,6 +180,7 @@ export class GameScreen {
   constructor(container, levels) {
     this.container = container;
     this.levels = levels;
+    this.currentRealm = 1;
     this.state = null;
     this.svg = null;
     this.hud = null;
@@ -380,7 +399,9 @@ export class GameScreen {
     renderPassage(passageIdx);
   }
 
-  showLevelSelect() {
+  showLevelSelect(realmId) {
+    if (realmId !== undefined) this.currentRealm = realmId;
+    const realm = REALMS.find(r => r.id === this.currentRealm) || REALMS[0];
     clearLevelBg();
     this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
@@ -468,38 +489,67 @@ export class GameScreen {
           <p class="sf-tagline">Restore the balance</p>
         </div>
       </div>
-      <div class="level-grid"></div>
-      <div class="title-btn-row" style="margin-top:24px; padding-bottom:8px">
+
+      <div class="realm-nav-row">
+        <button class="realm-arrow" id="realm-prev" aria-label="Previous realm">&#8249;</button>
+        <div class="realm-center">
+          <div class="realm-label" id="realm-name">${realm.name.toUpperCase()}</div>
+          <div class="level-grid" id="realm-grid"></div>
+        </div>
+        <button class="realm-arrow" id="realm-next" aria-label="Next realm">&#8250;</button>
+      </div>
+
+      <div class="title-btn-row" style="margin-top:20px; padding-bottom:8px">
         <button class="title-btn" id="ls-how">HOW</button>
         <button class="title-btn" id="ls-why">WHY</button>
       </div>
     `;
 
-    const grid = screen.querySelector('.level-grid');
-    for (const level of this.levels) {
+    // Populate grid with this realm's levels
+    const grid = screen.querySelector('#realm-grid');
+    for (const levelId of realm.levelIds) {
+      const level = this.levels.find(l => l.id === levelId);
       const card = document.createElement('button');
       card.className = 'level-card';
+
+      if (!level) {
+        // Level not yet loaded — show as locked placeholder
+        card.classList.add('locked');
+        card.innerHTML = `<div class="card-rite">Rite</div><div class="card-num">?</div><div class="card-elem">—</div><div class="card-status">⬡</div>`;
+        grid.appendChild(card);
+        continue;
+      }
+
       const isUnlocked = this.progress.unlocked.includes(level.id);
       const isCompleted = this.progress.completed.includes(level.id);
-
       if (!isUnlocked) card.classList.add('locked');
       if (isCompleted) card.classList.add('completed');
+      card.style.setProperty('--elem-color', ELEMENT_COLORS[level.playerElement]);
 
-      const color = ELEMENT_COLORS[level.playerElement];
-      card.style.setProperty('--elem-color', color);
-
-      const roman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][level.id - 1] || level.id;
+      const roman = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'][level.id - 1] || level.id;
       card.innerHTML = `
         <div class="card-rite">Rite</div>
         <div class="card-num">${roman}</div>
         <div class="card-elem">${level.playerElement.toUpperCase()}</div>
         <div class="card-status">${isCompleted ? '✦' : isUnlocked ? '◈' : '⬡'}</div>
       `;
-
-      if (isUnlocked) {
-        card.addEventListener('click', () => this.startLevel(level.id));
-      }
+      if (isUnlocked) card.addEventListener('click', () => this.startLevel(level.id));
       grid.appendChild(card);
+    }
+
+    // Realm navigation
+    const prevBtn = screen.querySelector('#realm-prev');
+    const nextBtn = screen.querySelector('#realm-next');
+    const prevRealm = REALMS.find(r => r.id === this.currentRealm - 1);
+    const nextRealm = REALMS.find(r => r.id === this.currentRealm + 1);
+
+    if (!prevRealm) prevBtn.classList.add('realm-arrow-hidden');
+    else prevBtn.addEventListener('click', () => this.showLevelSelect(prevRealm.id));
+
+    if (!nextRealm || !isRealmUnlocked(nextRealm.id, this.progress)) {
+      nextBtn.classList.add('realm-arrow-hidden');
+    } else {
+      nextBtn.addEventListener('click', () => this.showLevelSelect(nextRealm.id));
     }
 
     screen.querySelector('#ls-how').addEventListener('click', () => this.showHowToPlay());
@@ -764,24 +814,43 @@ export class GameScreen {
     // Update progress
     if (!this.progress.completed.includes(id)) this.progress.completed.push(id);
     const nextId = id + 1;
-    if (nextId <= this.levels.length && !this.progress.unlocked.includes(nextId)) {
+    const nextLevel = this.levels.find(l => l.id === nextId);
+    if (nextLevel && !this.progress.unlocked.includes(nextId)) {
       this.progress.unlocked.push(nextId);
     }
     saveProgress(this.progress);
 
-    const winRoman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][id - 1] || id;
-    const nextRoman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][nextId - 1] || nextId;
+    const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+    const winRoman  = ROMAN[id - 1]     || id;
+    const nextRoman = ROMAN[nextId - 1] || nextId;
+
+    // Check if this was the last level of a realm → offer realm advance
+    const currentRealm  = getRealmForLevel(id);
+    const realmComplete = currentRealm.levelIds.every(lid => this.progress.completed.includes(lid));
+    const nextRealm     = REALMS.find(r => r.id === currentRealm.id + 1);
+    const isLastInRealm = currentRealm.levelIds[currentRealm.levelIds.length - 1] === id;
+
+    let nextBtn = '';
+    if (nextLevel) {
+      nextBtn = `<button class="btn-primary" id="btn-next">Enter Rite ${nextRoman} →</button>`;
+    } else if (realmComplete && nextRealm) {
+      nextBtn = `<button class="btn-primary" id="btn-next-realm">Enter ${nextRealm.name} →</button>`;
+    } else {
+      nextBtn = `<p class="overlay-sub">All rites performed. The form is sanctified.</p>`;
+    }
+
     this._showOverlay('win', `
       <div class="overlay-icon win-icon">✦</div>
       <h2 class="eerie-h2">Rite ${winRoman} <span class="win-sub-title">Complete</span></h2>
       <p class="overlay-score">Essence gathered: ${this.state.player.score}</p>
-      ${nextId <= this.levels.length
-        ? `<button class="btn-primary" id="btn-next">Enter Rite ${nextRoman} →</button>`
-        : `<p class="overlay-sub">All rites performed. The form is sanctified.</p>`
-      }
+      ${isLastInRealm && realmComplete && nextRealm
+        ? `<p class="overlay-sub" style="color:rgba(200,160,255,0.8);margin-bottom:4px">${currentRealm.name} — all rites sanctified.</p>`
+        : ''}
+      ${nextBtn}
       <button class="btn-ghost" id="btn-levels">← Return to the Rites</button>
     `, () => {
       document.getElementById('btn-next')?.addEventListener('click', () => this.startLevel(nextId));
+      document.getElementById('btn-next-realm')?.addEventListener('click', () => this.showLevelSelect(nextRealm?.id));
       document.getElementById('btn-levels')?.addEventListener('click', () => this.showLevelSelect());
     });
   }
