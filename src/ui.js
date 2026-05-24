@@ -436,28 +436,6 @@ export class GameScreen {
     // Grid SVG
     this.svg = createGridSVG();
 
-    // Direction buttons (mobile)
-    const dpad = document.createElement('div');
-    dpad.className = 'dpad';
-    dpad.innerHTML = `
-      <div class="dpad-row">
-        <button class="dpad-btn" data-dir="U">▲</button>
-      </div>
-      <div class="dpad-row">
-        <button class="dpad-btn" data-dir="L">◀</button>
-        <button class="dpad-btn dpad-center" data-dir="">·</button>
-        <button class="dpad-btn" data-dir="R">▶</button>
-      </div>
-      <div class="dpad-row">
-        <button class="dpad-btn" data-dir="D">▼</button>
-      </div>
-    `;
-    dpad.querySelectorAll('[data-dir]').forEach(btn => {
-      if (btn.dataset.dir) {
-        btn.addEventListener('click', () => this._move(btn.dataset.dir));
-      }
-    });
-
     // Full SANCTA FORMA logo — top of game screen
     const logoWrap = document.createElement('div');
     logoWrap.className = 'game-logo-wrap';
@@ -488,10 +466,10 @@ export class GameScreen {
         </div>
         <p class="sf-tagline">Six rites of absorption</p>
       </div>`;
-    // Order: logo → HUD → grid → dpad
+    // Order: logo → grid → HUD (scoring below grid, no d-pad)
     wrapper.insertBefore(logoWrap, wrapper.firstChild);
     wrapper.appendChild(this.svg);
-    wrapper.appendChild(dpad);
+    wrapper.appendChild(this.hud);  // HUD moves below grid
     this.container.appendChild(wrapper);
 
     // Tap-to-move: translate pointer position → grid cell → direction
