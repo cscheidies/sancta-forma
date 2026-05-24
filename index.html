@@ -687,6 +687,20 @@
       .dpad-btn { width: 46px; height: 46px; }
       .game-grid { max-width: 360px; }
     }
+    /* Reduced-motion: skip animations, show text immediately */
+    @media (prefers-reduced-motion: reduce) {
+      .narr-line, .narr-actions {
+        opacity: 1 !important;
+        animation: none !important;
+        transform: none !important;
+        filter: none !important;
+      }
+      .narr-wrap-inner {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
   </style>
 </head>
 <canvas id="starfield"></canvas>
@@ -1438,6 +1452,15 @@
   }
 
   btn.addEventListener('click', () => { if (playing) stopMusic(); else startMusic(); });
+
+  // Auto-start music on first user interaction (covers mobile tap-to-unlock AudioContext)
+  function onFirstInteraction() {
+    if (!playing) startMusic();
+    document.removeEventListener('click', onFirstInteraction);
+    document.removeEventListener('touchstart', onFirstInteraction);
+  }
+  document.addEventListener('click', onFirstInteraction);
+  document.addEventListener('touchstart', onFirstInteraction);
 })();
 </script>
 </body>

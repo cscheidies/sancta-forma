@@ -173,13 +173,13 @@ export class GameScreen {
 
     const renderPassage = (idx) => {
       const p = passages[idx];
-      const stagger = 0.5;
+      const stagger = 0.18;
       inner.innerHTML = `
         <div class="narr-heading">${p.heading}</div>
         <div class="narr-lines" style="margin-top:10px">
-          ${p.lines.map((l,i) => `<p class="narr-line" style="animation-delay:${0.3 + i*stagger}s">${l}</p>`).join('')}
+          ${p.lines.map((l,i) => `<p class="narr-line" style="animation-delay:${0.2 + i*stagger}s">${l}</p>`).join('')}
         </div>
-        <div class="narr-actions" style="animation-delay:${0.3 + p.lines.length*stagger + 0.6}s">
+        <div class="narr-actions" style="animation-delay:0.35s">
           ${idx < passages.length - 1
             ? `<button class="btn-primary" id="narr-next">Continue →</button>`
             : `<button class="btn-primary" id="narr-begin">✦ Begin the Rites</button>`
