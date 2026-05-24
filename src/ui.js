@@ -228,11 +228,11 @@ export class GameScreen {
     const screen = document.createElement('div');
     screen.className = 'screen';
     screen.innerHTML = `
+      <div style="height:160px;flex-shrink:0"></div>
       <div class="howto-screen">
-        <div style="height:154px;flex-shrink:0"></div>
         <div class="screen-header">
           <h2 class="eerie-h2" style="margin-bottom:4px">How to Play</h2>
-          <p class="sf-tagline" style="margin-bottom:32px">The grammar of absorption</p>
+          <p class="sf-tagline" style="margin-bottom:20px">The grammar of absorption</p>
         </div>
 
         <div class="howto-section">
@@ -242,18 +242,19 @@ export class GameScreen {
         </div>
 
         <div class="howto-section">
-          <div class="howto-label">Absorption Rules</div>
+          <div class="howto-label">Purity &amp; Death</div>
+          <p class="howto-rule"><span class="danger">Each element must remain itself.</span> A form that loses its nature dies.</p>
           <p class="howto-rule"><span class="good">Absorb your own kind</span> — Essence <span>+10</span>, Corruption clears.</p>
           <p class="howto-rule"><span class="warn">Absorb a foreign shape</span> — Essence <span>+3</span>, Corruption <span>+1</span>.</p>
-          <p class="howto-rule"><span class="danger">Corruption at the threshold</span> — the form dissolves. Death.</p>
+          <p class="howto-rule"><span class="danger">Corruption at the threshold</span> — purity fails. The form dissolves.</p>
         </div>
 
         <div class="howto-section">
           <div class="howto-label">Transit &amp; Transformation</div>
           <p class="howto-rule">Squares and triangles are <span class="arcane">transit pairs</span>.</p>
           <p class="howto-rule">Stepping into your transit shape <span class="arcane">transforms</span> you — no cost, no score.</p>
-          <p class="howto-rule">While transformed, absorb your <span class="good">original form</span> to cleanse and reclaim your kin bonus.</p>
-          <p class="howto-rule"><span class="danger">Absorbing your current form</span> while transformed is fatal.</p>
+          <p class="howto-rule">While transformed you are <span class="danger">impure</span>. Absorb your <span class="good">original form</span> immediately to cleanse.</p>
+          <p class="howto-rule"><span class="danger">Fail to cleanse</span> and the corruption of lost identity kills you.</p>
         </div>
 
         <div class="howto-section">
@@ -261,7 +262,7 @@ export class GameScreen {
           <p class="howto-rule">Gather enough Essence to complete the rite. The threshold is shown in your panel.</p>
         </div>
 
-        <div style="text-align:center; margin-top:32px">
+        <div style="text-align:center; margin-top:32px; padding-bottom:40px">
           <button class="title-btn primary" id="howto-back">← Return</button>
         </div>
       </div>
