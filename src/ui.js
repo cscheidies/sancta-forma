@@ -19,23 +19,29 @@ let _activeBgId = 'bg-a';
 function setLevelBg(levelId) {
   const bg = LEVEL_BACKGROUNDS[levelId];
   const starfield = document.getElementById('starfield');
+  const titleBg = document.getElementById('bg-title');
   const nextId  = _activeBgId === 'bg-a' ? 'bg-b' : 'bg-a';
   const current = document.getElementById(_activeBgId);
   const next    = document.getElementById(nextId);
 
+  // Fade out title bg when entering a rite
+  if (titleBg) titleBg.style.opacity = '0';
+
   if (bg && next && current) {
     next.style.backgroundImage = `url("${bg}")`;
-    next.style.opacity  = '0';
-    // Tiny delay so the browser registers the new bg-image before we transition opacity
+    next.style.opacity = '0';
     requestAnimationFrame(() => requestAnimationFrame(() => {
       next.style.opacity    = '1';
       current.style.opacity = '0';
     }));
     _activeBgId = nextId;
-    if (starfield) starfield.style.opacity = '0.15';
+    // Stars/shooting stars still visible over rite bg
+    if (starfield) starfield.style.opacity = '0.35';
+    window.sfPhotoMode = true;
   } else if (current) {
     current.style.opacity = '0';
     if (starfield) starfield.style.opacity = '1';
+    window.sfPhotoMode = false;
   }
 }
 
@@ -44,8 +50,14 @@ function clearLevelBg() {
   const b = document.getElementById('bg-b');
   if (a) a.style.opacity = '0';
   if (b) b.style.opacity = '0';
+  // Restore title bg on non-game screens
+  const titleBg = document.getElementById('bg-title');
+  if (titleBg) requestAnimationFrame(() => requestAnimationFrame(() => {
+    titleBg.style.opacity = '1';
+  }));
   const starfield = document.getElementById('starfield');
-  if (starfield) starfield.style.opacity = '1';
+  if (starfield) starfield.style.opacity = '0.65';
+  window.sfPhotoMode = true;
   document.getElementById('lore-overlay')?.remove();
 }
 

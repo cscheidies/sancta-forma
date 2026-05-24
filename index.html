@@ -816,7 +816,8 @@
     }
   </style>
 </head>
-<div class="bg-layer" id="bg-a"></div>
+<div class="bg-layer" id="bg-title" style="background-image:url('./bg_title.jpg');opacity:1"></div>
+<div class="bg-layer" id="bg-a" style="opacity:0"></div>
 <div class="bg-layer" id="bg-b" style="opacity:0"></div>
 <div id="bg-vignette"></div>
 <canvas id="starfield"></canvas>
@@ -1255,25 +1256,30 @@
   function draw(now) {
     C.clearRect(0,0,W,H);
 
-    // Stars (upper half only)
-    for (const s of stars) {
-      s.y+=s.spd; if(s.y>H*0.65+s.r){s.y=-s.r;s.x=rand(0,W);}
-      s.ph+=s.phSpd;
-      const a=Math.max(0.03,s.baseA*(0.70+0.30*Math.sin(s.ph)));
-      C.beginPath(); C.arc(s.x,s.y,s.r,0,Math.PI*2);
-      C.fillStyle=`rgba(220,215,255,${a})`; C.fill();
+    if (window.sfPhotoMode) {
+      // Photo mode — transparent canvas, only stars + shooting stars over the photo bg
+      for (const s of stars) {
+        s.y+=s.spd; if(s.y>H*0.65+s.r){s.y=-s.r;s.x=rand(0,W);}
+        s.ph+=s.phSpd;
+        const a=Math.max(0.03,s.baseA*(0.70+0.30*Math.sin(s.ph)));
+        C.beginPath(); C.arc(s.x,s.y,s.r,0,Math.PI*2);
+        C.fillStyle=`rgba(220,215,255,${a})`; C.fill();
+      }
+    } else {
+      // Full generated scene (used only when no photo bg is active)
+      for (const s of stars) {
+        s.y+=s.spd; if(s.y>H*0.65+s.r){s.y=-s.r;s.x=rand(0,W);}
+        s.ph+=s.phSpd;
+        const a=Math.max(0.03,s.baseA*(0.70+0.30*Math.sin(s.ph)));
+        C.beginPath(); C.arc(s.x,s.y,s.r,0,Math.PI*2);
+        C.fillStyle=`rgba(220,215,255,${a})`; C.fill();
+      }
+      C.globalAlpha=0.75+0.25*Math.sin(now*0.00022);
+      C.drawImage(nebCanvas,0,0);
+      C.globalAlpha=1;
+      C.drawImage(sceneCanvas,0,0);
+      drawMist(now);
     }
-
-    // Nebulae (faint)
-    C.globalAlpha=0.75+0.25*Math.sin(now*0.00022);
-    C.drawImage(nebCanvas,0,0);
-    C.globalAlpha=1;
-
-    // Static scene (mountains + stones)
-    C.drawImage(sceneCanvas,0,0);
-
-    // Mist (animated, between and around stones)
-    drawMist(now);
 
     // Shooting stars (rare)
     if(now-lastShoot>nextShoot){spawnShooter();lastShoot=now;nextShoot=rand(4000,10000);}
@@ -1294,14 +1300,19 @@
       C.fillStyle=`rgba(240,235,255,${s.life*0.85})`;C.fill();
     }
 
-    // Floating narrative text
-    if (now - narrLastSpawn > narrNextSpawn) {
-      spawnNarrText(now); narrLastSpawn = now; narrNextSpawn = rand(6000, 14000);
+    // Floating narrative text (only in full generated scene)
+    if (!window.sfPhotoMode) {
+      if (now - narrLastSpawn > narrNextSpawn) {
+        spawnNarrText(now); narrLastSpawn = now; narrNextSpawn = rand(6000, 14000);
+      }
+      drawNarrTexts(now);
     }
-    drawNarrTexts(now);
 
     requestAnimationFrame(draw);
   }
+
+  // Start in photo mode — title bg is shown on load
+  window.sfPhotoMode = true;
 
   window.addEventListener('resize', init);
   init();
