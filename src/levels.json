@@ -2,313 +2,115 @@
   {
     "id": 1,
     "name": "The First Rite",
-    "playerElement": "circle",
-    "playerStart": [
-      2,
-      2
-    ],
+    "playerElement": "square",
+    "playerStart": [2, 2],
     "winScore": 40,
     "lore": [
-      "You are Circle. Pure. Boundless.",
-      "The hunters have scattered your kin.",
-      "Reclaim them. Begin."
+      "You are Square. Grounded. Unyielding.",
+      "Triangles yield before you — safe passage, not prey.",
+      "Absorb your kin. Begin."
     ],
     "grid": [
-      [
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon"
-      ],
-      [
-        "moon",
-        "triangle",
-        "circle",
-        "square",
-        "moon"
-      ],
-      [
-        "moon",
-        "circle",
-        "circle",
-        "circle",
-        "moon"
-      ],
-      [
-        "moon",
-        "square",
-        "circle",
-        "triangle",
-        "moon"
-      ],
-      [
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon"
-      ]
+      ["triangle", "square",   "triangle", "square",   "triangle"],
+      ["square",   "square",   "triangle", "square",   "square"  ],
+      ["triangle", "triangle", "square",   "triangle", "triangle"],
+      ["square",   "square",   "triangle", "square",   "square"  ],
+      ["triangle", "square",   "triangle", "square",   "triangle"]
     ]
   },
   {
     "id": 2,
     "name": "The Bridge",
     "playerElement": "square",
-    "playerStart": [
-      2,
-      2
-    ],
+    "playerStart": [2, 2],
     "winScore": 50,
     "lore": [
-      "You are Square. Grounded. Unyielding.",
-      "Triangles fear you not \u2014 they yield, become passage.",
-      "Cross them freely. Reach your kin."
+      "Order corrupts at its edges.",
+      "The circles press from every direction.",
+      "Find your kin before the curves consume you."
     ],
     "grid": [
-      [
-        "moon",
-        "triangle",
-        "circle",
-        "triangle",
-        "moon"
-      ],
-      [
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle"
-      ],
-      [
-        "circle",
-        "triangle",
-        "square",
-        "triangle",
-        "circle"
-      ],
-      [
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle"
-      ],
-      [
-        "moon",
-        "triangle",
-        "circle",
-        "triangle",
-        "moon"
-      ]
+      ["triangle", "circle",   "circle", "square",   "triangle"],
+      ["circle",   "square",   "circle", "circle",   "circle"  ],
+      ["square",   "circle",   "square", "circle",   "triangle"],
+      ["triangle", "circle",   "circle", "square",   "circle"  ],
+      ["circle",   "square",   "triangle","circle",  "square"  ]
     ]
   },
   {
     "id": 3,
-    "name": "The Web",
-    "playerElement": "triangle",
-    "playerStart": [
-      2,
-      2
-    ],
+    "name": "The Pure Form",
+    "playerElement": "circle",
+    "playerStart": [2, 2],
     "winScore": 50,
     "lore": [
-      "You are Triangle. Sharp. Fractal.",
-      "Squares dissolve before you \u2014 harmless, hollow.",
-      "Walk through them to reach your own."
+      "You are Circle. Pure. Boundless.",
+      "Your kin fill every corridor.",
+      "Reclaim them. Nothing stands between you."
     ],
     "grid": [
-      [
-        "moon",
-        "square",
-        "circle",
-        "square",
-        "moon"
-      ],
-      [
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square"
-      ],
-      [
-        "circle",
-        "square",
-        "triangle",
-        "square",
-        "circle"
-      ],
-      [
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square"
-      ],
-      [
-        "moon",
-        "square",
-        "circle",
-        "square",
-        "moon"
-      ]
+      ["square", "circle", "square", "circle", "square"],
+      ["circle", "circle", "circle", "circle", "circle"],
+      ["square", "circle", "circle", "circle", "square"],
+      ["circle", "circle", "circle", "circle", "circle"],
+      ["square", "circle", "square", "circle", "square"]
     ]
   },
   {
     "id": 4,
-    "name": "The Second Rite",
+    "name": "The Crucible",
     "playerElement": "circle",
-    "playerStart": [
-      2,
-      2
-    ],
+    "playerStart": [2, 2],
     "winScore": 50,
     "lore": [
-      "The circle returns, deeper.",
-      "More kin scattered further.",
-      "The hunters grow bolder."
+      "The circle returns, tested.",
+      "Squares and triangles grid the world in alternation.",
+      "Navigate the pattern. Every choice is permanent."
     ],
     "grid": [
-      [
-        "moon",
-        "moon",
-        "circle",
-        "moon",
-        "moon"
-      ],
-      [
-        "moon",
-        "triangle",
-        "circle",
-        "square",
-        "moon"
-      ],
-      [
-        "square",
-        "circle",
-        "circle",
-        "circle",
-        "triangle"
-      ],
-      [
-        "moon",
-        "square",
-        "circle",
-        "triangle",
-        "moon"
-      ],
-      [
-        "moon",
-        "moon",
-        "circle",
-        "moon",
-        "moon"
-      ]
+      ["circle",   "square", "triangle", "square", "circle"  ],
+      ["square",   "circle", "square",   "circle", "square"  ],
+      ["triangle", "square", "circle",   "square", "triangle"],
+      ["square",   "circle", "square",   "circle", "square"  ],
+      ["circle",   "square", "triangle", "square", "circle"  ]
     ]
   },
   {
     "id": 5,
-    "name": "Convergence",
-    "playerElement": "square",
-    "playerStart": [
-      2,
-      2
-    ],
-    "winScore": 60,
+    "name": "The Lattice",
+    "playerElement": "triangle",
+    "playerStart": [2, 2],
+    "winScore": 40,
     "lore": [
-      "Five remain. Five must be found.",
-      "The triangles form a lattice of safe passage.",
-      "Circles tempt. Resist, or cleanse quickly."
+      "You are Triangle. Sharp. Fractal.",
+      "Squares dissolve before you — hollow, harmless.",
+      "Walk through silence. Gather the sharp ones."
     ],
     "grid": [
-      [
-        "circle",
-        "triangle",
-        "square",
-        "triangle",
-        "circle"
-      ],
-      [
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle"
-      ],
-      [
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square"
-      ],
-      [
-        "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle"
-      ],
-      [
-        "circle",
-        "triangle",
-        "square",
-        "triangle",
-        "circle"
-      ]
+      ["square",   "triangle", "square",   "triangle", "square"  ],
+      ["triangle", "triangle", "square",   "triangle", "triangle"],
+      ["square",   "square",   "triangle", "square",   "square"  ],
+      ["triangle", "triangle", "square",   "triangle", "triangle"],
+      ["square",   "triangle", "square",   "triangle", "square"  ]
     ]
   },
   {
     "id": 6,
     "name": "The Final Form",
     "playerElement": "triangle",
-    "playerStart": [
-      2,
-      2
-    ],
-    "winScore": 60,
+    "playerStart": [2, 2],
+    "winScore": 50,
     "lore": [
       "All angles converge.",
-      "Squares are the silence between notes.",
-      "Walk through silence. Gather the sharp ones. Become whole."
+      "The circles press in from every side.",
+      "Stay sharp. Do not let the curves consume you."
     ],
     "grid": [
-      [
-        "circle",
-        "square",
-        "triangle",
-        "square",
-        "circle"
-      ],
-      [
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square"
-      ],
-      [
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle"
-      ],
-      [
-        "square",
-        "circle",
-        "square",
-        "circle",
-        "square"
-      ],
-      [
-        "circle",
-        "square",
-        "triangle",
-        "square",
-        "circle"
-      ]
+      ["square",   "circle", "circle",   "triangle", "square"  ],
+      ["circle",   "triangle","circle",  "circle",   "circle"  ],
+      ["triangle", "circle", "triangle", "circle",   "square"  ],
+      ["square",   "circle", "circle",   "triangle", "circle"  ],
+      ["circle",   "triangle","square",  "circle",   "triangle"]
     ]
   }
 ]
