@@ -245,9 +245,33 @@ export function win() {
 }
 
 // ── Death ──────────────────────────────────────────────────────────────────
-// Orchestral string sting: sudden fortissimo cluster chord, tremolo sustain,
-// bass impact, then long resonant decay — like a horror film stinger.
+// Plays the sampled death hit (sfx_death.ogg).
+let _deathBuf = null;
+let _deathBufLoading = false;
+function loadDeathBuf() {
+  if (_deathBuf || _deathBufLoading) return;
+  _deathBufLoading = true;
+  fetch('./sfx_death.ogg')
+    .then(r => r.arrayBuffer())
+    .then(ab => ctx().decodeAudioData(ab))
+    .then(buf => { _deathBuf = buf; })
+    .catch(() => { _deathBufLoading = false; });
+}
+loadDeathBuf(); // preload on module init
+
 export function death() {
+  if (_deathBuf) {
+    const c = ctx();
+    const src = c.createBufferSource();
+    src.buffer = _deathBuf;
+    const gain = c.createGain();
+    gain.gain.value = 0.9;
+    src.connect(gain);
+    gain.connect(c.destination);
+    src.start();
+    return;
+  }
+  // Fallback: synthesised sting if file not yet loaded
   const c = ctx();
   const now = c.currentTime;
 
