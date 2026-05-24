@@ -458,9 +458,7 @@ export class GameScreen {
       }
     });
 
-    wrapper.appendChild(this.hud);
-
-    // Full SANCTA FORMA logo above the board — same sigil + title + tagline as title screen
+    // Full SANCTA FORMA logo — top of game screen
     const logoWrap = document.createElement('div');
     logoWrap.className = 'game-logo-wrap';
     logoWrap.innerHTML = `
@@ -490,7 +488,8 @@ export class GameScreen {
         </div>
         <p class="sf-tagline">Six rites of absorption</p>
       </div>`;
-    wrapper.appendChild(logoWrap);
+    // Order: logo → HUD → grid → dpad
+    wrapper.insertBefore(logoWrap, wrapper.firstChild);
     wrapper.appendChild(this.svg);
     wrapper.appendChild(dpad);
     this.container.appendChild(wrapper);

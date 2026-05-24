@@ -362,23 +362,26 @@
       background: transparent;
     }
 
-    /* ── In-game logo (full title, scaled down) ─────────── */
+    /* ── In-game logo — top of game, full title treatment ── */
     .game-logo-wrap {
       display: flex;
       justify-content: center;
       width: 100%;
+      padding-top: 8px;
     }
-    /* Reuse .sf-logo inside game but scale the whole block */
-    .game-logo-wrap .sf-logo {
-      transform: scale(0.52);
-      transform-origin: top center;
-      /* Collapse the vertical space the scaled-down logo occupies */
-      margin-bottom: -64px;
-    }
-    /* Inside the game header the sigil can be slightly smaller */
     .game-logo-wrap .sf-sigil {
-      width: 120px;
-      height: 110px;
+      width: 130px;
+      height: 118px;
+    }
+    .game-logo-wrap .sf-sancta {
+      font-size: 0.85rem;
+    }
+    .game-logo-wrap .sf-forma {
+      font-size: 1.85rem;
+    }
+    .game-logo-wrap .sf-tagline {
+      font-size: 0.60rem;
+      margin-top: 6px;
     }
 
     /* ── D-Pad ──────────────────────────────────────────── */
