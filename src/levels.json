@@ -59,7 +59,12 @@
       "corruptionRequired": false,
       "hexagonRequired": false,
       "hexagonUsedInAnyWin": false
-    }
+    },
+    "lore": [
+      "You are Square. Grounded. Unyielding.",
+      "Triangles yield before you — safe passage, not prey.",
+      "Absorb your kin. Begin."
+    ]
   },
   {
     "id": 2,
@@ -121,7 +126,12 @@
       "corruptionRequired": true,
       "hexagonRequired": false,
       "hexagonUsedInAnyWin": false
-    }
+    },
+    "lore": [
+      "Order corrupts at its edges.",
+      "The circles press from every direction.",
+      "Find your kin before the curves consume you."
+    ]
   },
   {
     "id": 3,
@@ -183,7 +193,12 @@
       "corruptionRequired": false,
       "hexagonRequired": false,
       "hexagonUsedInAnyWin": false
-    }
+    },
+    "lore": [
+      "You are Circle. Pure. Boundless.",
+      "Your kin fill every corridor.",
+      "Reclaim them. Nothing stands between you."
+    ]
   },
   {
     "id": 4,
@@ -245,7 +260,12 @@
       "corruptionRequired": true,
       "hexagonRequired": false,
       "hexagonUsedInAnyWin": false
-    }
+    },
+    "lore": [
+      "The circle returns, tested.",
+      "Squares and triangles grid the world in alternation.",
+      "Navigate the pattern. Every choice is permanent."
+    ]
   },
   {
     "id": 5,
@@ -307,7 +327,12 @@
       "corruptionRequired": false,
       "hexagonRequired": false,
       "hexagonUsedInAnyWin": false
-    }
+    },
+    "lore": [
+      "You are Triangle. Sharp. Fractal.",
+      "Squares dissolve before you — hollow, harmless.",
+      "Walk through silence. Gather the sharp ones."
+    ]
   },
   {
     "id": 6,
@@ -369,7 +394,12 @@
       "corruptionRequired": true,
       "hexagonRequired": false,
       "hexagonUsedInAnyWin": false
-    }
+    },
+    "lore": [
+      "All angles converge.",
+      "The circles press in from every side.",
+      "Stay sharp. Do not let the curves consume you."
+    ]
   },
   {
     "id": 7,
@@ -431,7 +461,12 @@
       "corruptionRequired": false,
       "hexagonRequired": false,
       "hexagonUsedInAnyWin": true
-    }
+    },
+    "lore": [
+      "A new geometry has entered the grid.",
+      "One alien form. Irregular. Dangerous.",
+      "Route around it. The hexagon is not yours to take."
+    ]
   },
   {
     "id": 8,
@@ -494,7 +529,12 @@
       "hexagonUsedInAnyWin": true,
       "truncated": false,
       "nodesVisited": -1
-    }
+    },
+    "lore": [
+      "Two now. They multiply.",
+      "The familiar squares are still here — reach them.",
+      "Do not let the hexagons claim you."
+    ]
   },
   {
     "id": 9,
@@ -556,7 +596,12 @@
       "corruptionRequired": true,
       "hexagonRequired": false,
       "hexagonUsedInAnyWin": false
-    }
+    },
+    "lore": [
+      "You are Circle. The hexagon is death.",
+      "One cell forbidden. Absolute.",
+      "Find the path that avoids it."
+    ]
   },
   {
     "id": 10,
@@ -618,7 +663,12 @@
       "corruptionRequired": true,
       "hexagonRequired": false,
       "hexagonUsedInAnyWin": false
-    }
+    },
+    "lore": [
+      "Two forbidden cells now.",
+      "The circles remain. The hexagons do not move.",
+      "Navigate the space between them."
+    ]
   },
   {
     "id": 11,
@@ -680,7 +730,12 @@
       "corruptionRequired": false,
       "hexagonRequired": false,
       "hexagonUsedInAnyWin": true
-    }
+    },
+    "lore": [
+      "The hexagons have entered your domain.",
+      "Touch one and it reshapes you. Cleanse immediately.",
+      "The shape beneath remembers what you are."
+    ]
   },
   {
     "id": 12,
@@ -742,7 +797,12 @@
       "corruptionRequired": true,
       "hexagonRequired": false,
       "hexagonUsedInAnyWin": false
-    }
+    },
+    "lore": [
+      "Three of them. The board has changed.",
+      "Route through the angles. Avoid the alien forms.",
+      "The balance can still be restored."
+    ]
   },
   {
     "id": 13,
@@ -805,7 +865,12 @@
       "hexagonUsedInAnyWin": true,
       "truncated": true,
       "nodesVisited": 3650
-    }
+    },
+    "lore": [
+      "The hexagons are everywhere now.",
+      "They do not gate — they saturate.",
+      "Find the squares before the grid closes."
+    ]
   },
   {
     "id": 14,
@@ -867,7 +932,12 @@
       "hexagonUsedInAnyWin": true,
       "truncated": true,
       "nodesVisited": 1569
-    }
+    },
+    "lore": [
+      "Two hexagons flank every path.",
+      "Touch one and you wear it. Find a square. Cleanse.",
+      "The corruption is patient. You are not."
+    ]
   },
   {
     "id": 15,
@@ -929,7 +999,12 @@
       "hexagonUsedInAnyWin": true,
       "truncated": false,
       "nodesVisited": 513
-    }
+    },
+    "lore": [
+      "The board has been stripped bare.",
+      "Few squares remain. Each one is a lifeline.",
+      "The hexagons have claimed the rest."
+    ]
   },
   {
     "id": 16,
@@ -992,7 +1067,12 @@
       "hexagonUsedInAnyWin": true,
       "truncated": true,
       "nodesVisited": 3656
-    }
+    },
+    "lore": [
+      "The triangle enters the chase.",
+      "Sharp and fast — but the circles press close.",
+      "One curve too many and the angle breaks."
+    ]
   },
   {
     "id": 17,
@@ -1055,7 +1135,12 @@
       "hexagonUsedInAnyWin": true,
       "truncated": true,
       "nodesVisited": 1041
-    }
+    },
+    "lore": [
+      "The hexagons have learned to cluster.",
+      "They guard the only paths forward.",
+      "Move through them. Cleanse immediately. Keep moving."
+    ]
   },
   {
     "id": 18,
@@ -1118,6 +1203,11 @@
       "hexagonUsedInAnyWin": true,
       "truncated": false,
       "nodesVisited": 209
-    }
+    },
+    "lore": [
+      "This is where the chase ends.",
+      "Eight ways through. No second chances.",
+      "Finish it."
+    ]
   }
 ]
