@@ -170,6 +170,107 @@ export class GameScreen {
     this._keyHandler = this._onKey.bind(this);
   }
 
+  showTitle() {
+    clearLevelBg();
+    this.container.innerHTML = '';
+    document.removeEventListener('keydown', this._keyHandler);
+    if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
+
+    const screen = document.createElement('div');
+    screen.className = 'screen title-screen';
+    screen.innerHTML = `
+      <div class="sf-logo" style="margin-top:auto">
+        <svg class="sf-sigil" viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="sf-glow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="3.5" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+          </defs>
+          <circle cx="110" cy="98" r="82" fill="none" stroke="rgba(140,60,220,0.22)" stroke-width="0.8"/>
+          <circle cx="110" cy="98" r="54" fill="none" stroke="rgba(140,60,220,0.12)" stroke-width="0.5"/>
+          <polygon points="110,16 186,138 34,138" fill="none" stroke="rgba(160,80,255,0.30)" stroke-width="0.8"/>
+          <polygon points="110,180 34,58 186,58" fill="none" stroke="rgba(160,80,255,0.14)" stroke-width="0.5"/>
+          <line x1="110" y1="98" x2="110" y2="16"  stroke="rgba(224,64,251,0.15)"  stroke-width="0.5"/>
+          <line x1="110" y1="98" x2="186" y2="138" stroke="rgba(0,229,255,0.15)"   stroke-width="0.5"/>
+          <line x1="110" y1="98" x2="34"  y2="138" stroke="rgba(105,255,71,0.15)"  stroke-width="0.5"/>
+          <circle cx="110" cy="16" r="13" fill="rgba(224,64,251,0.08)" stroke="#e040fb" stroke-width="1.8" filter="url(#sf-glow)"/>
+          <rect x="176" y="128" width="20" height="20" fill="rgba(0,229,255,0.08)" stroke="#00e5ff" stroke-width="1.8" filter="url(#sf-glow)"/>
+          <polygon points="34,140 44,122 24,122" fill="rgba(105,255,71,0.08)" stroke="#69ff47" stroke-width="1.8" filter="url(#sf-glow)"/>
+          <circle cx="110" cy="98" r="3.5" fill="#a060ff" filter="url(#sf-glow)" opacity="0.9"/>
+        </svg>
+        <div class="sf-title">
+          <span class="sf-sancta">SANCTA</span>
+          <span class="sf-forma">FORMA</span>
+        </div>
+        <p class="sf-tagline">Restore the balance</p>
+      </div>
+      <div style="margin-top:auto"></div>
+      <div class="title-btn-row">
+        <button class="title-btn" id="title-how">HOW</button>
+        <button class="title-btn primary" id="title-begin">ENTER THE RITES</button>
+        <button class="title-btn" id="title-why">WHY</button>
+      </div>
+    `;
+
+    this.container.appendChild(screen);
+    requestAnimationFrame(() => screen.classList.add('visible'));
+
+    screen.querySelector('#title-how').addEventListener('click', () => this.showHowToPlay());
+    screen.querySelector('#title-begin').addEventListener('click', () => this.showLevelSelect());
+    screen.querySelector('#title-why').addEventListener('click', () => this.showNarrative());
+  }
+
+  showHowToPlay() {
+    clearLevelBg();
+    this.container.innerHTML = '';
+
+    const screen = document.createElement('div');
+    screen.className = 'screen';
+    screen.innerHTML = `
+      <div class="howto-screen">
+        <div class="screen-header">
+          <h2 class="eerie-h2" style="margin-bottom:4px">How to Play</h2>
+          <p class="sf-tagline" style="margin-bottom:32px">The grammar of absorption</p>
+        </div>
+
+        <div class="howto-section">
+          <div class="howto-label">The Three Forms</div>
+          <p class="howto-rule"><span class="arcane" style="color:#e040fb">●</span> Circle &nbsp;&nbsp;<span class="arcane" style="color:#00e5ff">■</span> Square &nbsp;&nbsp;<span class="arcane" style="color:#69ff47">▲</span> Triangle</p>
+          <p class="howto-rule">You begin as one pure form. Absorb shapes by moving into them.</p>
+        </div>
+
+        <div class="howto-section">
+          <div class="howto-label">Absorption Rules</div>
+          <p class="howto-rule"><span class="good">Absorb your own kind</span> — Essence <span>+10</span>, Corruption clears.</p>
+          <p class="howto-rule"><span class="warn">Absorb a foreign shape</span> — Essence <span>+3</span>, Corruption <span>+1</span>.</p>
+          <p class="howto-rule"><span class="danger">Corruption at the threshold</span> — the form dissolves. Death.</p>
+        </div>
+
+        <div class="howto-section">
+          <div class="howto-label">Transit &amp; Transformation</div>
+          <p class="howto-rule">Squares and triangles are <span class="arcane">transit pairs</span>.</p>
+          <p class="howto-rule">Stepping into your transit shape <span class="arcane">transforms</span> you — no cost, no score.</p>
+          <p class="howto-rule">While transformed, absorb your <span class="good">original form</span> to cleanse and reclaim your kin bonus.</p>
+          <p class="howto-rule"><span class="danger">Absorbing your current form</span> while transformed is fatal.</p>
+        </div>
+
+        <div class="howto-section">
+          <div class="howto-label">Victory</div>
+          <p class="howto-rule">Gather enough Essence to complete the rite. The threshold is shown in your panel.</p>
+        </div>
+
+        <div style="text-align:center; margin-top:32px">
+          <button class="title-btn primary" id="howto-back">← Return</button>
+        </div>
+      </div>
+    `;
+
+    this.container.appendChild(screen);
+    requestAnimationFrame(() => screen.classList.add('visible'));
+    screen.querySelector('#howto-back').addEventListener('click', () => this.showTitle());
+  }
+
   showNarrative() {
     clearLevelBg();
     this.container.innerHTML = '';
@@ -273,7 +374,7 @@ export class GameScreen {
 
       inner.querySelector('#narr-next')?.addEventListener('click', () => advance('next'));
       inner.querySelector('#narr-begin')?.addEventListener('click', () => advance(() => this.showLevelSelect()));
-      inner.querySelector('#narr-skip')?.addEventListener('click',  () => advance(() => this.showLevelSelect()));
+      inner.querySelector('#narr-skip')?.addEventListener('click',  () => this.showTitle());
     };
 
     renderPassage(passageIdx);
