@@ -229,6 +229,7 @@ export class GameScreen {
     screen.className = 'screen';
     screen.innerHTML = `
       <div class="howto-screen">
+        <div style="height:154px;flex-shrink:0"></div>
         <div class="screen-header">
           <h2 class="eerie-h2" style="margin-bottom:4px">How to Play</h2>
           <p class="sf-tagline" style="margin-bottom:32px">The grammar of absorption</p>
