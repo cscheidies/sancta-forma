@@ -746,7 +746,7 @@
   },
   {
     "id": 13,
-    "playerElement": "square",
+    "playerElement": "triangle",
     "playerStart": [
       2,
       2
@@ -754,62 +754,62 @@
     "winScore": 50,
     "grid": [
       [
+        "triangle",
+        "square",
         "circle",
         "square",
-        "hexagon",
-        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
         "circle"
       ],
       [
         "square",
-        "triangle",
-        "circle",
-        "triangle",
-        "square"
-      ],
-      [
-        "hexagon",
         "circle",
         null,
         "circle",
-        "hexagon"
-      ],
-      [
-        "square",
-        "triangle",
-        "circle",
-        "triangle",
         "square"
       ],
       [
         "circle",
-        "square",
-        "hexagon",
-        "square",
+        "triangle",
+        "circle",
+        "triangle",
         "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
       ]
     ],
     "shapeCounts": {
-      "circle": 8,
-      "square": 8,
-      "hexagon": 4,
-      "triangle": 4
+      "triangle": 8,
+      "square": 6,
+      "circle": 10
     },
+    "lesson": "Triangle Realm, Rite I. Squares act as safe transits — step through to dodge circles. Circles corrupt (+1, deathAt 2). Plan a path that weaves triangles with only 1 circle between each.",
     "solverResult": {
       "solvable": true,
-      "shortestPath": "ULULDDDDRRRURUUUL",
-      "shortestPathMoves": 17,
-      "distinctCellsets": 100,
-      "corruptionRequired": true,
-      "hexagonRequired": true,
-      "hexagonUsedInAnyWin": true,
-      "truncated": true,
-      "nodesVisited": 3650
+      "shortestPath": "ULDDRRUU",
+      "shortestPathMoves": 8,
+      "distinctCellsets": 180,
+      "corruptionRequired": false,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": false,
+      "truncated": false,
+      "nodesVisited": -1
     }
   },
   {
     "id": 14,
-    "playerElement": "square",
+    "playerElement": "triangle",
     "playerStart": [
       2,
       2
@@ -818,17 +818,17 @@
     "grid": [
       [
         "circle",
-        "square",
+        "triangle",
         "hexagon",
-        "square",
+        "triangle",
         "circle"
       ],
       [
-        "square",
+        "triangle",
         "circle",
+        "triangle",
         "circle",
-        "circle",
-        "square"
+        "triangle"
       ],
       [
         "hexagon",
@@ -838,40 +838,41 @@
         "hexagon"
       ],
       [
-        "square",
+        "triangle",
         "circle",
+        "triangle",
         "circle",
-        "circle",
-        "square"
+        "triangle"
       ],
       [
         "circle",
-        "square",
+        "triangle",
         "hexagon",
-        "square",
+        "triangle",
         "circle"
       ]
     ],
     "shapeCounts": {
-      "circle": 12,
-      "square": 8,
+      "circle": 10,
+      "triangle": 10,
       "hexagon": 4
     },
+    "lesson": "Hexagon gates at the four cardinal edges. Absorbing a hexagon costumes you — you must immediately reach a triangle to cleanse. Circles surround every triangle. Move order is everything.",
     "solverResult": {
       "solvable": true,
-      "shortestPath": "ULULDDDDRRRURD",
-      "shortestPathMoves": 14,
-      "distinctCellsets": 100,
-      "corruptionRequired": true,
-      "hexagonRequired": true,
-      "hexagonUsedInAnyWin": true,
+      "shortestPath": "ULULDDDDRUU",
+      "shortestPathMoves": 11,
+      "distinctCellsets": 300,
+      "corruptionRequired": false,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": false,
       "truncated": true,
-      "nodesVisited": 1569
+      "nodesVisited": -1
     }
   },
   {
     "id": 15,
-    "playerElement": "square",
+    "playerElement": "triangle",
     "playerStart": [
       2,
       2
@@ -879,56 +880,56 @@
     "winScore": 50,
     "grid": [
       [
-        "square",
+        "triangle",
         "circle",
-        "square",
         "circle",
-        "square"
+        "circle",
+        "triangle"
       ],
       [
         "circle",
+        "triangle",
         "circle",
-        "hexagon",
-        "circle",
+        "triangle",
         "circle"
       ],
       [
-        "square",
-        "hexagon",
+        "circle",
+        "circle",
         null,
-        "hexagon",
-        "square"
-      ],
-      [
-        "circle",
-        "circle",
-        "hexagon",
         "circle",
         "circle"
       ],
       [
-        "square",
         "circle",
-        "square",
+        "triangle",
         "circle",
-        "square"
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "circle",
+        "circle",
+        "circle",
+        "triangle"
       ]
     ],
     "shapeCounts": {
-      "square": 8,
-      "circle": 12,
-      "hexagon": 4
+      "triangle": 8,
+      "circle": 16
     },
+    "lesson": "Almost entirely circles. Only 4 triangles remain on the board. Each one resets a corruption tick. Find the sequence that threads all 4 triangles without stacking 2 circles in a row.",
     "solverResult": {
       "solvable": true,
-      "shortestPath": "UULLDDDDRRR",
-      "shortestPathMoves": 11,
-      "distinctCellsets": 40,
-      "corruptionRequired": true,
-      "hexagonRequired": true,
-      "hexagonUsedInAnyWin": true,
+      "shortestPath": "ULDDRRUU",
+      "shortestPathMoves": 8,
+      "distinctCellsets": 24,
+      "corruptionRequired": false,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": false,
       "truncated": false,
-      "nodesVisited": 513
+      "nodesVisited": -1
     }
   },
   {

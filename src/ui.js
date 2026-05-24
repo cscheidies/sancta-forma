@@ -87,14 +87,20 @@ import {
 
 // ── Realm definitions ─────────────────────────────────────────────────────
 const REALMS = [
-  { id: 1, name: 'The First Rites',    levelIds: [1,2,3,4,5,6]    },
-  { id: 2, name: 'The Hexagon Rites',  levelIds: [7,8,9,10,11,12] },
-  { id: 3, name: 'The Hexagon Chase',  levelIds: [13,14,15,16,17,18] },
+  { id: 1, name: 'The First Rites',      levelIds: [1,2,3,4,5,6]       },
+  { id: 2, name: 'The Rites of Passage', levelIds: [7,8,9,10,11,12]    },
+  { id: 3, name: 'The Triangle Rites',   levelIds: [13,14,15,16,17,18] },
   // Future realms appended here
 ];
 
 function getRealmForLevel(levelId) {
   return REALMS.find(r => r.levelIds.includes(levelId)) || REALMS[0];
+}
+
+// Returns the 0-based position of a level within its realm (0–5 → Rite I–VI)
+function riteIndex(levelId) {
+  const realm = getRealmForLevel(levelId);
+  return realm.levelIds.indexOf(levelId); // -1 if not found → fallback
 }
 
 function isRealmUnlocked(realmId, progress) {
@@ -152,7 +158,8 @@ function updateHUD(hud, state) {
   const { player } = state;
   const rules      = RULES[player.element];
   const corrMax    = rules.deathAt - 1; // max safe corruption (deathAt is instant kill)
-  const roman      = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][parseInt(hud.dataset.level) - 1] || hud.dataset.level;
+  const _rIdx = riteIndex(parseInt(hud.dataset.level));
+  const roman = ['I','II','III','IV','V','VI'][_rIdx] ?? hud.dataset.level;
 
   hud.querySelector('.hud-level').textContent = `✦ Rite ${roman}`;
   hud.querySelector('.hud-score').textContent = `${player.score} / ${state.winScore}`;
@@ -523,7 +530,7 @@ export class GameScreen {
       if (isCompleted) card.classList.add('completed');
       card.style.setProperty('--elem-color', ELEMENT_COLORS[level.playerElement]);
 
-      const roman = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'][level.id - 1] || level.id;
+      const roman = ['I','II','III','IV','V','VI'][riteIndex(level.id)] ?? level.id;
       card.innerHTML = `
         <div class="card-rite">Rite</div>
         <div class="card-num">${roman}</div>
