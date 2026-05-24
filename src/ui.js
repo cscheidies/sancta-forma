@@ -33,12 +33,12 @@ const LEVEL_CELL_OPACITY = {
   10: 0.42,
   11: 0.42,
   12: 0.38,
-  13: 0.48,  // bright full-moon mountain sky
-  14: 0.42,  // purple night, moderate
-  15: 0.34,  // dark misty green
+  13: 0.34,  // dark misty green (dense hex columns)
+  14: 0.34,
+  15: 0.34,
   16: 0.34,
-  17: 0.34,
-  18: 0.34,
+  17: 0.42,  // purple night, moderate
+  18: 0.48,  // bright full-moon mountain sky — finale
 };
 function levelCellOpacity(levelId) {
   return LEVEL_CELL_OPACITY[levelId] ?? 0.22;
