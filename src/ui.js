@@ -46,6 +46,7 @@ function clearLevelBg() {
   if (b) b.style.opacity = '0';
   const starfield = document.getElementById('starfield');
   if (starfield) starfield.style.opacity = '1';
+  document.getElementById('lore-overlay')?.remove();
 }
 
 import {
@@ -500,6 +501,41 @@ export class GameScreen {
     document.addEventListener('keydown', this._keyHandler);
 
     this._render();
+
+    // Lore overlay — fade each line in/out over the background
+    this._playLoreOverlay(level.lore);
+  }
+
+  _playLoreOverlay(lines) {
+    // Remove any existing overlay
+    document.getElementById('lore-overlay')?.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'lore-overlay';
+    document.body.appendChild(overlay);
+
+    const text = document.createElement('p');
+    overlay.appendChild(text);
+
+    let i = 0;
+    const FADE_MS  = 1100;
+    const HOLD_MS  = 2600;
+
+    const next = () => {
+      if (!document.body.contains(overlay)) return; // navigated away
+      if (i >= lines.length) { overlay.remove(); return; }
+
+      text.textContent = lines[i];
+      text.style.opacity = '1';
+
+      setTimeout(() => {
+        text.style.opacity = '0';
+        setTimeout(() => { i++; next(); }, FADE_MS);
+      }, HOLD_MS);
+    };
+
+    // Brief pause so the bg crossfade starts first
+    setTimeout(next, 700);
   }
 
   _onKey(e) {
