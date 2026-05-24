@@ -100,42 +100,48 @@ function _drawShapeSVG(svgEl, element, corruption) {
 
 function updateHUD(hud, state) {
   const { player } = state;
-  const rules = RULES[player.element];
-  const color = ELEMENT_COLORS[player.element];
+  const rules      = RULES[player.element];
+  const corrMax    = rules.deathAt - 1; // max safe corruption (deathAt is instant kill)
+  const roman      = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][parseInt(hud.dataset.level) - 1] || hud.dataset.level;
 
-  hud.querySelector('.hud-level').textContent = `Level ${hud.dataset.level}`;
+  hud.querySelector('.hud-level').textContent = `✦ Rite ${roman}`;
   hud.querySelector('.hud-score').textContent = `${player.score} / ${state.winScore}`;
   hud.querySelector('.hud-score').style.color = player.score >= state.winScore ? '#69ff47' : '#fff';
 
-  const corrMax = rules.maxCorruption;
   const corrEl = hud.querySelector('.hud-corruption');
   corrEl.textContent = `${player.corruption} / ${corrMax}`;
+  if      (player.corruption === 0)        corrEl.style.color = '#69ff47';
+  else if (player.corruption < corrMax)    corrEl.style.color = '#ffcc00';
+  else                                     corrEl.style.color = '#ff4747';
 
-  // Colour-code corruption: green→yellow→red
-  if (player.corruption === 0) corrEl.style.color = '#69ff47';
-  else if (player.corruption < corrMax) corrEl.style.color = '#ffcc00';
-  else corrEl.style.color = '#ff4747';
-
-  // Current form (with corruption morphing)
-  _drawShapeSVG(hud.querySelector('.hud-player-mini'), player.element, player.corruption);
-
-  // Origin shape (always shown, static clean outline)
+  // Origin shape (always static)
   _drawShapeSVG(hud.querySelector('.hud-origin-svg'), player.originalElement, 0);
   const originNameEl = hud.querySelector('.hud-origin-name');
   originNameEl.textContent = player.originalElement.toUpperCase();
   originNameEl.style.color = ELEMENT_COLORS[player.originalElement];
 
-  // Current form name
+  // Current manifest form
+  _drawShapeSVG(hud.querySelector('.hud-player-mini'), player.element, player.corruption);
   const currentNameEl = hud.querySelector('.hud-current-name');
-  const isMutated = player.corruption > 0;
-  currentNameEl.textContent = isMutated
-    ? `${player.originalElement.toUpperCase()} +${player.corruption}`
-    : player.originalElement.toUpperCase();
-  currentNameEl.style.color = isMutated ? '#ffcc00' : ELEMENT_COLORS[player.originalElement];
+  const arrow         = hud.querySelector('.hud-identity-arrow');
 
-  // Arrow colour — warn when corrupted
-  const arrow = hud.querySelector('.hud-identity-arrow');
-  if (arrow) arrow.style.color = isMutated ? '#ffcc00' : '#3d4d5e';
+  if (player.transformed) {
+    // Transformed — flash red warning, show current (foreign) element
+    currentNameEl.textContent = `${player.element.toUpperCase()} ⚠`;
+    currentNameEl.style.color = '#ff4747';
+    if (arrow) arrow.style.color = '#ff4747';
+    hud.style.boxShadow = '0 0 18px rgba(255,40,40,0.45), inset 0 0 20px rgba(200,20,20,0.12)';
+  } else if (player.corruption > 0) {
+    currentNameEl.textContent = player.element.toUpperCase();
+    currentNameEl.style.color = '#ffcc00';
+    if (arrow) arrow.style.color = '#ffcc00';
+    hud.style.boxShadow = '';
+  } else {
+    currentNameEl.textContent = player.element.toUpperCase();
+    currentNameEl.style.color = ELEMENT_COLORS[player.element];
+    if (arrow) arrow.style.color = '#3d4d5e';
+    hud.style.boxShadow = '';
+  }
 }
 
 // ─── Game screen ──────────────────────────────────────────────────────────
@@ -506,6 +512,19 @@ export class GameScreen {
     this._playLoreOverlay(level.lore);
   }
 
+  _showTransformHint(nowEl, revertEl) {
+    document.getElementById('transform-hint')?.remove();
+    const el = document.createElement('div');
+    el.id = 'transform-hint';
+    el.textContent = `Transformed → ${nowEl.toUpperCase()} — absorb ${revertEl.toUpperCase()} to revert`;
+    document.body.appendChild(el);
+    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('visible')));
+    setTimeout(() => {
+      el.classList.remove('visible');
+      setTimeout(() => el.remove(), 700);
+    }, 2200);
+  }
+
   _playLoreOverlay(lines) {
     // Remove any existing overlay
     document.getElementById('lore-overlay')?.remove();
@@ -571,7 +590,11 @@ export class GameScreen {
       else if (event.type === 'nemesis') sfx.absorbNemesis(event.absorbed);
       else if (event.type === 'cross')   sfx.absorbCross(event.absorbed);
       else if (event.type === 'safe')    sfx.absorbSafe();
-      else if (event.type === 'transform') sfx.transform(this.state.player.element);
+      else if (event.type === 'transform') {
+        sfx.transform(this.state.player.element);
+        // Brief on-screen hint so player knows what happened
+        this._showTransformHint(this.state.player.element, this.state.player.originalElement);
+      }
 
       // Near-death warning: fire when corruption first reaches deathAt-1
       if (this.state.status === 'playing' && event.corruptionDelta > 0) {
