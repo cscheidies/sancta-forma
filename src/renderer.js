@@ -127,45 +127,64 @@ function drawGridShape(type, col, row) {
   return svgEl('path', { d: pathD, fill, 'fill-opacity':fillOpacity, stroke:color, 'stroke-width':sw, opacity });
 }
 
-// Draw the player shape with corruption state applied
-function drawPlayer(element, corruption, col, row) {
+// Pentagon path for costumed-square state
+function pentagonPath(cx, cy, r) {
+  const pts = Array.from({length:5}, (_,i) => {
+    const a = i * (2*Math.PI/5) - Math.PI/2;
+    return `${(cx + r*Math.cos(a)).toFixed(2)},${(cy + r*Math.sin(a)).toFixed(2)}`;
+  });
+  return `M ${pts.join(' L ')} Z`;
+}
+
+// Draw the player shape with corruption and costumed state applied
+function drawPlayer(element, corruption, col, row, costumed = false, originalElement = null) {
   const cx = col * CELL_SIZE + CELL_SIZE / 2;
   const cy = row * CELL_SIZE + CELL_SIZE / 2;
-  const color = ELEMENT_COLORS[element];
   const x = col * CELL_SIZE + PLAYER_PAD;
   const y = row * CELL_SIZE + PLAYER_PAD;
   const w = CELL_SIZE - PLAYER_PAD * 2;
   const h = CELL_SIZE - PLAYER_PAD * 2;
+  const r = w / 2;
 
+  // Costumed state — special visual: must cleanse immediately
+  const WARN = '#ff6020'; // orange-red warning colour
+  if (costumed && originalElement === 'square') {
+    // Pentagon (square absorbed hexagon)
+    const pentD = pentagonPath(cx, cy, r * 0.88);
+    const g = svgEl('g', { class: 'player-shape player-costumed' });
+    g.appendChild(svgEl('path', { d: pentD, fill: WARN, 'fill-opacity':'0.15', stroke: WARN, 'stroke-width':'3.5', filter:'url(#glow)' }));
+    g.appendChild(svgEl('path', { d: pentD, fill:'none', stroke: WARN, 'stroke-width':'2' }));
+    // Faint original square ghost inside
+    const sqD = squarePath(x + 14, y + 14, w - 28, h - 28, 0);
+    g.appendChild(svgEl('path', { d: sqD, fill:'none', stroke: ELEMENT_COLORS.square, 'stroke-width':'1', opacity:'0.35' }));
+    return g;
+  }
+  if (costumed && originalElement === 'triangle') {
+    // Square-shaped costume with faint triangle inside
+    const g = svgEl('g', { class: 'player-shape player-costumed' });
+    const sqD = `M ${x},${y} L ${x+w},${y} L ${x+w},${y+h} L ${x},${y+h} Z`;
+    g.appendChild(svgEl('path', { d: sqD, fill: WARN, 'fill-opacity':'0.15', stroke: WARN, 'stroke-width':'3.5', filter:'url(#glow)' }));
+    g.appendChild(svgEl('path', { d: sqD, fill:'none', stroke: WARN, 'stroke-width':'2' }));
+    // Faint triangle inside
+    const triD = trianglePath(cx, cy, w - 20, 0);
+    g.appendChild(svgEl('path', { d: triD, fill:'none', stroke: ELEMENT_COLORS.triangle, 'stroke-width':'1', opacity:'0.35' }));
+    return g;
+  }
+
+  // Normal player rendering (unchanged)
+  const color = ELEMENT_COLORS[element];
   let pathD;
   if (element === 'square') {
     pathD = squarePath(x, y, w, h, corruption);
   } else if (element === 'circle') {
-    const r = w / 2;
     pathD = circlePath(cx, cy, r, corruption);
   } else {
     pathD = trianglePath(cx, cy, w, corruption);
   }
 
   const g = svgEl('g', { class: 'player-shape' });
-
-  // Glow effect
-  g.appendChild(svgEl('path', {
-    d: pathD,
-    fill: color,
-    'fill-opacity': '0.18',
-    stroke: color,
-    'stroke-width': '4',
-    filter: 'url(#glow)',
-  }));
-  // Solid inner stroke
-  g.appendChild(svgEl('path', {
-    d: pathD,
-    fill: 'none',
-    stroke: color,
-    'stroke-width': '2.5',
-  }));
-
+  g.appendChild(svgEl('path', { d: pathD, fill: color, 'fill-opacity':'0.18', stroke: color, 'stroke-width':'4', filter:'url(#glow)' }));
+  g.appendChild(svgEl('path', { d: pathD, fill:'none', stroke: color, 'stroke-width':'2.5' }));
   return g;
 }
 
@@ -296,12 +315,30 @@ export function renderState(svg, state) {
     }
   }
 
+  // Hexagon danger highlight (more visible than normal nemesis overlay)
+  for (let r = 0; r < 5; r++) {
+    for (let c = 0; c < 5; c++) {
+      const cell = grid[r][c];
+      if (cell?.type === 'hexagon') {
+        shapesLayer.appendChild(svgEl('rect', {
+          x: c * CELL_SIZE + 2, y: r * CELL_SIZE + 2,
+          width: CELL_SIZE - 4, height: CELL_SIZE - 4,
+          fill: 'rgba(200,100,20,0.10)',
+          stroke: 'rgba(200,100,20,0.55)',
+          'stroke-width': '1.5',
+          rx: '4',
+          'pointer-events': 'none',
+        }));
+      }
+    }
+  }
+
   // Draw player
   const [pr, pc] = player.position;
-  playerLayer.appendChild(drawPlayer(player.element, player.corruption, pc, pr));
+  playerLayer.appendChild(drawPlayer(player.element, player.corruption, pc, pr, player.costumed, player.originalElement));
 
-  // Draw ghost of original element (only if corrupted)
-  if (player.corruption > 0) {
+  // Draw ghost of original element (only if corrupted or costumed)
+  if (player.corruption > 0 || player.costumed) {
     playerLayer.appendChild(drawOriginalGhost(player.originalElement, pc, pr));
   }
 

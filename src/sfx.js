@@ -163,6 +163,42 @@ export function transform(newElement) {
   noise(0.03, 3000, 0.12, now);
 }
 
+// ── Hexagon costume ────────────────────────────────────────────────────────
+// Dissonant grinding thud — alien geometry forcing its shape
+export function costume() {
+  const c = ctx();
+  const now = c.currentTime;
+  // Low grinding tone
+  [70, 74.5, 105].forEach(freq => {
+    const osc = c.createOscillator();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(freq, now);
+    osc.frequency.linearRampToValueAtTime(freq * 0.85, now + 0.3);
+    const g = c.createGain();
+    g.gain.setValueAtTime(0.06, now);
+    g.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+    osc.connect(g); g.connect(c.destination);
+    osc.start(now); osc.stop(now + 0.4);
+  });
+  noise(0.04, 400, 0.2, now);
+}
+
+// ── Costume cleanse ────────────────────────────────────────────────────────
+// Clean ascending tone — form restored
+export function cleanse() {
+  const c = ctx();
+  const now = c.currentTime;
+  const osc = c.createOscillator();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(260, now);
+  osc.frequency.exponentialRampToValueAtTime(520, now + 0.18);
+  const g = c.createGain();
+  g.gain.setValueAtTime(0.10, now);
+  g.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+  osc.connect(g); g.connect(c.destination);
+  osc.start(now); osc.stop(now + 0.3);
+}
+
 // ── Safe transit ───────────────────────────────────────────────────────────
 // Soft whoosh — lowpass-filtered noise sweep
 export function absorbSafe() {

@@ -13,7 +13,7 @@
     "grid": [
       ["triangle", "square",   "triangle", "square",   "triangle"],
       ["square",   "square",   "triangle", "square",   "square"  ],
-      ["triangle", "triangle", "square",   "triangle", "triangle"],
+      ["triangle", "triangle", null,       "triangle", "triangle"],
       ["square",   "square",   "triangle", "square",   "square"  ],
       ["triangle", "square",   "triangle", "square",   "triangle"]
     ]
@@ -30,11 +30,11 @@
       "Find your kin before the curves consume you."
     ],
     "grid": [
-      ["triangle", "circle",   "circle", "square",   "triangle"],
-      ["circle",   "square",   "circle", "circle",   "circle"  ],
-      ["square",   "circle",   "square", "circle",   "triangle"],
-      ["triangle", "circle",   "circle", "square",   "circle"  ],
-      ["circle",   "square",   "triangle","circle",  "square"  ]
+      ["triangle", "circle",   "circle",   "square",   "triangle"],
+      ["circle",   "square",   "circle",   "circle",   "circle"  ],
+      ["square",   "circle",   null,       "circle",   "triangle"],
+      ["triangle", "circle",   "circle",   "square",   "circle"  ],
+      ["circle",   "square",   "triangle", "circle",   "square"  ]
     ]
   },
   {
@@ -51,7 +51,7 @@
     "grid": [
       ["square", "circle", "square", "circle", "square"],
       ["circle", "circle", "circle", "circle", "circle"],
-      ["square", "circle", "circle", "circle", "square"],
+      ["square", "circle", null,     "circle", "square"],
       ["circle", "circle", "circle", "circle", "circle"],
       ["square", "circle", "square", "circle", "square"]
     ]
@@ -68,11 +68,11 @@
       "Navigate the pattern. Every choice is permanent."
     ],
     "grid": [
-      ["circle",   "square", "triangle", "square", "circle"  ],
-      ["square",   "circle", "square",   "circle", "square"  ],
-      ["triangle", "square", "circle",   "square", "triangle"],
-      ["square",   "circle", "square",   "circle", "square"  ],
-      ["circle",   "square", "triangle", "square", "circle"  ]
+      ["circle",   "square",   "triangle", "square",   "circle"  ],
+      ["square",   "circle",   "square",   "circle",   "square"  ],
+      ["triangle", "square",   null,       "square",   "triangle"],
+      ["square",   "circle",   "square",   "circle",   "square"  ],
+      ["circle",   "square",   "triangle", "square",   "circle"  ]
     ]
   },
   {
@@ -89,7 +89,7 @@
     "grid": [
       ["square",   "triangle", "square",   "triangle", "square"  ],
       ["triangle", "triangle", "square",   "triangle", "triangle"],
-      ["square",   "square",   "triangle", "square",   "square"  ],
+      ["square",   "square",   null,       "square",   "square"  ],
       ["triangle", "triangle", "square",   "triangle", "triangle"],
       ["square",   "triangle", "square",   "triangle", "square"  ]
     ]
@@ -106,11 +106,125 @@
       "Stay sharp. Do not let the curves consume you."
     ],
     "grid": [
-      ["square",   "circle", "circle",   "triangle", "square"  ],
-      ["circle",   "triangle","circle",  "circle",   "circle"  ],
-      ["triangle", "circle", "triangle", "circle",   "square"  ],
-      ["square",   "circle", "circle",   "triangle", "circle"  ],
-      ["circle",   "triangle","square",  "circle",   "triangle"]
+      ["square",   "circle",   "circle",   "triangle", "square"  ],
+      ["circle",   "triangle", "circle",   "circle",   "circle"  ],
+      ["triangle", "circle",   null,       "circle",   "square"  ],
+      ["square",   "circle",   "circle",   "triangle", "circle"  ],
+      ["circle",   "triangle", "square",   "circle",   "triangle"]
+    ]
+  },
+  {
+    "id": 7,
+    "name": "The Intrusion",
+    "playerElement": "square",
+    "playerStart": [2, 2],
+    "winScore": 50,
+    "lore": [
+      "A new geometry has entered the grid.",
+      "One alien form. Irregular. Dangerous.",
+      "Route around it. The hexagon is not yours to take."
+    ],
+    "grid": [
+      ["triangle", "square",   "triangle", "square",   "triangle"],
+      ["square",   "square",   "hexagon",  "square",   "square"  ],
+      ["triangle", "triangle", null,       "triangle", "triangle"],
+      ["square",   "square",   "triangle", "square",   "square"  ],
+      ["triangle", "square",   "triangle", "square",   "triangle"]
+    ]
+  },
+  {
+    "id": 8,
+    "name": "The Breach",
+    "playerElement": "square",
+    "playerStart": [2, 2],
+    "winScore": 50,
+    "lore": [
+      "Two now. They multiply.",
+      "The familiar squares are still here — reach them.",
+      "Do not let the hexagons claim you."
+    ],
+    "grid": [
+      ["square",   "hexagon",  "square",   "hexagon",  "square"  ],
+      ["triangle", "square",   "triangle", "square",   "triangle"],
+      ["square",   "triangle", null,       "triangle", "square"  ],
+      ["triangle", "square",   "triangle", "square",   "triangle"],
+      ["square",   "triangle", "square",   "triangle", "square"  ]
+    ]
+  },
+  {
+    "id": 9,
+    "name": "The Forbidden Cell",
+    "playerElement": "circle",
+    "playerStart": [2, 2],
+    "winScore": 50,
+    "lore": [
+      "You are Circle. The hexagon is death.",
+      "One cell forbidden. Absolute.",
+      "Find the path that avoids it."
+    ],
+    "grid": [
+      ["circle",   "square",   "circle",   "square",   "circle"  ],
+      ["square",   "circle",   "circle",   "circle",   "square"  ],
+      ["triangle", "circle",   null,       "circle",   "triangle"],
+      ["square",   "circle",   "hexagon",  "circle",   "square"  ],
+      ["circle",   "square",   "circle",   "square",   "circle"  ]
+    ]
+  },
+  {
+    "id": 10,
+    "name": "The Corridor",
+    "playerElement": "circle",
+    "playerStart": [2, 2],
+    "winScore": 50,
+    "lore": [
+      "Two forbidden cells now.",
+      "The circles remain. The hexagons do not move.",
+      "Navigate the space between them."
+    ],
+    "grid": [
+      ["square",   "circle",   "hexagon",  "circle",   "square"  ],
+      ["circle",   "circle",   "triangle", "circle",   "circle"  ],
+      ["triangle", "circle",   null,       "circle",   "triangle"],
+      ["circle",   "circle",   "triangle", "circle",   "circle"  ],
+      ["square",   "circle",   "hexagon",  "circle",   "square"  ]
+    ]
+  },
+  {
+    "id": 11,
+    "name": "The Reshaping",
+    "playerElement": "triangle",
+    "playerStart": [2, 2],
+    "winScore": 50,
+    "lore": [
+      "The hexagons have entered your domain.",
+      "Touch one and it reshapes you. Cleanse immediately.",
+      "The shape beneath remembers what you are."
+    ],
+    "grid": [
+      ["square",   "triangle", "hexagon",  "triangle", "square"  ],
+      ["triangle", "square",   "triangle", "square",   "triangle"],
+      ["square",   "triangle", null,       "triangle", "square"  ],
+      ["triangle", "square",   "triangle", "square",   "triangle"],
+      ["square",   "triangle", "hexagon",  "triangle", "square"  ]
+    ]
+  },
+  {
+    "id": 12,
+    "name": "The Mature Board",
+    "playerElement": "triangle",
+    "playerStart": [2, 2],
+    "winScore": 50,
+    "lore": [
+      "Three of them. The board has changed.",
+      "Route through the angles. Avoid the alien forms.",
+      "The balance can still be restored."
+    ],
+    "grid": [
+      ["hexagon",  "triangle", "square",   "triangle", "hexagon" ],
+      ["triangle", "triangle", "triangle", "triangle", "triangle"],
+      ["square",   "triangle", null,       "triangle", "square"  ],
+      ["triangle", "square",   "triangle", "square",   "triangle"],
+      ["square",   "triangle", "hexagon",  "triangle", "square"  ]
     ]
   }
 ]

@@ -9,7 +9,7 @@ export const RULES = {
       square:   { score: 10, corruptionDelta: -1 },
       circle:   { score:  3, corruptionDelta:  1 },
       triangle: { score:  0, corruptionDelta:  0 }, // safe transit
-      hexagon:  { score:  8, corruptionDelta:  2 }, // nemesis — dangerous but rewarding
+      hexagon:  { score: -3, corruptionDelta:  0 }, // costume trigger — handled specially in applyMove
       star:     { score:  3, corruptionDelta:  1 },
       moon:     { score:  3, corruptionDelta:  1 },
     },
@@ -23,7 +23,7 @@ export const RULES = {
       circle:   { score: 10, corruptionDelta: -1 },
       square:   { score:  3, corruptionDelta:  1 },
       triangle: { score:  3, corruptionDelta:  1 },
-      hexagon:  { score:  3, corruptionDelta:  1 },
+      hexagon:  { score:  0, corruptionDelta:  0 }, // illegal — blocked in getValidMoves
       star:     { score:  3, corruptionDelta:  1 },
       moon:     { score:  8, corruptionDelta:  2 }, // nemesis — instant death
     },
@@ -37,7 +37,7 @@ export const RULES = {
       triangle: { score: 10, corruptionDelta: -1 },
       circle:   { score:  3, corruptionDelta:  1 },
       square:   { score:  0, corruptionDelta:  0 }, // safe transit
-      hexagon:  { score:  3, corruptionDelta:  1 },
+      hexagon:  { score: -3, corruptionDelta:  0 }, // costume trigger — handled specially in applyMove
       star:     { score:  8, corruptionDelta:  2 }, // nemesis — instant death
       moon:     { score:  3, corruptionDelta:  1 },
     },
@@ -64,6 +64,7 @@ export function initState(level) {
       position: [...level.playerStart],
       score: 0,
       transformed: false,  // true after absorbing a transit cell — must absorb original type next
+      costumed: false,     // true after absorbing a hexagon — must absorb same element to cleanse
     },
     grid,
     winScore: level.winScore ?? 50,
@@ -80,7 +81,15 @@ export function getValidMoves(state) {
     const nr = r + dr, nc = c + dc;
     if (nr < 0 || nr >= 5 || nc < 0 || nc >= 5) return false;
     const cell = state.grid[nr][nc];
-    return cell !== null; // any non-empty cell is enterable; applyMove handles death
+    if (!cell) return false;
+
+    // ── COSTUMED: only the player's base element is a legal move ──────────
+    if (state.player.costumed) return cell.type === state.player.element;
+
+    // ── HEXAGON: illegal for circle, and illegal while transformed ─────────
+    if (cell.type === 'hexagon' && (state.player.element === 'circle' || state.player.transformed)) return false;
+
+    return true;
   });
 }
 
@@ -101,9 +110,29 @@ export function applyMove(state, dir) {
   const TRANSIT_MAP = { square: 'triangle', triangle: 'square' };
   const transitTarget = TRANSIT_MAP[currentEl]; // what type transforms this player
 
-  let rule, newElement, newTransformed, absorbType;
+  let rule, newElement, newTransformed, newCostumed = false, absorbType;
 
-  if (state.player.transformed) {
+  if (state.player.costumed) {
+    // ── COSTUMED MANDATORY CLEANSE ───────────────────────────────────────
+    // Only same-element cell is legal (enforced by getValidMoves).
+    // Cleanse: 0 points, removes 1 corruption, exits costumed state.
+    rule           = { score: 0, corruptionDelta: -1 };
+    newElement     = currentEl;
+    newTransformed = false;
+    newCostumed    = false;
+    absorbType     = 'cleanse';
+
+  } else if (!state.player.transformed && absorbedType === 'hexagon') {
+    // ── HEXAGON ABSORPTION → COSTUMED ───────────────────────────────────
+    // Score penalty -3, no corruption change, player must cleanse next turn.
+    // (circle cannot absorb hexagon — blocked in getValidMoves)
+    rule           = { score: -3, corruptionDelta: 0 };
+    newElement     = currentEl;
+    newTransformed = false;
+    newCostumed    = true;
+    absorbType     = 'costume';
+
+  } else if (state.player.transformed) {
     // ── TRANSFORMED STATE ────────────────────────────────────────────────
     if (absorbedType === currentEl) {
       // Absorbing same-as-current while transformed → instant death
@@ -114,30 +143,30 @@ export function applyMove(state, dir) {
       return { ...state, player: killPlayer, grid: newGrid2, lastEvent: killEvent, status: 'lose-death' };
     } else if (absorbedType === originalEl) {
       // Absorbing original element while transformed → REVERT, award kin bonus
-      rule         = RULES[originalEl].absorb[originalEl]; // kin rule (+10, -1 corr)
-      newElement   = originalEl;
+      rule           = RULES[originalEl].absorb[originalEl];
+      newElement     = originalEl;
       newTransformed = false;
-      absorbType   = 'same';
+      absorbType     = 'same';
     } else {
-      // Absorbing a cross/neutral cell — normal rules for current (transformed) element
-      rule         = RULES[currentEl].absorb[absorbedType];
-      newElement   = currentEl;
+      // Cross/neutral cell — normal rules for current (transformed) element
+      rule           = RULES[currentEl].absorb[absorbedType];
+      newElement     = currentEl;
       newTransformed = true;
-      absorbType   = RULES[currentEl].nemesis === absorbedType ? 'nemesis' : 'cross';
+      absorbType     = RULES[currentEl].nemesis === absorbedType ? 'nemesis' : 'cross';
     }
   } else if (transitTarget && absorbedType === transitTarget) {
     // ── TRANSIT ABSORPTION → TRANSFORM ──────────────────────────────────
-    rule         = { score: 0, corruptionDelta: 0 }; // no score or corruption for transit
-    newElement   = transitTarget;
+    rule           = { score: 0, corruptionDelta: 0 };
+    newElement     = transitTarget;
     newTransformed = true;
-    absorbType   = 'transform';
+    absorbType     = 'transform';
   } else {
     // ── NORMAL ABSORPTION ────────────────────────────────────────────────
-    rule         = RULES[currentEl].absorb[absorbedType];
-    newElement   = currentEl;
+    rule           = RULES[currentEl].absorb[absorbedType];
+    newElement     = currentEl;
     newTransformed = false;
     const isNemesis = RULES[currentEl].nemesis === absorbedType;
-    absorbType   = absorbedType === currentEl ? 'same'
+    absorbType     = absorbedType === currentEl ? 'same'
       : isNemesis ? 'nemesis'
       : rule.score === 0 && rule.corruptionDelta === 0 ? 'safe'
       : 'cross';
@@ -153,6 +182,7 @@ export function applyMove(state, dir) {
     ...state.player,
     element:     newElement,
     transformed: newTransformed,
+    costumed:    newCostumed,
     position:    [nr, nc],
     score:       newScore,
     corruption:  newCorruption,
@@ -163,11 +193,12 @@ export function applyMove(state, dir) {
     scoreDelta: rule.score, corruptionDelta: rule.corruptionDelta,
     newScore, newCorruption,
     transformed: newTransformed,
+    costumed: newCostumed,
   };
 
   const newState = { ...state, player: newPlayer, grid: newGrid, lastEvent: event };
 
-  if (newScore >= newState.winScore)                            return { ...newState, status: 'win' };
+  if (newScore >= newState.winScore && !newCostumed)            return { ...newState, status: 'win' };
   if (newCorruption >= RULES[newElement].deathAt)              return { ...newState, status: 'lose-death' };
   if (getValidMoves(newState).length === 0)                    return { ...newState, status: 'lose-stuck' };
 
@@ -178,7 +209,10 @@ export function cloneState(state) {
   return {
     ...state,
     player: { ...state.player, position: [...state.player.position] },
-    grid: state.grid.map(row => row.map(cell => cell ? { type: cell.type } : null)),
+    grid:   state.grid.map(row => row.map(cell => cell ? { type: cell.type } : null)),
     lastEvent: state.lastEvent ? { ...state.lastEvent } : null,
   };
 }
+
+// ── Hexagon cell check (used by renderer) ────────────────────────────────────
+export const HEXAGON_ELEMENTS = new Set(['hexagon']);

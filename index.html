@@ -483,6 +483,15 @@
       background: transparent;
     }
 
+    /* ── Costumed player pulse ─────────────────────────────── */
+    .player-costumed {
+      animation: costume-pulse 0.7s ease-in-out infinite alternate;
+    }
+    @keyframes costume-pulse {
+      from { filter: drop-shadow(0 0 6px rgba(255,80,20,0.5)); }
+      to   { filter: drop-shadow(0 0 18px rgba(255,80,20,1.0)); }
+    }
+
     /* ── Valid-move hint pulse ─────────────────────────────── */
     .move-hint-pulse {
       animation: hint-pulse 1.2s ease-in-out infinite alternate;

@@ -155,7 +155,13 @@ function updateHUD(hud, state) {
   const currentNameEl = hud.querySelector('.hud-current-name');
   const arrow         = hud.querySelector('.hud-identity-arrow');
 
-  if (player.transformed) {
+  if (player.costumed) {
+    // Costumed — orange-red alarm, must cleanse next move
+    currentNameEl.textContent = `${player.element.toUpperCase()} ✦ CLEANSE`;
+    currentNameEl.style.color = '#ff6020';
+    if (arrow) arrow.style.color = '#ff6020';
+    hud.style.boxShadow = '0 0 22px rgba(255,80,20,0.55), inset 0 0 20px rgba(200,60,0,0.15)';
+  } else if (player.transformed) {
     // Transformed — flash red warning, show current (foreign) element
     currentNameEl.textContent = `${player.element.toUpperCase()} ⚠`;
     currentNameEl.style.color = '#ff4747';
@@ -685,7 +691,9 @@ export class GameScreen {
     document.getElementById('transform-hint')?.remove();
     const el = document.createElement('div');
     el.id = 'transform-hint';
-    el.textContent = `Transformed → ${nowEl.toUpperCase()} — absorb ${revertEl.toUpperCase()} to cleanse`;
+    el.textContent = nowEl === 'costumed'
+      ? `Hexagon absorbed — absorb ${revertEl.toUpperCase()} immediately to cleanse`
+      : `Transformed → ${nowEl.toUpperCase()} — absorb ${revertEl.toUpperCase()} to cleanse`;
     document.body.appendChild(el);
     requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('visible')));
     setTimeout(() => {
@@ -761,8 +769,14 @@ export class GameScreen {
       else if (event.type === 'safe')    sfx.absorbSafe();
       else if (event.type === 'transform') {
         sfx.transform(this.state.player.element);
-        // Brief on-screen hint so player knows what happened
         this._showTransformHint(this.state.player.element, this.state.player.originalElement);
+      }
+      else if (event.type === 'costume') {
+        sfx.costume?.();
+        this._showTransformHint('costumed', this.state.player.originalElement);
+      }
+      else if (event.type === 'cleanse') {
+        sfx.cleanse?.();
       }
 
       // Near-death warning: fire when corruption first reaches deathAt-1
