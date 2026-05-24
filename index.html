@@ -483,6 +483,36 @@
       background: transparent;
     }
 
+    /* ── Global fixed logo — always top-centre, never moves ─── */
+    #global-logo {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 60;
+      pointer-events: none;
+      text-align: center;
+      padding-top: 10px;
+    }
+    #global-logo .sf-sigil {
+      width: 90px;
+      height: 82px;
+      display: block;
+      margin: 0 auto;
+    }
+    #global-logo .sf-title {
+      margin-top: 2px;
+      line-height: 1.05;
+    }
+    #global-logo .sf-sancta {
+      font-size: 0.60rem;
+      letter-spacing: 0.30em;
+    }
+    #global-logo .sf-forma {
+      font-size: 1.15rem;
+      letter-spacing: 0.18em;
+    }
+
     /* ── Costumed player pulse ─────────────────────────────── */
     .player-costumed {
       animation: costume-pulse 0.7s ease-in-out infinite alternate;
@@ -561,26 +591,9 @@
       margin: 0;
     }
 
-    /* ── In-game logo — top of game, full title treatment ── */
+    /* ── In-game logo spacer (actual logo is #global-logo fixed) ── */
     .game-logo-wrap {
-      display: flex;
-      justify-content: center;
       width: 100%;
-      padding-top: 8px;
-    }
-    .game-logo-wrap .sf-sigil {
-      width: 130px;
-      height: 118px;
-    }
-    .game-logo-wrap .sf-sancta {
-      font-size: 0.85rem;
-    }
-    .game-logo-wrap .sf-forma {
-      font-size: 1.85rem;
-    }
-    .game-logo-wrap .sf-tagline {
-      font-size: 0.60rem;
-      margin-top: 6px;
     }
 
     /* ── D-Pad ──────────────────────────────────────────── */
@@ -957,6 +970,33 @@
 <div class="bg-layer" id="bg-b" style="opacity:0"></div>
 <div id="bg-vignette"></div>
 <canvas id="starfield"></canvas>
+<!-- ── Global persistent logo — fixed position, never moves ───────────────── -->
+<div id="global-logo" aria-hidden="true">
+  <svg class="sf-sigil" viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="glo-glow" x="-40%" y="-40%" width="180%" height="180%">
+        <feGaussianBlur stdDeviation="3.5" result="blur"/>
+        <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+      </filter>
+    </defs>
+    <circle cx="110" cy="98" r="82" fill="none" stroke="rgba(140,60,220,0.22)" stroke-width="0.8"/>
+    <circle cx="110" cy="98" r="54"  fill="none" stroke="rgba(140,60,220,0.12)" stroke-width="0.5"/>
+    <polygon points="110,16 186,138 34,138"   fill="none" stroke="rgba(160,80,255,0.30)" stroke-width="0.8"/>
+    <polygon points="110,180 34,58 186,58"    fill="none" stroke="rgba(160,80,255,0.14)" stroke-width="0.5"/>
+    <line x1="110" y1="98" x2="110" y2="16"   stroke="rgba(224,64,251,0.15)"  stroke-width="0.5"/>
+    <line x1="110" y1="98" x2="186" y2="138"  stroke="rgba(0,229,255,0.15)"   stroke-width="0.5"/>
+    <line x1="110" y1="98" x2="34"  y2="138"  stroke="rgba(105,255,71,0.15)"  stroke-width="0.5"/>
+    <circle cx="110" cy="16" r="13"   fill="rgba(224,64,251,0.08)" stroke="#e040fb" stroke-width="1.8" filter="url(#glo-glow)"/>
+    <rect   x="176" y="128" width="20" height="20" fill="rgba(0,229,255,0.08)" stroke="#00e5ff" stroke-width="1.8" filter="url(#glo-glow)"/>
+    <polygon points="34,140 44,122 24,122"     fill="rgba(105,255,71,0.08)" stroke="#69ff47" stroke-width="1.8" filter="url(#glo-glow)"/>
+    <circle cx="110" cy="98" r="3.5" fill="#a060ff" filter="url(#glo-glow)" opacity="0.9"/>
+  </svg>
+  <div class="sf-title">
+    <span class="sf-sancta">SANCTA</span>
+    <span class="sf-forma">FORMA</span>
+  </div>
+</div>
+
 <div id="app"></div>
 <button id="music-btn" title="Toggle music">🔇</button>
 
