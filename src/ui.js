@@ -17,16 +17,28 @@ const LEVEL_BACKGROUNDS = {
   10: './bg_rite10.jpg',
   11: './bg_rite11.jpg',
   12: './bg_rite12.jpg',
+  13: './bg_rite13.jpg',
+  14: './bg_rite14.jpg',
+  15: './bg_rite15.jpg',
+  16: './bg_rite16.jpg',
+  17: './bg_rite17.jpg',
+  18: './bg_rite18.jpg',
 };
 
 // Cell fill opacity per level — higher = darker grid (use when bg is bright/light)
 const LEVEL_CELL_OPACITY = {
-  7: 0.52,
-  8: 0.52,
-  9: 0.42,
+  7:  0.52,
+  8:  0.52,
+  9:  0.42,
   10: 0.42,
   11: 0.42,
   12: 0.38,
+  13: 0.48,  // bright full-moon mountain sky
+  14: 0.42,  // purple night, moderate
+  15: 0.34,  // dark misty green
+  16: 0.34,
+  17: 0.34,
+  18: 0.34,
 };
 function levelCellOpacity(levelId) {
   return LEVEL_CELL_OPACITY[levelId] ?? 0.22;
