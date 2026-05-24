@@ -460,30 +460,37 @@ export class GameScreen {
 
     wrapper.appendChild(this.hud);
 
-    // Floating sigil above the board — same animation as title screen
-    const sigilWrap = document.createElement('div');
-    sigilWrap.className = 'game-sigil-wrap';
-    sigilWrap.innerHTML = `
-      <svg class="game-sigil" viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="gs-glow" x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="3" result="blur"/>
-            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-          </filter>
-        </defs>
-        <circle cx="110" cy="98" r="82" fill="none" stroke="rgba(140,60,220,0.22)" stroke-width="0.8"/>
-        <circle cx="110" cy="98" r="54" fill="none" stroke="rgba(140,60,220,0.12)" stroke-width="0.5"/>
-        <polygon points="110,16 186,138 34,138" fill="none" stroke="rgba(160,80,255,0.30)" stroke-width="0.8"/>
-        <polygon points="110,180 34,58 186,58" fill="none" stroke="rgba(160,80,255,0.14)" stroke-width="0.5"/>
-        <line x1="110" y1="98" x2="110" y2="16"  stroke="rgba(224,64,251,0.15)" stroke-width="0.5"/>
-        <line x1="110" y1="98" x2="186" y2="138" stroke="rgba(0,229,255,0.15)"   stroke-width="0.5"/>
-        <line x1="110" y1="98" x2="34"  y2="138" stroke="rgba(105,255,71,0.15)"  stroke-width="0.5"/>
-        <circle cx="110" cy="16" r="13" fill="rgba(224,64,251,0.08)" stroke="#e040fb" stroke-width="1.8" filter="url(#gs-glow)"/>
-        <rect x="176" y="128" width="20" height="20" fill="rgba(0,229,255,0.08)" stroke="#00e5ff" stroke-width="1.8" filter="url(#gs-glow)"/>
-        <polygon points="34,140 44,122 24,122" fill="rgba(105,255,71,0.08)" stroke="#69ff47" stroke-width="1.8" filter="url(#gs-glow)"/>
-        <circle cx="110" cy="98" r="3.5" fill="#a060ff" filter="url(#gs-glow)" opacity="0.9"/>
-      </svg>`;
-    wrapper.appendChild(sigilWrap);
+    // Full SANCTA FORMA logo above the board — same sigil + title + tagline as title screen
+    const logoWrap = document.createElement('div');
+    logoWrap.className = 'game-logo-wrap';
+    logoWrap.innerHTML = `
+      <div class="sf-logo">
+        <svg class="sf-sigil" viewBox="0 0 220 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="gl-glow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="3.5" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+          </defs>
+          <circle cx="110" cy="98" r="82" fill="none" stroke="rgba(140,60,220,0.22)" stroke-width="0.8"/>
+          <circle cx="110" cy="98" r="54" fill="none" stroke="rgba(140,60,220,0.12)" stroke-width="0.5"/>
+          <polygon points="110,16 186,138 34,138" fill="none" stroke="rgba(160,80,255,0.30)" stroke-width="0.8"/>
+          <polygon points="110,180 34,58 186,58" fill="none" stroke="rgba(160,80,255,0.14)" stroke-width="0.5"/>
+          <line x1="110" y1="98" x2="110" y2="16"  stroke="rgba(224,64,251,0.15)" stroke-width="0.5"/>
+          <line x1="110" y1="98" x2="186" y2="138" stroke="rgba(0,229,255,0.15)"   stroke-width="0.5"/>
+          <line x1="110" y1="98" x2="34"  y2="138" stroke="rgba(105,255,71,0.15)"  stroke-width="0.5"/>
+          <circle cx="110" cy="16" r="13" fill="rgba(224,64,251,0.08)" stroke="#e040fb" stroke-width="1.8" filter="url(#gl-glow)"/>
+          <rect x="176" y="128" width="20" height="20" fill="rgba(0,229,255,0.08)" stroke="#00e5ff" stroke-width="1.8" filter="url(#gl-glow)"/>
+          <polygon points="34,140 44,122 24,122" fill="rgba(105,255,71,0.08)" stroke="#69ff47" stroke-width="1.8" filter="url(#gl-glow)"/>
+          <circle cx="110" cy="98" r="3.5" fill="#a060ff" filter="url(#gl-glow)" opacity="0.9"/>
+        </svg>
+        <div class="sf-title">
+          <span class="sf-sancta">SANCTA</span>
+          <span class="sf-forma">FORMA</span>
+        </div>
+        <p class="sf-tagline">Six rites of absorption</p>
+      </div>`;
+    wrapper.appendChild(logoWrap);
     wrapper.appendChild(this.svg);
     wrapper.appendChild(dpad);
     this.container.appendChild(wrapper);

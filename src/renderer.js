@@ -215,14 +215,14 @@ export function createGridSVG() {
   // Grid background cells — dark stone/obsidian
   for (let r = 0; r < 5; r++) {
     for (let c = 0; c < 5; c++) {
-      // Base cell
+      // Base cell — semi-transparent so background art shows through
       svg.appendChild(svgEl('rect', {
         x: c * CELL_SIZE + 1,
         y: r * CELL_SIZE + 1,
         width: CELL_SIZE - 2,
         height: CELL_SIZE - 2,
-        fill: '#08060f',
-        stroke: '#1e1a2e',
+        fill: 'rgba(8,6,15,0.28)',
+        stroke: 'rgba(50,30,90,0.55)',
         'stroke-width': '1',
         rx: '3',
       }));
