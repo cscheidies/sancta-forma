@@ -528,7 +528,7 @@ export class GameScreen {
     document.getElementById('transform-hint')?.remove();
     const el = document.createElement('div');
     el.id = 'transform-hint';
-    el.textContent = `Transformed → ${nowEl.toUpperCase()} — absorb ${revertEl.toUpperCase()} to revert`;
+    el.textContent = `Transformed → ${nowEl.toUpperCase()} — absorb ${revertEl.toUpperCase()} to cleanse`;
     document.body.appendChild(el);
     requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('visible')));
     setTimeout(() => {
