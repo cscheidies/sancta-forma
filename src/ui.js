@@ -5,12 +5,18 @@ import * as sfx from './sfx.js';
 
 // Per-rite background images
 const LEVEL_BACKGROUNDS = {
-  1: './bg_rite1.jpg',
-  2: './bg_rite2.jpg',
-  3: './bg_rite3.jpg',
-  4: './bg_rite4.jpg',
-  5: './bg_rite5.jpg',
-  6: './bg_rite6.jpg',
+  1:  './bg_rite1.jpg',
+  2:  './bg_rite2.jpg',
+  3:  './bg_rite3.jpg',
+  4:  './bg_rite4.jpg',
+  5:  './bg_rite5.jpg',
+  6:  './bg_rite6.jpg',
+  7:  './bg_rite7.jpg',
+  8:  './bg_rite8.jpg',
+  9:  './bg_rite9.jpg',
+  10: './bg_rite10.jpg',
+  11: './bg_rite11.jpg',
+  12: './bg_rite12.jpg',
 };
 
 // Active bg layer tracker (crossfade: swap between bg-a and bg-b)
