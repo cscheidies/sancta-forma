@@ -1,230 +1,1118 @@
 [
   {
     "id": 1,
-    "name": "The First Rite",
     "playerElement": "square",
-    "playerStart": [2, 2],
-    "winScore": 50,
-    "lore": [
-      "You are Square. Grounded. Unyielding.",
-      "Triangles yield before you — safe passage, not prey.",
-      "Absorb your kin. Begin."
+    "playerStart": [
+      2,
+      2
     ],
+    "winScore": 50,
     "grid": [
-      ["triangle", "square",   "triangle", "square",   "triangle"],
-      ["square",   "square",   "triangle", "square",   "square"  ],
-      ["triangle", "triangle", null,       "triangle", "triangle"],
-      ["square",   "square",   "triangle", "square",   "square"  ],
-      ["triangle", "square",   "triangle", "square",   "triangle"]
-    ]
+      [
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle"
+      ],
+      [
+        "square",
+        "square",
+        "triangle",
+        "square",
+        "square"
+      ],
+      [
+        "triangle",
+        "triangle",
+        null,
+        "triangle",
+        "triangle"
+      ],
+      [
+        "square",
+        "square",
+        "triangle",
+        "square",
+        "square"
+      ],
+      [
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle"
+      ]
+    ],
+    "lesson": "First level. Square player, lots of squares to absorb, triangles as safe filler, NO circles. Teaches movement and same-element scoring without any risk.",
+    "shapeCounts": {
+      "square": 12,
+      "circle": 0,
+      "triangle": 12,
+      "hexagon": 0
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "ULURRDR",
+      "shortestPathMoves": 7,
+      "distinctCellsets": 928,
+      "corruptionRequired": false,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": false
+    }
   },
   {
     "id": 2,
-    "name": "The Bridge",
     "playerElement": "square",
-    "playerStart": [2, 2],
-    "winScore": 50,
-    "lore": [
-      "Order corrupts at its edges.",
-      "The circles press from every direction.",
-      "Find your kin before the curves consume you."
+    "playerStart": [
+      2,
+      2
     ],
+    "winScore": 50,
     "grid": [
-      ["triangle", "circle",   "circle",   "square",   "triangle"],
-      ["circle",   "square",   "circle",   "circle",   "circle"  ],
-      ["square",   "circle",   null,       "circle",   "triangle"],
-      ["triangle", "circle",   "circle",   "square",   "circle"  ],
-      ["circle",   "square",   "triangle", "circle",   "square"  ]
-    ]
+      [
+        "triangle",
+        "circle",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "square",
+        "circle",
+        "circle",
+        "circle"
+      ],
+      [
+        "square",
+        "circle",
+        null,
+        "circle",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "circle",
+        "circle",
+        "square",
+        "circle"
+      ],
+      [
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square"
+      ]
+    ],
+    "lesson": "Corruption arrives. Adjacents are all circles. To reach the squares scattered around the board, you'll absorb circles along the way (+3 each, +1 curve). Square dies at 3 curves \u2014 pace it. Squares cleanse you back.",
+    "shapeCounts": {
+      "square": 6,
+      "circle": 13,
+      "triangle": 5,
+      "hexagon": 0
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "ULDDDRURDR",
+      "shortestPathMoves": 10,
+      "distinctCellsets": 132,
+      "corruptionRequired": true,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": false
+    }
   },
   {
     "id": 3,
-    "name": "The Pure Form",
     "playerElement": "circle",
-    "playerStart": [2, 2],
-    "winScore": 50,
-    "lore": [
-      "You are Circle. Pure. Boundless.",
-      "Your kin fill every corridor.",
-      "Reclaim them. Nothing stands between you."
+    "playerStart": [
+      2,
+      2
     ],
+    "winScore": 50,
     "grid": [
-      ["square", "circle", "square", "circle", "square"],
-      ["circle", "circle", "circle", "circle", "circle"],
-      ["square", "circle", null,     "circle", "square"],
-      ["circle", "circle", "circle", "circle", "circle"],
-      ["square", "circle", "square", "circle", "square"]
-    ]
+      [
+        "square",
+        "circle",
+        "square",
+        "circle",
+        "square"
+      ],
+      [
+        "circle",
+        "circle",
+        "circle",
+        "circle",
+        "circle"
+      ],
+      [
+        "square",
+        "circle",
+        null,
+        "circle",
+        "square"
+      ],
+      [
+        "circle",
+        "circle",
+        "circle",
+        "circle",
+        "circle"
+      ],
+      [
+        "square",
+        "circle",
+        "square",
+        "circle",
+        "square"
+      ]
+    ],
+    "lesson": "Circle's turn. Surrounded by circles. Squares dot the corners as visible decoys \u2014 remember Circle has NO safe-transit shape; both squares and triangles add +1 straight. Death at 2 straights. This level is winnable circle-only.",
+    "shapeCounts": {
+      "square": 8,
+      "circle": 16,
+      "triangle": 0,
+      "hexagon": 0
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "ULDDD",
+      "shortestPathMoves": 5,
+      "distinctCellsets": 152,
+      "corruptionRequired": false,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": false
+    }
   },
   {
     "id": 4,
-    "name": "The Crucible",
     "playerElement": "circle",
-    "playerStart": [2, 2],
-    "winScore": 50,
-    "lore": [
-      "The circle returns, tested.",
-      "Squares and triangles grid the world in alternation.",
-      "Navigate the pattern. Every choice is permanent."
+    "playerStart": [
+      2,
+      2
     ],
+    "winScore": 50,
     "grid": [
-      ["circle",   "square",   "triangle", "square",   "circle"  ],
-      ["square",   "circle",   "square",   "circle",   "square"  ],
-      ["triangle", "square",   null,       "square",   "triangle"],
-      ["square",   "circle",   "square",   "circle",   "square"  ],
-      ["circle",   "square",   "triangle", "square",   "circle"  ]
-    ]
+      [
+        "circle",
+        "square",
+        "triangle",
+        "square",
+        "circle"
+      ],
+      [
+        "square",
+        "circle",
+        "square",
+        "circle",
+        "square"
+      ],
+      [
+        "triangle",
+        "square",
+        null,
+        "square",
+        "triangle"
+      ],
+      [
+        "square",
+        "circle",
+        "square",
+        "circle",
+        "square"
+      ],
+      [
+        "circle",
+        "square",
+        "triangle",
+        "square",
+        "circle"
+      ]
+    ],
+    "lesson": "Circle in hostile terrain. Adjacents are all squares (each = +1 straight). Circle dies at 2 straights, so you must absorb a circle to cleanse between every cross-element step. Strict alternation. The hardest tutorial level.",
+    "shapeCounts": {
+      "square": 12,
+      "circle": 8,
+      "triangle": 4,
+      "hexagon": 0
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "ULDDRRUU",
+      "shortestPathMoves": 8,
+      "distinctCellsets": 17,
+      "corruptionRequired": true,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": false
+    }
   },
   {
     "id": 5,
-    "name": "The Lattice",
     "playerElement": "triangle",
-    "playerStart": [2, 2],
-    "winScore": 50,
-    "lore": [
-      "You are Triangle. Sharp. Fractal.",
-      "Squares dissolve before you — hollow, harmless.",
-      "Walk through silence. Gather the sharp ones."
+    "playerStart": [
+      2,
+      2
     ],
+    "winScore": 50,
     "grid": [
-      ["square",   "triangle", "square",   "triangle", "square"  ],
-      ["triangle", "triangle", "square",   "triangle", "triangle"],
-      ["square",   "square",   null,       "square",   "square"  ],
-      ["triangle", "triangle", "square",   "triangle", "triangle"],
-      ["square",   "triangle", "square",   "triangle", "square"  ]
-    ]
+      [
+        "square",
+        "triangle",
+        "square",
+        "triangle",
+        "square"
+      ],
+      [
+        "triangle",
+        "triangle",
+        "square",
+        "triangle",
+        "triangle"
+      ],
+      [
+        "square",
+        "square",
+        null,
+        "square",
+        "square"
+      ],
+      [
+        "triangle",
+        "triangle",
+        "square",
+        "triangle",
+        "triangle"
+      ],
+      [
+        "square",
+        "triangle",
+        "square",
+        "triangle",
+        "square"
+      ]
+    ],
+    "lesson": "Triangle's turn. Triangles for scoring, squares as filler. Critical new rule to memorize: Triangle absorbing Square = 0 pts, 0 corruption (SAFE TRANSIT). Squares are friends for triangles. Circles are absent here \u2014 no danger.",
+    "shapeCounts": {
+      "square": 12,
+      "circle": 0,
+      "triangle": 12,
+      "hexagon": 0
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "ULURRDR",
+      "shortestPathMoves": 7,
+      "distinctCellsets": 928,
+      "corruptionRequired": false,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": false
+    }
   },
   {
     "id": 6,
-    "name": "The Final Form",
     "playerElement": "triangle",
-    "playerStart": [2, 2],
-    "winScore": 50,
-    "lore": [
-      "All angles converge.",
-      "The circles press in from every side.",
-      "Stay sharp. Do not let the curves consume you."
+    "playerStart": [
+      2,
+      2
     ],
+    "winScore": 50,
     "grid": [
-      ["square",   "circle",   "circle",   "triangle", "square"  ],
-      ["circle",   "triangle", "circle",   "circle",   "circle"  ],
-      ["triangle", "circle",   null,       "circle",   "square"  ],
-      ["square",   "circle",   "circle",   "triangle", "circle"  ],
-      ["circle",   "triangle", "square",   "circle",   "triangle"]
-    ]
+      [
+        "square",
+        "circle",
+        "circle",
+        "triangle",
+        "square"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "circle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "circle",
+        null,
+        "circle",
+        "square"
+      ],
+      [
+        "square",
+        "circle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "square",
+        "circle",
+        "triangle"
+      ]
+    ],
+    "lesson": "Mirror of Level 2. Triangle player. Adjacents are all circles (+3 each, +1 curve; Triangle dies at 2 curves). Triangles scattered to score and cleanse. Squares everywhere as safe transit (0/0). Tight clock \u2014 same lesson as L2 but with the elements swapped.",
+    "shapeCounts": {
+      "square": 5,
+      "circle": 13,
+      "triangle": 6,
+      "hexagon": 0
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "ULDLDDRRUR",
+      "shortestPathMoves": 10,
+      "distinctCellsets": 40,
+      "corruptionRequired": true,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": false
+    }
   },
   {
     "id": 7,
-    "name": "The Intrusion",
     "playerElement": "square",
-    "playerStart": [2, 2],
-    "winScore": 50,
-    "lore": [
-      "A new geometry has entered the grid.",
-      "One alien form. Irregular. Dangerous.",
-      "Route around it. The hexagon is not yours to take."
+    "playerStart": [
+      2,
+      2
     ],
+    "winScore": 50,
     "grid": [
-      ["triangle", "square",   "triangle", "square",   "triangle"],
-      ["square",   "square",   "hexagon",  "square",   "square"  ],
-      ["triangle", "triangle", null,       "triangle", "triangle"],
-      ["square",   "square",   "triangle", "square",   "square"  ],
-      ["triangle", "square",   "triangle", "square",   "triangle"]
-    ]
+      [
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "square",
+        "hexagon",
+        "square",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "square",
+        null,
+        "square",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle"
+      ]
+    ],
+    "lesson": "Hexagon introduced as a single threat at the player's north. Squares now form vertical columns; triangles fill the rest. 9 squares total - barely enough for 50 if you waste any. Route around the hexagon.",
+    "shapeCounts": {
+      "square": 10,
+      "circle": 0,
+      "triangle": 13,
+      "hexagon": 1
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "LUURRD",
+      "shortestPathMoves": 6,
+      "distinctCellsets": 2546,
+      "corruptionRequired": false,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": true
+    }
   },
   {
     "id": 8,
-    "name": "The Breach",
     "playerElement": "square",
-    "playerStart": [2, 2],
-    "winScore": 50,
-    "lore": [
-      "Two now. They multiply.",
-      "The familiar squares are still here — reach them.",
-      "Do not let the hexagons claim you."
+    "playerStart": [
+      2,
+      2
     ],
+    "winScore": 50,
     "grid": [
-      ["square",   "hexagon",  "square",   "hexagon",  "square"  ],
-      ["triangle", "square",   "triangle", "square",   "triangle"],
-      ["square",   "triangle", null,       "triangle", "square"  ],
-      ["triangle", "square",   "triangle", "square",   "triangle"],
-      ["square",   "triangle", "square",   "triangle", "square"  ]
-    ]
+      [
+        "square",
+        "hexagon",
+        "circle",
+        "hexagon",
+        "square"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "circle",
+        null,
+        "circle",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "square",
+        "triangle",
+        "square",
+        "triangle",
+        "square"
+      ]
+    ],
+    "lesson": "Second Square level. Adjacents are all circles (+3 / +1 curve each). Two hexagons gate the north squares. Square dies at 3 curves - must absorb a square to cleanse before stacking too many circles. Sparse squares mean every same-element absorb counts.",
+    "shapeCounts": {
+      "square": 5,
+      "circle": 9,
+      "triangle": 8,
+      "hexagon": 2
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "DLLDRRRRUUUU",
+      "shortestPathMoves": 12,
+      "distinctCellsets": 24,
+      "corruptionRequired": true,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": true
+    }
   },
   {
     "id": 9,
-    "name": "The Forbidden Cell",
     "playerElement": "circle",
-    "playerStart": [2, 2],
-    "winScore": 50,
-    "lore": [
-      "You are Circle. The hexagon is death.",
-      "One cell forbidden. Absolute.",
-      "Find the path that avoids it."
+    "playerStart": [
+      2,
+      2
     ],
+    "winScore": 50,
     "grid": [
-      ["circle",   "square",   "circle",   "square",   "circle"  ],
-      ["square",   "circle",   "circle",   "circle",   "square"  ],
-      ["triangle", "circle",   null,       "circle",   "triangle"],
-      ["square",   "circle",   "hexagon",  "circle",   "square"  ],
-      ["circle",   "square",   "circle",   "square",   "circle"  ]
-    ]
+      [
+        "square",
+        "circle",
+        "square",
+        "circle",
+        "square"
+      ],
+      [
+        "circle",
+        "square",
+        "circle",
+        "square",
+        "circle"
+      ],
+      [
+        "triangle",
+        "circle",
+        null,
+        "circle",
+        "triangle"
+      ],
+      [
+        "circle",
+        "square",
+        "hexagon",
+        "square",
+        "circle"
+      ],
+      [
+        "square",
+        "circle",
+        "square",
+        "circle",
+        "square"
+      ]
+    ],
+    "lesson": "Hexagon enters Circle's world. Adjacents are circles. Hexagon blocks the south route. Circle dies at 2 straights; cross-elements add straights. Must score 50 from circles while routing around the hexagon AND not stacking too many cross-element absorbs.",
+    "shapeCounts": {
+      "square": 10,
+      "circle": 11,
+      "triangle": 2,
+      "hexagon": 1
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "UULDDDDL",
+      "shortestPathMoves": 8,
+      "distinctCellsets": 198,
+      "corruptionRequired": true,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": false
+    }
   },
   {
     "id": 10,
-    "name": "The Corridor",
     "playerElement": "circle",
-    "playerStart": [2, 2],
-    "winScore": 50,
-    "lore": [
-      "Two forbidden cells now.",
-      "The circles remain. The hexagons do not move.",
-      "Navigate the space between them."
+    "playerStart": [
+      2,
+      2
     ],
+    "winScore": 50,
     "grid": [
-      ["square",   "circle",   "hexagon",  "circle",   "square"  ],
-      ["circle",   "circle",   "triangle", "circle",   "circle"  ],
-      ["triangle", "circle",   null,       "circle",   "triangle"],
-      ["circle",   "circle",   "triangle", "circle",   "circle"  ],
-      ["square",   "circle",   "hexagon",  "circle",   "square"  ]
-    ]
+      [
+        "square",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "square"
+      ],
+      [
+        "triangle",
+        "circle",
+        "square",
+        "circle",
+        "triangle"
+      ],
+      [
+        "circle",
+        "square",
+        null,
+        "square",
+        "circle"
+      ],
+      [
+        "triangle",
+        "circle",
+        "square",
+        "circle",
+        "triangle"
+      ],
+      [
+        "square",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "square"
+      ]
+    ],
+    "lesson": "Second Circle level. Adjacents are all SQUARES (+1 straight, Circle dies at 2). Two hexagons cap the north and south central columns. Player must absorb a square (gain straight), reach a circle to cleanse, navigate around hexagons. Highest tension yet.",
+    "shapeCounts": {
+      "square": 8,
+      "circle": 6,
+      "triangle": 8,
+      "hexagon": 2
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "ULDDRRUU",
+      "shortestPathMoves": 8,
+      "distinctCellsets": 49,
+      "corruptionRequired": true,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": false
+    }
   },
   {
     "id": 11,
-    "name": "The Reshaping",
     "playerElement": "triangle",
-    "playerStart": [2, 2],
-    "winScore": 50,
-    "lore": [
-      "The hexagons have entered your domain.",
-      "Touch one and it reshapes you. Cleanse immediately.",
-      "The shape beneath remembers what you are."
+    "playerStart": [
+      2,
+      2
     ],
+    "winScore": 50,
     "grid": [
-      ["square",   "triangle", "hexagon",  "triangle", "square"  ],
-      ["triangle", "square",   "triangle", "square",   "triangle"],
-      ["square",   "triangle", null,       "triangle", "square"  ],
-      ["triangle", "square",   "triangle", "square",   "triangle"],
-      ["square",   "triangle", "hexagon",  "triangle", "square"  ]
-    ]
+      [
+        "square",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "square"
+      ],
+      [
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        null,
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle"
+      ],
+      [
+        "square",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "square"
+      ]
+    ],
+    "lesson": "Triangle with two hexagons on the central column (north/south poles). Circles introduced flanking the player (+3 pts / +1 curve, dies at 2 curves). Must score from triangles, may grab a circle for +3 if needed, avoid hexagons.",
+    "shapeCounts": {
+      "square": 8,
+      "circle": 2,
+      "triangle": 12,
+      "hexagon": 2
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "ULULDDDDR",
+      "shortestPathMoves": 9,
+      "distinctCellsets": 1996,
+      "corruptionRequired": false,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": true
+    }
   },
   {
     "id": 12,
-    "name": "The Mature Board",
     "playerElement": "triangle",
-    "playerStart": [2, 2],
-    "winScore": 50,
-    "lore": [
-      "Three of them. The board has changed.",
-      "Route through the angles. Avoid the alien forms.",
-      "The balance can still be restored."
+    "playerStart": [
+      2,
+      2
     ],
+    "winScore": 50,
     "grid": [
-      ["hexagon",  "triangle", "square",   "triangle", "hexagon" ],
-      ["triangle", "triangle", "triangle", "triangle", "triangle"],
-      ["square",   "triangle", null,       "triangle", "square"  ],
-      ["triangle", "square",   "triangle", "square",   "triangle"],
-      ["square",   "triangle", "hexagon",  "triangle", "square"  ]
-    ]
+      [
+        "hexagon",
+        "square",
+        "circle",
+        "square",
+        "hexagon"
+      ],
+      [
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "square"
+      ],
+      [
+        "circle",
+        "circle",
+        null,
+        "circle",
+        "circle"
+      ],
+      [
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "square"
+      ],
+      [
+        "hexagon",
+        "square",
+        "triangle",
+        "square",
+        "triangle"
+      ]
+    ],
+    "lesson": "Final tutorial-extension. Three hexagons on corners and bottom-left, gating routes. Adjacents are circles (forced corruption). Sparse triangles (only 6) - must hit them all PLUS take circle bonuses, while routing around hexagons. Maximum tension before training wheels come off in L13.",
+    "shapeCounts": {
+      "square": 8,
+      "circle": 7,
+      "triangle": 6,
+      "hexagon": 3
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "ULDDRRUU",
+      "shortestPathMoves": 8,
+      "distinctCellsets": 214,
+      "corruptionRequired": true,
+      "hexagonRequired": false,
+      "hexagonUsedInAnyWin": false
+    }
+  },
+  {
+    "id": 13,
+    "playerElement": "square",
+    "playerStart": [
+      3,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "square",
+        "square",
+        "square",
+        "square",
+        "square"
+      ],
+      [
+        "circle",
+        "circle",
+        "square",
+        "circle",
+        "circle"
+      ],
+      [
+        null,
+        null,
+        "hexagon",
+        null,
+        null
+      ],
+      [
+        "triangle",
+        "triangle",
+        null,
+        "triangle",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "triangle",
+        "triangle",
+        "triangle",
+        "triangle"
+      ]
+    ],
+    "lesson": "Two rooms. South room is triangle-only (safe transit, zero scoring). Only path north is through the hexagon (-3 + forced Square cleanse). North room has circles flanking the squares - must take circle hits to reach 50 from a mix of squares and circles. Both corruption AND hexagon engagement required.",
+    "shapeCounts": {
+      "square": 6,
+      "circle": 4,
+      "triangle": 9,
+      "hexagon": 1
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "UULLURRRR",
+      "shortestPathMoves": 9,
+      "distinctCellsets": 3,
+      "corruptionRequired": true,
+      "hexagonRequired": true,
+      "hexagonUsedInAnyWin": true
+    }
+  },
+  {
+    "id": 14,
+    "playerElement": "square",
+    "playerStart": [
+      4,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "square",
+        "square",
+        "triangle",
+        "square",
+        "square"
+      ],
+      [
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle"
+      ],
+      [
+        null,
+        "hexagon",
+        null,
+        "hexagon",
+        null
+      ],
+      [
+        "circle",
+        "triangle",
+        "triangle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "triangle",
+        null,
+        "triangle",
+        "triangle"
+      ]
+    ],
+    "lesson": "Two hex doorways with circles flanking the south room. Player must pick one hexagon bridge, take -3, cleanse on a square, then circuit the north room. Tightest Square level so far. Both corruption AND hex are required.",
+    "shapeCounts": {
+      "square": 6,
+      "circle": 2,
+      "triangle": 11,
+      "hexagon": 2
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "LLURUULURRDRUR",
+      "shortestPathMoves": 14,
+      "distinctCellsets": 16,
+      "corruptionRequired": true,
+      "hexagonRequired": true,
+      "hexagonUsedInAnyWin": true
+    }
+  },
+  {
+    "id": 15,
+    "playerElement": "square",
+    "playerStart": [
+      4,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "square",
+        "circle",
+        "square",
+        "circle",
+        "square"
+      ],
+      [
+        "circle",
+        "square",
+        "circle",
+        "square",
+        "circle"
+      ],
+      [
+        null,
+        null,
+        null,
+        "hexagon",
+        null
+      ],
+      [
+        "triangle",
+        "triangle",
+        "triangle",
+        "triangle",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "triangle",
+        null,
+        "triangle",
+        "triangle"
+      ]
+    ],
+    "lesson": "Hexagon is on the east side of the wall, not centered. Player must reach it diagonally through the south triangle row. North room is dense with circles - corruption pressure to navigate. Only 5 distinct winning cellsets - one of the tightest puzzles in the set. Both required.",
+    "shapeCounts": {
+      "square": 5,
+      "circle": 5,
+      "triangle": 9,
+      "hexagon": 1
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "URUULLLURRRRD",
+      "shortestPathMoves": 13,
+      "distinctCellsets": 5,
+      "corruptionRequired": true,
+      "hexagonRequired": true,
+      "hexagonUsedInAnyWin": true
+    }
+  },
+  {
+    "id": 16,
+    "playerElement": "triangle",
+    "playerStart": [
+      4,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        null,
+        null,
+        null,
+        "hexagon",
+        null
+      ],
+      [
+        "square",
+        "square",
+        "square",
+        "square",
+        "square"
+      ],
+      [
+        "square",
+        "square",
+        null,
+        "square",
+        "square"
+      ]
+    ],
+    "lesson": "Triangle mirror of L15. Off-center hex on east. South room is squares-only (safe transit, zero scoring). Player crosses east-side hex, lands on a Circle (must cleanse with Triangle). 5 cellsets, 13-move shortest. Tight.",
+    "shapeCounts": {
+      "square": 9,
+      "circle": 5,
+      "triangle": 5,
+      "hexagon": 1
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "URUULLLURRRRD",
+      "shortestPathMoves": 13,
+      "distinctCellsets": 5,
+      "corruptionRequired": true,
+      "hexagonRequired": true,
+      "hexagonUsedInAnyWin": true
+    }
+  },
+  {
+    "id": 17,
+    "playerElement": "triangle",
+    "playerStart": [
+      3,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle"
+      ],
+      [
+        null,
+        null,
+        "hexagon",
+        null,
+        null
+      ],
+      [
+        "square",
+        "square",
+        null,
+        "square",
+        "square"
+      ],
+      [
+        "square",
+        "square",
+        "square",
+        "square",
+        "square"
+      ]
+    ],
+    "lesson": "Mirror of Level 13. South room is square-only (safe transit, zero scoring). Only path north is through the hex bridge (-3 + forced Triangle cleanse). North room has triangles in vertical columns separated by circles - must take circle hits for cross-element +3s on the way to 50. Both corruption AND hexagon required.",
+    "shapeCounts": {
+      "square": 9,
+      "circle": 4,
+      "triangle": 6,
+      "hexagon": 1
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "UULLURRRRD",
+      "shortestPathMoves": 10,
+      "distinctCellsets": 2,
+      "corruptionRequired": true,
+      "hexagonRequired": true,
+      "hexagonUsedInAnyWin": true
+    }
+  },
+  {
+    "id": 18,
+    "playerElement": "triangle",
+    "playerStart": [
+      4,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "triangle",
+        "triangle",
+        "square",
+        "triangle",
+        "triangle"
+      ],
+      [
+        "square",
+        "triangle",
+        "square",
+        "triangle",
+        "square"
+      ],
+      [
+        null,
+        "hexagon",
+        null,
+        "hexagon",
+        null
+      ],
+      [
+        "circle",
+        "square",
+        "square",
+        "square",
+        "circle"
+      ],
+      [
+        "square",
+        "square",
+        null,
+        "square",
+        "square"
+      ]
+    ],
+    "lesson": "Final level of the set. Two hex doorways flanking the southern room (squares = safe transit but no scoring). Circles at the corners of the bridge zone force corruption. Player picks a bridge, takes -3 + cleanse, navigates the triangle room. Mirror of L14.",
+    "shapeCounts": {
+      "square": 11,
+      "circle": 2,
+      "triangle": 6,
+      "hexagon": 2
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "LLURUULURRDRUR",
+      "shortestPathMoves": 14,
+      "distinctCellsets": 16,
+      "corruptionRequired": true,
+      "hexagonRequired": true,
+      "hexagonUsedInAnyWin": true
+    }
   }
 ]
