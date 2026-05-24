@@ -1,4 +1,5 @@
 // renderer.js — SVG shape rendering. No game logic.
+import { RULES } from './engine.js';
 
 export const ELEMENT_COLORS = {
   // Pure forms
