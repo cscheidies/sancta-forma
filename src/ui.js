@@ -469,6 +469,10 @@ export class GameScreen {
         </div>
       </div>
       <div class="level-grid"></div>
+      <div class="title-btn-row" style="margin-top:24px; padding-bottom:8px">
+        <button class="title-btn" id="ls-how">HOW</button>
+        <button class="title-btn" id="ls-why">WHY</button>
+      </div>
     `;
 
     const grid = screen.querySelector('.level-grid');
@@ -498,6 +502,8 @@ export class GameScreen {
       grid.appendChild(card);
     }
 
+    screen.querySelector('#ls-how').addEventListener('click', () => this.showHowToPlay());
+    screen.querySelector('#ls-why').addEventListener('click', () => this.showNarrative());
     this.container.appendChild(screen);
   }
 
