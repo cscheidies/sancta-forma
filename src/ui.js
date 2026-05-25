@@ -41,6 +41,12 @@ const LEVEL_BACKGROUNDS = {
   28: './bg_rite28.jpg',
   29: './bg_rite29.jpg',
   30: './bg_rite30.jpg',
+  31: './bg_rite31.jpg',
+  32: './bg_rite32.jpg',
+  33: './bg_rite33.jpg',
+  34: './bg_rite34.jpg',
+  35: './bg_rite35.jpg',
+  36: './bg_rite36.jpg',
   37: './bg_rite37.jpg',
   38: './bg_rite38.jpg',
   39: './bg_rite39.jpg',
@@ -128,6 +134,7 @@ const REALMS = [
   { id: 3, name: 'The Hexagon Chase', levelIds: [13,14,15,16,17,18]    },
   { id: 4, name: 'Moon Rites',        levelIds: [19,20,21,22,23,24]    },
   { id: 5, name: 'Moon Passage',      levelIds: [25,26,27,28,29,30]    },
+  { id: 6, name: 'Realm VI',          levelIds: [31,32,33,34,35,36]    },
   { id: 7, name: 'The Star Journey',  levelIds: [37,38,39,40,41,42]    },
 ];
 
