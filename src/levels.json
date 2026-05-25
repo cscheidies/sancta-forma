@@ -861,7 +861,12 @@
       "shortestPath": "14 moves",
       "distinctPaths": 1208,
       "hexagonRequired": true
-    }
+    },
+    "lore": [
+      "The hexagons have multiplied.",
+      "They do not pursue. They do not need to.",
+      "Find the narrow path. It still exists."
+    ]
   },
   {
     "id": 14,
@@ -920,7 +925,12 @@
       "shortestPath": "12 moves",
       "distinctPaths": 12,
       "hexagonRequired": true
-    }
+    },
+    "lore": [
+      "Two forbidden forms now flank your corridor.",
+      "Square is patient. Navigate the pressure.",
+      "Every safe cell is an act of will."
+    ]
   },
   {
     "id": 15,
@@ -979,7 +989,12 @@
       "shortestPath": "6 moves",
       "distinctPaths": 192,
       "hexagonRequired": false
-    }
+    },
+    "lore": [
+      "Circle. The hexagons fill the walls.",
+      "One wrong turn and the shape dissolves.",
+      "Hold the curve. There is a way through."
+    ]
   },
   {
     "id": 16,
@@ -1038,7 +1053,12 @@
       "shortestPath": "8 moves",
       "distinctPaths": 12,
       "hexagonRequired": false
-    }
+    },
+    "lore": [
+      "They press from all sides now.",
+      "But the circles remain \u2014 bright, waiting.",
+      "Read the grid before you move."
+    ]
   },
   {
     "id": 17,
@@ -1097,7 +1117,12 @@
       "shortestPath": "14 moves",
       "distinctPaths": 880,
       "hexagonRequired": true
-    }
+    },
+    "lore": [
+      "Triangle threads the forbidden forms.",
+      "The hexagons tower but do not block all routes.",
+      "Angles find what curves and squares cannot."
+    ]
   },
   {
     "id": 18,
@@ -1156,7 +1181,12 @@
       "shortestPath": "14 moves",
       "distinctPaths": 976,
       "hexagonRequired": true
-    }
+    },
+    "lore": [
+      "The chase reaches its end.",
+      "Hexagons on every flank. The path is narrow.",
+      "Perform this rite and the form is sanctified."
+    ]
   },
   {
     "id": 19,
@@ -1216,7 +1246,12 @@
       "shortestPath": "15 moves",
       "distinctPaths": 52,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "Something new has entered the grid.",
+      "The Moon. Pale. Ancient. Lethal to Square.",
+      "Circle alone can wear its shape."
+    ]
   },
   {
     "id": 20,
@@ -1276,7 +1311,12 @@
       "shortestPath": "17 moves",
       "distinctPaths": 8,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "Square returns, tested by the Moon.",
+      "One forbidden cell glows differently now.",
+      "Route through the familiar. Avoid the pale light."
+    ]
   },
   {
     "id": 21,
@@ -1336,7 +1376,12 @@
       "shortestPath": "8 moves",
       "distinctPaths": 76,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "You are Circle. The Moon is yours.",
+      "Absorb it. Let it reshape you. Then cleanse.",
+      "The Moon does not kill you. It costumes you."
+    ]
   },
   {
     "id": 22,
@@ -1395,7 +1440,12 @@
       "shortestPath": "12 moves",
       "distinctPaths": 16,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "Two Moons now \u2014 one on each side.",
+      "Circle moves between them, gathering its kin.",
+      "To wear the Moon is to survive it."
+    ]
   },
   {
     "id": 23,
@@ -1454,7 +1504,12 @@
       "shortestPath": "11 moves",
       "distinctPaths": 376,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "Triangle encounters the Moon for the first time.",
+      "It is not yours to take. It kills.",
+      "Walk carefully through this pale geometry."
+    ]
   },
   {
     "id": 24,
@@ -1514,7 +1569,12 @@
       "shortestPath": "17 moves",
       "distinctPaths": 36,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "The Moon commands the inner ring.",
+      "Triangle must thread between them to reach its kin.",
+      "The passage narrows. The rite demands it."
+    ]
   },
   {
     "id": 25,
@@ -1567,7 +1627,12 @@
       "shortestPath": "17 moves",
       "distinctPaths": 36,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "The Moon grows dense in the grid.",
+      "Square must navigate the pale field.",
+      "Hexagons offer costume. Moons offer death."
+    ]
   },
   {
     "id": 26,
@@ -1620,7 +1685,12 @@
       "shortestPath": "11 moves",
       "distinctPaths": 8,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "The Moons press from every diagonal.",
+      "Square finds Hexagon as shield, not threat.",
+      "Absorb the lesser danger to survive the greater."
+    ]
   },
   {
     "id": 27,
@@ -1673,7 +1743,12 @@
       "shortestPath": "11 moves",
       "distinctPaths": 792,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "Circle in the Moon field.",
+      "The Moons are allies \u2014 wear them, cleanse, move on.",
+      "This is not survival. This is choreography."
+    ]
   },
   {
     "id": 28,
@@ -1726,7 +1801,12 @@
       "shortestPath": "12 moves",
       "distinctPaths": 12,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "Six Moons. A circle of pale fire.",
+      "Circle alone moves freely through them.",
+      "The grid is a dance. Know the steps."
+    ]
   },
   {
     "id": 29,
@@ -1779,7 +1859,12 @@
       "shortestPath": "11 moves",
       "distinctPaths": 376,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "Triangle walks the Moon-lit path.",
+      "Four Moons stand where the kin do not.",
+      "Find the route that keeps the sharp form intact."
+    ]
   },
   {
     "id": 30,
@@ -1832,7 +1917,12 @@
       "shortestPath": "11 moves",
       "distinctPaths": 16,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "The passage ends here.",
+      "Moons and Hexagons. Every quadrant tested.",
+      "Perform this rite. The Moon no longer surprises you."
+    ]
   },
   {
     "id": 31,
@@ -1886,7 +1976,12 @@
       "distinctPaths": 192,
       "corruptionRequired": true,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "A third geometry has entered.",
+      "The Star. It kills Square. It kills Circle.",
+      "Only Triangle can absorb it \u2014 but you are not Triangle."
+    ]
   },
   {
     "id": 32,
@@ -1940,7 +2035,12 @@
       "distinctPaths": 8,
       "corruptionRequired": true,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "Four Stars hold the corners.",
+      "Square must thread the inner field without touching them.",
+      "The hexagons are the lesser danger now."
+    ]
   },
   {
     "id": 33,
@@ -1994,7 +2094,12 @@
       "distinctPaths": 76,
       "corruptionRequired": true,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "Circle meets the Star.",
+      "One to the North. Death from above.",
+      "The Moons on each side are the only salvation."
+    ]
   },
   {
     "id": 34,
@@ -2048,7 +2153,12 @@
       "distinctPaths": 76,
       "corruptionRequired": true,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "Two Stars now. North and South.",
+      "No Hexagon to ease the transition \u2014 only Stars.",
+      "The Moons are Circle's path through."
+    ]
   },
   {
     "id": 35,
@@ -2102,7 +2212,12 @@
       "distinctPaths": 376,
       "corruptionRequired": true,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "You are Triangle. The Star is yours.",
+      "Four of them wait in the corners \u2014 absorbable, not lethal.",
+      "For the first time, the hunter becomes the hunted."
+    ]
   },
   {
     "id": 36,
@@ -2156,7 +2271,12 @@
       "distinctPaths": 188,
       "corruptionRequired": true,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "The Stars press inward.",
+      "Triangle is surrounded by what it can consume.",
+      "Absorb every one. The form that knows its hunter is free."
+    ]
   },
   {
     "id": 37,
@@ -2210,7 +2330,12 @@
       "distinctPaths": 15,
       "corruptionRequired": true,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "All three hunters on one board.",
+      "Hexagon. Moon. Star. Each kills differently.",
+      "Square must learn the grammar of all three threats."
+    ]
   },
   {
     "id": 38,
@@ -2264,7 +2389,12 @@
       "distinctPaths": 8,
       "corruptionRequired": true,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "Four Stars at the corners. Hexagons within.",
+      "The grid is fully armed.",
+      "Square threads the only safe corridor."
+    ]
   },
   {
     "id": 39,
@@ -2318,7 +2448,12 @@
       "distinctPaths": 792,
       "corruptionRequired": true,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "Circle walks the Star field.",
+      "Four Stars at the corners \u2014 death on every side.",
+      "Moons are the only passage through."
+    ]
   },
   {
     "id": 40,
@@ -2372,7 +2507,12 @@
       "distinctPaths": 448,
       "corruptionRequired": true,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "Two Stars. One above, one below.",
+      "Fewer deaths \u2014 but fewer paths.",
+      "The shorter route is the harder one."
+    ]
   },
   {
     "id": 41,
@@ -2426,7 +2566,12 @@
       "distinctPaths": 7792,
       "corruptionRequired": true,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "Triangle at the threshold.",
+      "Stars flank the player. Hexagons wait beyond.",
+      "The final form approaches its final trial."
+    ]
   },
   {
     "id": 42,
@@ -2480,6 +2625,11 @@
       "distinctPaths": 7792,
       "corruptionRequired": true,
       "hunterRequired": true
-    }
+    },
+    "lore": [
+      "This is the last rite.",
+      "Triangle, wholly surrounded by Stars.",
+      "The form that masters its hunter needs nothing more. Restore the balance."
+    ]
   }
 ]
