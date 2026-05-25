@@ -69,6 +69,27 @@ const ABSORB = {
 export const HUNTERS = new Set(['hexagon', 'moon', 'star']);
 export const SACRED  = new Set(['square', 'circle', 'triangle']);
 
+// ── Renderer/UI helpers ───────────────────────────────────────────────────────
+
+/** All hunters that instantly kill this element (used for danger overlays). */
+export function getDeathHunters(element) {
+  return Object.entries(RULES[element].hunters)
+    .filter(([, v]) => v === 'death')
+    .map(([k]) => k);
+}
+
+/** Score + corruption result for absorbing target. Returns null for hunters/invalid. */
+export function getAbsorbResult(element, target) {
+  if (HUNTERS.has(target)) {
+    const h = RULES[element].hunters[target];
+    if (h === 'death') return null;
+    return { score: -3, corruptionDelta: 0, isCostume: true };
+  }
+  const r = ABSORB[element]?.[target];
+  if (!r) return null;
+  return { score: r.score, corruptionDelta: r.corruptionDelta === 'cleanse' ? -99 : r.corruptionDelta, isCostume: false };
+}
+
 export const DIRS     = { U: [-1, 0], D: [1, 0], L: [0, -1], R: [0, 1] };
 export const DIR_KEYS = ['U', 'D', 'L', 'R'];
 

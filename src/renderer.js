@@ -1,5 +1,5 @@
 // renderer.js — SVG shape rendering. No game logic.
-import { RULES } from './engine.js';
+import { RULES, getDeathHunters, getAbsorbResult } from './engine.js';
 
 export const ELEMENT_COLORS = {
   // Pure forms
@@ -288,47 +288,22 @@ export function renderState(svg, state) {
   playerLayer.innerHTML = '';
 
   const { grid, player } = state;
-  const nemesisType = RULES[player.element].nemesis;
+  const deathHunters = new Set(getDeathHunters(player.element));
 
-  // Draw all grid shapes
+  // Draw all grid shapes + danger overlays
   for (let r = 0; r < 5; r++) {
     for (let c = 0; c < 5; c++) {
       const cell = grid[r][c];
-      if (cell) {
-        shapesLayer.appendChild(drawGridShape(cell.type, c, r));
+      if (!cell) continue;
+      shapesLayer.appendChild(drawGridShape(cell.type, c, r));
 
-        // Danger overlay: nemesis cells are impassable walls — mark them clearly
-        if (cell.type === nemesisType) {
-          const dangerRect = svgEl('rect', {
-            x: c * CELL_SIZE + 2,
-            y: r * CELL_SIZE + 2,
-            width:  CELL_SIZE - 4,
-            height: CELL_SIZE - 4,
-            fill:   'rgba(220,30,30,0.08)',
-            stroke: 'rgba(220,30,30,0.50)',
-            'stroke-width': '1.5',
-            rx: '4',
-            'pointer-events': 'none',
-          });
-          shapesLayer.appendChild(dangerRect);
-        }
-      }
-    }
-  }
-
-  // Hexagon danger highlight (more visible than normal nemesis overlay)
-  for (let r = 0; r < 5; r++) {
-    for (let c = 0; c < 5; c++) {
-      const cell = grid[r][c];
-      if (cell?.type === 'hexagon') {
+      // Death hunter — red danger overlay
+      if (deathHunters.has(cell.type)) {
         shapesLayer.appendChild(svgEl('rect', {
           x: c * CELL_SIZE + 2, y: r * CELL_SIZE + 2,
           width: CELL_SIZE - 4, height: CELL_SIZE - 4,
-          fill: 'rgba(200,100,20,0.10)',
-          stroke: 'rgba(200,100,20,0.55)',
-          'stroke-width': '1.5',
-          rx: '4',
-          'pointer-events': 'none',
+          fill: 'rgba(220,30,30,0.08)', stroke: 'rgba(220,30,30,0.50)',
+          'stroke-width': '1.5', rx: '4', 'pointer-events': 'none',
         }));
       }
     }
@@ -562,17 +537,17 @@ export function highlightValidMoves(svg, validMoves, state) {
     const nr = pr + dr, nc = pc + dc;
     const cellType = state.grid[nr][nc]?.type;
 
-    // Determine if this move is lethal
+    // Determine if this move is lethal (corruption overflow)
     const currentEl = state.player.element;
     const corr      = state.player.corruption;
     let lethal = false;
-    if (cellType && RULES[currentEl]?.absorb[cellType]) {
-      const delta = RULES[currentEl].absorb[cellType].corruptionDelta;
-      const newCorr = Math.max(0, corr + delta);
-      if (newCorr >= RULES[currentEl].deathAt) lethal = true;
+    if (cellType) {
+      const result = getAbsorbResult(currentEl, cellType);
+      if (result && !result.isCostume) {
+        const newCorr = result.corruptionDelta < -10 ? 0 : Math.max(0, corr + result.corruptionDelta);
+        if (newCorr >= RULES[currentEl].deathAt) lethal = true;
+      }
     }
-    // While transformed: absorbing same-as-current = instant death
-    if (state.player.transformed && cellType === currentEl) lethal = true;
 
     const borderColor = lethal ? '#ff3030' : '#c070ff';
     const fillColor   = lethal ? 'rgba(255,30,30,0.10)' : 'rgba(160,80,255,0.12)';
