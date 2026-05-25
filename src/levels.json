@@ -1833,5 +1833,329 @@
       "distinctPaths": 16,
       "hunterRequired": true
     }
+  },
+  {
+    "id": 37,
+    "playerElement": "square",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "square",
+        "hexagon",
+        "square",
+        "circle",
+        "star"
+      ],
+      [
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "square"
+      ],
+      [
+        "hexagon",
+        "moon",
+        null,
+        "moon",
+        "hexagon"
+      ],
+      [
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "square"
+      ],
+      [
+        "circle",
+        "square",
+        "hexagon",
+        "square",
+        "star"
+      ]
+    ],
+    "lesson": "Square opens the Star Journey. Two Stars, two Moons, four Hexagons \u2014 all three hunters on one board. Square survives Hexagon (costume), dies to Moon and Star. Plan the cleanse. 16-move win, 15 paths.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "16 moves",
+      "distinctPaths": 15,
+      "corruptionRequired": true,
+      "hunterRequired": true
+    }
+  },
+  {
+    "id": 38,
+    "playerElement": "square",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "star",
+        "circle",
+        "square",
+        "circle",
+        "star"
+      ],
+      [
+        "circle",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "circle"
+      ],
+      [
+        "square",
+        "hexagon",
+        null,
+        "hexagon",
+        "square"
+      ],
+      [
+        "circle",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "circle"
+      ],
+      [
+        "star",
+        "circle",
+        "square",
+        "circle",
+        "star"
+      ]
+    ],
+    "lesson": "Square hard. Four Stars at corners \u2014 instant death for Square. Four Hexagons form the inner ring \u2014 costume and cleanse required. Squares anchor the cardinal edges. 17-move win, 8 paths.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "17 moves",
+      "distinctPaths": 8,
+      "corruptionRequired": true,
+      "hunterRequired": true
+    }
+  },
+  {
+    "id": 39,
+    "playerElement": "circle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "star",
+        "circle",
+        "circle",
+        "circle",
+        "star"
+      ],
+      [
+        "circle",
+        "moon",
+        "circle",
+        "moon",
+        "circle"
+      ],
+      [
+        "square",
+        "circle",
+        null,
+        "circle",
+        "square"
+      ],
+      [
+        "circle",
+        "moon",
+        "circle",
+        "moon",
+        "circle"
+      ],
+      [
+        "star",
+        "circle",
+        "circle",
+        "circle",
+        "star"
+      ]
+    ],
+    "lesson": "Circle meets the Star. Four Stars at corners \u2014 Circle takes a Moon costume (-3) to survive. Four Moons on the inner diagonals force engagement. 11-move win, 792 paths.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "11 moves",
+      "distinctPaths": 792,
+      "corruptionRequired": true,
+      "hunterRequired": true
+    }
+  },
+  {
+    "id": 40,
+    "playerElement": "circle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "circle",
+        "star",
+        "circle",
+        "circle"
+      ],
+      [
+        "circle",
+        "moon",
+        "circle",
+        "moon",
+        "circle"
+      ],
+      [
+        "square",
+        "circle",
+        null,
+        "circle",
+        "square"
+      ],
+      [
+        "circle",
+        "moon",
+        "circle",
+        "moon",
+        "circle"
+      ],
+      [
+        "circle",
+        "circle",
+        "star",
+        "circle",
+        "circle"
+      ]
+    ],
+    "lesson": "Circle hard. Stars move to N/S \u2014 blocking the axis. Shorter path, far fewer options. 8-move win, 448 paths. Tighter means harder.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "8 moves",
+      "distinctPaths": 448,
+      "corruptionRequired": true,
+      "hunterRequired": true
+    }
+  },
+  {
+    "id": 41,
+    "playerElement": "triangle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "star",
+        null,
+        "star",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle"
+      ]
+    ],
+    "lesson": "Triangle finds its hunter. Two Stars flank the player \u2014 Triangle wears Star as costume (-3). Two Hexagons guard the N/S. Triangle fills the rest. 11-move win, ~7800 paths.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "11 moves",
+      "distinctPaths": 7792,
+      "corruptionRequired": true,
+      "hunterRequired": true
+    }
+  },
+  {
+    "id": 42,
+    "playerElement": "triangle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "star",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "star",
+        null,
+        "star",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "star",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle"
+      ]
+    ],
+    "lesson": "The final rite. Triangle is wholly surrounded by its absorbable hunter \u2014 four Stars on every cardinal. No Hexagon. No escape. Triangle meets its shadow head-on. The game ends here. 11-move win, ~7800 paths.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "11 moves",
+      "distinctPaths": 7792,
+      "corruptionRequired": true,
+      "hunterRequired": true
+    }
   }
 ]

@@ -29,6 +29,24 @@ const LEVEL_BACKGROUNDS = {
   16: './bg_rite16.jpg',
   17: './bg_rite17.jpg',
   18: './bg_rite18.jpg',
+  19: './bg_rite19.jpg',
+  20: './bg_rite20.jpg',
+  21: './bg_rite21.jpg',
+  22: './bg_rite22.jpg',
+  23: './bg_rite23.jpg',
+  24: './bg_rite24.jpg',
+  25: './bg_rite25.jpg',
+  26: './bg_rite26.jpg',
+  27: './bg_rite27.jpg',
+  28: './bg_rite28.jpg',
+  29: './bg_rite29.jpg',
+  30: './bg_rite30.jpg',
+  37: './bg_rite37.jpg',
+  38: './bg_rite38.jpg',
+  39: './bg_rite39.jpg',
+  40: './bg_rite40.jpg',
+  41: './bg_rite41.jpg',
+  42: './bg_rite42.jpg',
 };
 
 // Cell fill opacity per level — higher = darker grid (use when bg is bright/light)
@@ -110,7 +128,7 @@ const REALMS = [
   { id: 3, name: 'The Hexagon Chase', levelIds: [13,14,15,16,17,18]    },
   { id: 4, name: 'Moon Rites',        levelIds: [19,20,21,22,23,24]    },
   { id: 5, name: 'Moon Passage',      levelIds: [25,26,27,28,29,30]    },
-  // Future realms appended here
+  { id: 7, name: 'The Star Journey',  levelIds: [37,38,39,40,41,42]    },
 ];
 
 function getRealmForLevel(levelId) {
@@ -125,8 +143,9 @@ function riteIndex(levelId) {
 
 function isRealmUnlocked(realmId, progress) {
   if (realmId === 1) return true;
-  const prev = REALMS.find(r => r.id === realmId - 1);
-  if (!prev) return false;
+  // Find the highest-id realm that comes before this one (handles non-sequential ids)
+  const prev = REALMS.filter(r => r.id < realmId).sort((a, b) => b.id - a.id)[0];
+  if (!prev) return true;
   return prev.levelIds.every(id => progress.completed.includes(id));
 }
 
