@@ -870,18 +870,54 @@ export class GameScreen {
     const id = parseInt(this.hud.dataset.level);
     const isDeath = reason === 'lose-death';
 
-    const deathSkull = `<img src="./death_skull.png" class="death-skull-img" alt="Death" />`;
+    // Shattering element — use player's original element shape
+    const el = this.state?.player?.originalElement || 'circle';
+    const shatterSVG = {
+      circle:   `<circle cx="120" cy="120" r="90" fill="none" stroke="#cc2200" stroke-width="5"/>
+                 <circle cx="120" cy="120" r="60" fill="none" stroke="#aa1100" stroke-width="3" opacity="0.6"/>`,
+      square:   `<rect x="30" y="30" width="180" height="180" fill="none" stroke="#cc2200" stroke-width="5"/>
+                 <rect x="55" y="55" width="130" height="130" fill="none" stroke="#aa1100" stroke-width="3" opacity="0.6"/>`,
+      triangle: `<polygon points="120,15 220,210 20,210" fill="none" stroke="#cc2200" stroke-width="5"/>
+                 <polygon points="120,45 195,195 45,195" fill="none" stroke="#aa1100" stroke-width="3" opacity="0.6"/>`,
+    }[el] || '';
+
+    // Fragment lines radiating outward
+    const frags = Array.from({length:8}, (_,i) => {
+      const a = i * Math.PI/4;
+      const x1 = 120 + Math.cos(a)*60, y1 = 120 + Math.sin(a)*60;
+      const x2 = 120 + Math.cos(a)*160, y2 = 120 + Math.sin(a)*160;
+      return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"
+               stroke="#ff2200" stroke-width="2.5" opacity="0.7"
+               class="shatter-frag" style="animation-delay:${0.5 + i*0.04}s"/>`;
+    }).join('');
+
+    const shatterEl = `
+      <svg class="death-shatter" viewBox="0 0 240 240" width="280" height="280">
+        <g class="shatter-shape">${shatterSVG}</g>
+        ${frags}
+      </svg>`;
+
+    const brushes = `
+      <div class="death-brush brush-1"></div>
+      <div class="death-brush brush-2"></div>
+      <div class="death-brush brush-3"></div>
+      <div class="death-brush brush-4"></div>
+      <div class="death-brush brush-5"></div>`;
 
     const roman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][id - 1] || id;
     const content = isDeath ? `
-      <div class="death-header">
-        ${deathSkull}
-        <h2 class="death-title">DEATH</h2>
-        <p class="death-sub">The corruption consumed you</p>
+      ${brushes}
+      ${shatterEl}
+      <div class="death-content">
+        <div class="death-header">
+          <img src="./death_skull.png" class="death-skull-img" alt="Death" />
+          <h2 class="death-title">DEATH</h2>
+          <p class="death-sub">The corruption consumed you</p>
+        </div>
+        <p class="overlay-score">Essence gathered: ${this.state.player.score}</p>
+        <button class="btn-danger" id="btn-retry">↺ Perform the Rite Again</button>
+        <button class="btn-ghost" id="btn-levels">← Return to the Rites</button>
       </div>
-      <p class="overlay-score">Essence gathered: ${this.state.player.score}</p>
-      <button class="btn-danger" id="btn-retry">↺ Perform the Rite Again</button>
-      <button class="btn-ghost" id="btn-levels">← Return to the Rites</button>
     ` : `
       <div class="overlay-icon bound-icon">⬡</div>
       <h2 class="eerie-h2">BOUND</h2>
