@@ -511,11 +511,11 @@ export class GameScreen {
       <div class="realm-nav-row">
         <button class="realm-arrow" id="realm-prev" aria-label="Previous realm">&#8249;</button>
         <div class="realm-center">
-          <div class="realm-label" id="realm-name">${realm.name.toUpperCase()}</div>
           <div class="level-grid" id="realm-grid"></div>
         </div>
         <button class="realm-arrow" id="realm-next" aria-label="Next realm">&#8250;</button>
       </div>
+      <div class="realm-label" id="realm-name">${realm.name.toUpperCase()}</div>
 
       <div class="title-btn-row" style="margin-top:20px; padding-bottom:8px">
         <button class="title-btn" id="ls-how">HOW</button>
