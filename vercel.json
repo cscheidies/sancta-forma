@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/dev/:path*",
+      "destination": "https://sanctaforma-dev.vercel.app/:path*"
+    },
+    {
+      "source": "/dev",
+      "destination": "https://sanctaforma-dev.vercel.app/"
+    }
+  ]
+}
