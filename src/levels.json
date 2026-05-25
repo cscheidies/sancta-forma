@@ -62,7 +62,7 @@
     },
     "lore": [
       "You are Square. Grounded. Unyielding.",
-      "Triangles yield before you — safe passage, not prey.",
+      "Triangles yield before you \u2014 safe passage, not prey.",
       "Absorb your kin. Begin."
     ]
   },
@@ -111,7 +111,7 @@
         "square"
       ]
     ],
-    "lesson": "Corruption arrives. Adjacents are all circles. To reach the squares scattered around the board, you'll absorb circles along the way (+3 each, +1 curve). Square dies at 3 curves — pace it. Squares cleanse you back.",
+    "lesson": "Corruption arrives. Adjacents are all circles. To reach the squares scattered around the board, you'll absorb circles along the way (+3 each, +1 curve). Square dies at 3 curves \u2014 pace it. Squares cleanse you back.",
     "shapeCounts": {
       "square": 6,
       "circle": 13,
@@ -178,7 +178,7 @@
         "square"
       ]
     ],
-    "lesson": "Circle's turn. Surrounded by circles. Squares dot the corners as visible decoys — remember Circle has NO safe-transit shape; both squares and triangles add +1 straight. Death at 2 straights. This level is winnable circle-only.",
+    "lesson": "Circle's turn. Surrounded by circles. Squares dot the corners as visible decoys \u2014 remember Circle has NO safe-transit shape; both squares and triangles add +1 straight. Death at 2 straights. This level is winnable circle-only.",
     "shapeCounts": {
       "square": 8,
       "circle": 16,
@@ -312,7 +312,7 @@
         "square"
       ]
     ],
-    "lesson": "Triangle's turn. Triangles for scoring, squares as filler. Critical new rule to memorize: Triangle absorbing Square = 0 pts, 0 corruption (SAFE TRANSIT). Squares are friends for triangles. Circles are absent here — no danger.",
+    "lesson": "Triangle's turn. Triangles for scoring, squares as filler. Critical new rule to memorize: Triangle absorbing Square = 0 pts, 0 corruption (SAFE TRANSIT). Squares are friends for triangles. Circles are absent here \u2014 no danger.",
     "shapeCounts": {
       "square": 12,
       "circle": 0,
@@ -330,7 +330,7 @@
     },
     "lore": [
       "You are Triangle. Sharp. Fractal.",
-      "Squares dissolve before you — hollow, harmless.",
+      "Squares dissolve before you \u2014 hollow, harmless.",
       "Walk through silence. Gather the sharp ones."
     ]
   },
@@ -379,7 +379,7 @@
         "triangle"
       ]
     ],
-    "lesson": "Mirror of Level 2. Triangle player. Adjacents are all circles (+3 each, +1 curve; Triangle dies at 2 curves). Triangles scattered to score and cleanse. Squares everywhere as safe transit (0/0). Tight clock — same lesson as L2 but with the elements swapped.",
+    "lesson": "Mirror of Level 2. Triangle player. Adjacents are all circles (+3 each, +1 curve; Triangle dies at 2 curves). Triangles scattered to score and cleanse. Squares everywhere as safe transit (0/0). Tight clock \u2014 same lesson as L2 but with the elements swapped.",
     "shapeCounts": {
       "square": 5,
       "circle": 13,
@@ -513,7 +513,7 @@
         "square"
       ]
     ],
-    "lesson": "Second Square level. Circles surround the grid interior — each costs +1 Curve. Two hexagons gate the north corner squares. Squares act as Curve resets: absorb a circle, then quickly reach a square to recover. Never let Curves stack to 3.",
+    "lesson": "Second Square level. Circles surround the grid interior \u2014 each costs +1 Curve. Two hexagons gate the north corner squares. Squares act as Curve resets: absorb a circle, then quickly reach a square to recover. Never let Curves stack to 3.",
     "shapeCounts": {
       "square": 9,
       "hexagon": 2,
@@ -532,7 +532,7 @@
     },
     "lore": [
       "Two now. They multiply.",
-      "The familiar squares are still here — reach them.",
+      "The familiar squares are still here \u2014 reach them.",
       "Do not let the hexagons claim you."
     ]
   },
@@ -868,7 +868,7 @@
     },
     "lore": [
       "The hexagons are everywhere now.",
-      "They do not gate — they saturate.",
+      "They do not gate \u2014 they saturate.",
       "Find the squares before the grid closes."
     ]
   },
@@ -1070,7 +1070,7 @@
     },
     "lore": [
       "The triangle enters the chase.",
-      "Sharp and fast — but the circles press close.",
+      "Sharp and fast \u2014 but the circles press close.",
       "One curve too many and the angle breaks."
     ]
   },
@@ -1209,5 +1209,641 @@
       "Eight ways through. No second chances.",
       "Finish it."
     ]
+  },
+  {
+    "id": 19,
+    "playerElement": "circle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        null,
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ]
+    ],
+    "lesson": "PLACEHOLDER \u2014 Level 19. Grid and lesson TBD by Chris.",
+    "shapeCounts": {
+      "circle": 8,
+      "triangle": 8,
+      "square": 4,
+      "hexagon": 0
+    }
+  },
+  {
+    "id": 20,
+    "playerElement": "circle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        null,
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ]
+    ],
+    "lesson": "PLACEHOLDER \u2014 Level 20. Grid and lesson TBD by Chris.",
+    "shapeCounts": {
+      "circle": 8,
+      "triangle": 8,
+      "square": 4,
+      "hexagon": 0
+    }
+  },
+  {
+    "id": 21,
+    "playerElement": "triangle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        null,
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ]
+    ],
+    "lesson": "PLACEHOLDER \u2014 Level 21. Grid and lesson TBD by Chris.",
+    "shapeCounts": {
+      "circle": 8,
+      "triangle": 8,
+      "square": 4,
+      "hexagon": 0
+    }
+  },
+  {
+    "id": 22,
+    "playerElement": "circle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        null,
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ]
+    ],
+    "lesson": "PLACEHOLDER \u2014 Level 22. Grid and lesson TBD by Chris.",
+    "shapeCounts": {
+      "circle": 8,
+      "triangle": 8,
+      "square": 4,
+      "hexagon": 0
+    }
+  },
+  {
+    "id": 23,
+    "playerElement": "square",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        null,
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ]
+    ],
+    "lesson": "PLACEHOLDER \u2014 Level 23. Grid and lesson TBD by Chris.",
+    "shapeCounts": {
+      "circle": 8,
+      "triangle": 8,
+      "square": 4,
+      "hexagon": 0
+    }
+  },
+  {
+    "id": 24,
+    "playerElement": "circle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        null,
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ]
+    ],
+    "lesson": "PLACEHOLDER \u2014 Level 24. Grid and lesson TBD by Chris.",
+    "shapeCounts": {
+      "circle": 8,
+      "triangle": 8,
+      "square": 4,
+      "hexagon": 0
+    }
+  },
+  {
+    "id": 25,
+    "playerElement": "circle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        null,
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ]
+    ],
+    "lesson": "PLACEHOLDER \u2014 Level 25. Grid and lesson TBD by Chris.",
+    "shapeCounts": {
+      "circle": 8,
+      "triangle": 8,
+      "square": 4,
+      "hexagon": 0
+    }
+  },
+  {
+    "id": 26,
+    "playerElement": "triangle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        null,
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ]
+    ],
+    "lesson": "PLACEHOLDER \u2014 Level 26. Grid and lesson TBD by Chris.",
+    "shapeCounts": {
+      "circle": 8,
+      "triangle": 8,
+      "square": 4,
+      "hexagon": 0
+    }
+  },
+  {
+    "id": 27,
+    "playerElement": "circle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        null,
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ]
+    ],
+    "lesson": "PLACEHOLDER \u2014 Level 27. Grid and lesson TBD by Chris.",
+    "shapeCounts": {
+      "circle": 8,
+      "triangle": 8,
+      "square": 4,
+      "hexagon": 0
+    }
+  },
+  {
+    "id": 28,
+    "playerElement": "square",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        null,
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ]
+    ],
+    "lesson": "PLACEHOLDER \u2014 Level 28. Grid and lesson TBD by Chris.",
+    "shapeCounts": {
+      "circle": 8,
+      "triangle": 8,
+      "square": 4,
+      "hexagon": 0
+    }
+  },
+  {
+    "id": 29,
+    "playerElement": "circle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        null,
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ]
+    ],
+    "lesson": "PLACEHOLDER \u2014 Level 29. Grid and lesson TBD by Chris.",
+    "shapeCounts": {
+      "circle": 8,
+      "triangle": 8,
+      "square": 4,
+      "hexagon": 0
+    }
+  },
+  {
+    "id": 30,
+    "playerElement": "triangle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        null,
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "square",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ]
+    ],
+    "lesson": "PLACEHOLDER \u2014 Level 30. Grid and lesson TBD by Chris.",
+    "shapeCounts": {
+      "circle": 8,
+      "triangle": 8,
+      "square": 4,
+      "hexagon": 0
+    }
   }
 ]

@@ -99,9 +99,11 @@ import {
 
 // ── Realm definitions ─────────────────────────────────────────────────────
 const REALMS = [
-  { id: 1, name: 'The First Rites',   levelIds: [1,2,3,4,5,6]       },
-  { id: 2, name: 'The Hexagon Rites', levelIds: [7,8,9,10,11,12]    },
-  { id: 3, name: 'The Hexagon Chase', levelIds: [13,14,15,16,17,18] },
+  { id: 1, name: 'The First Rites',   levelIds: [1,2,3,4,5,6]          },
+  { id: 2, name: 'The Hexagon Rites', levelIds: [7,8,9,10,11,12]       },
+  { id: 3, name: 'The Hexagon Chase', levelIds: [13,14,15,16,17,18]    },
+  { id: 4, name: 'Moon Rites',        levelIds: [19,20,21,22,23,24]    },
+  { id: 5, name: 'Moon Passage',      levelIds: [25,26,27,28,29,30]    },
   // Future realms appended here
 ];
 
