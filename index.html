@@ -1345,29 +1345,29 @@
   // dx = drift speed (px/ms normalised to screen width), layer: bg|fg
   const MIST = [
     // ── Lower banks — heavy ground fog ───────────────────────────────
-    {ox:0.50, oy:0.70, rx:0.80, ry:0.10, maxA:0.40, dx: 0.000006, phase:0.0, layer:'bg'},
-    {ox:0.20, oy:0.74, rx:0.55, ry:0.09, maxA:0.34, dx:-0.000005, phase:1.4, layer:'bg'},
-    {ox:0.80, oy:0.72, rx:0.50, ry:0.09, maxA:0.30, dx: 0.000007, phase:2.8, layer:'bg'},
-    {ox:0.50, oy:0.80, rx:0.85, ry:0.11, maxA:0.45, dx: 0.000004, phase:0.6, layer:'bg'},
-    {ox:0.30, oy:0.85, rx:0.70, ry:0.10, maxA:0.42, dx:-0.000006, phase:1.9, layer:'bg'},
-    {ox:0.70, oy:0.83, rx:0.65, ry:0.09, maxA:0.38, dx: 0.000005, phase:3.2, layer:'bg'},
+    {ox:0.50, oy:0.70, rx:0.90, ry:0.13, maxA:0.65, dx: 0.000008, phase:0.0, layer:'bg'},
+    {ox:0.20, oy:0.74, rx:0.65, ry:0.12, maxA:0.58, dx:-0.000007, phase:1.4, layer:'bg'},
+    {ox:0.80, oy:0.72, rx:0.60, ry:0.12, maxA:0.55, dx: 0.000009, phase:2.8, layer:'bg'},
+    {ox:0.50, oy:0.82, rx:0.95, ry:0.14, maxA:0.70, dx: 0.000006, phase:0.6, layer:'bg'},
+    {ox:0.30, oy:0.87, rx:0.80, ry:0.13, maxA:0.65, dx:-0.000008, phase:1.9, layer:'bg'},
+    {ox:0.70, oy:0.85, rx:0.75, ry:0.12, maxA:0.60, dx: 0.000007, phase:3.2, layer:'bg'},
     // ── Mid-screen banks — drift slowly across ────────────────────────
-    {ox:0.00, oy:0.48, rx:0.65, ry:0.09, maxA:0.20, dx: 0.000010, phase:0.7, layer:'bg'},
-    {ox:1.00, oy:0.52, rx:0.58, ry:0.08, maxA:0.18, dx:-0.000008, phase:2.2, layer:'bg'},
-    {ox:0.35, oy:0.44, rx:0.70, ry:0.08, maxA:0.16, dx: 0.000006, phase:4.1, layer:'bg'},
-    {ox:0.75, oy:0.57, rx:0.55, ry:0.08, maxA:0.18, dx:-0.000009, phase:1.5, layer:'bg'},
+    {ox:0.00, oy:0.48, rx:0.75, ry:0.11, maxA:0.42, dx: 0.000012, phase:0.7, layer:'bg'},
+    {ox:1.00, oy:0.52, rx:0.68, ry:0.10, maxA:0.38, dx:-0.000010, phase:2.2, layer:'bg'},
+    {ox:0.35, oy:0.44, rx:0.80, ry:0.10, maxA:0.35, dx: 0.000008, phase:4.1, layer:'bg'},
+    {ox:0.75, oy:0.57, rx:0.65, ry:0.10, maxA:0.38, dx:-0.000011, phase:1.5, layer:'bg'},
     // ── Upper wisps ───────────────────────────────────────────────────
-    {ox:0.10, oy:0.28, rx:0.48, ry:0.07, maxA:0.12, dx: 0.000013, phase:0.9, layer:'bg'},
-    {ox:0.90, oy:0.22, rx:0.42, ry:0.06, maxA:0.10, dx:-0.000011, phase:3.3, layer:'bg'},
-    {ox:0.50, oy:0.35, rx:0.55, ry:0.07, maxA:0.11, dx: 0.000009, phase:5.1, layer:'bg'},
+    {ox:0.10, oy:0.28, rx:0.55, ry:0.09, maxA:0.28, dx: 0.000015, phase:0.9, layer:'bg'},
+    {ox:0.90, oy:0.22, rx:0.50, ry:0.08, maxA:0.24, dx:-0.000013, phase:3.3, layer:'bg'},
+    {ox:0.50, oy:0.35, rx:0.65, ry:0.09, maxA:0.26, dx: 0.000011, phase:5.1, layer:'bg'},
     // ── Foreground — floats OVER the game board ────────────────────────
-    {ox:-0.10,oy:0.55, rx:0.55, ry:0.08, maxA:0.18, dx: 0.000016, phase:1.2, layer:'fg'},
-    {ox: 1.10,oy:0.62, rx:0.50, ry:0.07, maxA:0.16, dx:-0.000014, phase:2.7, layer:'fg'},
-    {ox:0.25, oy:0.50, rx:0.45, ry:0.07, maxA:0.14, dx: 0.000018, phase:0.5, layer:'fg'},
-    {ox:0.78, oy:0.44, rx:0.48, ry:0.07, maxA:0.14, dx:-0.000016, phase:3.8, layer:'fg'},
-    {ox:0.50, oy:0.68, rx:0.60, ry:0.09, maxA:0.20, dx: 0.000012, phase:2.0, layer:'fg'},
-    {ox:-0.05,oy:0.75, rx:0.45, ry:0.08, maxA:0.18, dx: 0.000020, phase:4.5, layer:'fg'},
-    {ox: 1.05,oy:0.38, rx:0.42, ry:0.07, maxA:0.13, dx:-0.000018, phase:1.8, layer:'fg'},
+    {ox:-0.10,oy:0.55, rx:0.65, ry:0.11, maxA:0.38, dx: 0.000018, phase:1.2, layer:'fg'},
+    {ox: 1.10,oy:0.62, rx:0.60, ry:0.10, maxA:0.34, dx:-0.000016, phase:2.7, layer:'fg'},
+    {ox:0.25, oy:0.50, rx:0.55, ry:0.10, maxA:0.30, dx: 0.000020, phase:0.5, layer:'fg'},
+    {ox:0.78, oy:0.44, rx:0.58, ry:0.10, maxA:0.30, dx:-0.000018, phase:3.8, layer:'fg'},
+    {ox:0.50, oy:0.68, rx:0.70, ry:0.12, maxA:0.42, dx: 0.000014, phase:2.0, layer:'fg'},
+    {ox:-0.05,oy:0.75, rx:0.55, ry:0.11, maxA:0.38, dx: 0.000022, phase:4.5, layer:'fg'},
+    {ox: 1.05,oy:0.38, rx:0.52, ry:0.09, maxA:0.28, dx:-0.000020, phase:1.8, layer:'fg'},
   ];
 
   function drawFogOnCtx(ctx, W, H, now, layerName) {
@@ -1519,7 +1519,7 @@
     }
 
     // Fog — always rendered over whatever background is active
-    drawMistLayer(now, 'bg');
+    drawMist(now);
 
     // Shooting stars (rare)
     if(now-lastShoot>nextShoot){spawnShooter();lastShoot=now;nextShoot=rand(4000,10000);}
