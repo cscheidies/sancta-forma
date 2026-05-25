@@ -1835,6 +1835,330 @@
     }
   },
   {
+    "id": 31,
+    "playerElement": "square",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "square",
+        "hexagon",
+        "square",
+        "circle"
+      ],
+      [
+        "square",
+        "triangle",
+        "star",
+        "triangle",
+        "square"
+      ],
+      [
+        "hexagon",
+        "circle",
+        null,
+        "circle",
+        "hexagon"
+      ],
+      [
+        "square",
+        "triangle",
+        "star",
+        "triangle",
+        "square"
+      ],
+      [
+        "circle",
+        "square",
+        "hexagon",
+        "square",
+        "circle"
+      ]
+    ],
+    "lesson": "Square meets the Star. Two Stars block the N/S axis \u2014 instant death for Square. Four Hexagons absorb safely (costume), Moons wait at the flanks. Navigate the inner ring. 14-move win, 192 paths.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "14 moves",
+      "distinctPaths": 192,
+      "corruptionRequired": true,
+      "hunterRequired": true
+    }
+  },
+  {
+    "id": 32,
+    "playerElement": "square",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "star",
+        "circle",
+        "square",
+        "circle",
+        "star"
+      ],
+      [
+        "circle",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "circle"
+      ],
+      [
+        "square",
+        "hexagon",
+        null,
+        "hexagon",
+        "square"
+      ],
+      [
+        "circle",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "circle"
+      ],
+      [
+        "star",
+        "circle",
+        "square",
+        "circle",
+        "star"
+      ]
+    ],
+    "lesson": "Square hard. Four Stars command the corners \u2014 death on all sides. Dense Hexagon inner ring. Square must costume and cleanse while threading the narrow paths. 17-move win, 8 paths.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "17 moves",
+      "distinctPaths": 8,
+      "corruptionRequired": true,
+      "hunterRequired": true
+    }
+  },
+  {
+    "id": 33,
+    "playerElement": "circle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "circle",
+        "star",
+        "circle",
+        "circle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "moon",
+        "square",
+        null,
+        "square",
+        "moon"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "circle",
+        "circle",
+        "hexagon",
+        "circle",
+        "circle"
+      ]
+    ],
+    "lesson": "Circle's first Star. One Star to the North \u2014 death. One Hexagon to the South \u2014 also death. Two Moons flank the path, offering costume and escape. A transition rite: familiar threats, new pressure. 8-move win, 76 paths.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "8 moves",
+      "distinctPaths": 76,
+      "corruptionRequired": true,
+      "hunterRequired": true
+    }
+  },
+  {
+    "id": 34,
+    "playerElement": "circle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "circle",
+        "circle",
+        "star",
+        "circle",
+        "circle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "moon",
+        "square",
+        null,
+        "square",
+        "moon"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "circle",
+        "circle",
+        "star",
+        "circle",
+        "circle"
+      ]
+    ],
+    "lesson": "Circle hard. The Hexagon is gone \u2014 now a second Star holds the South. Stars above and below. The Moons are Circle's only allies. Same paths, pure Star theme. 8-move win, 76 paths.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "8 moves",
+      "distinctPaths": 76,
+      "corruptionRequired": true,
+      "hunterRequired": true
+    }
+  },
+  {
+    "id": 35,
+    "playerElement": "triangle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "star",
+        "circle",
+        "triangle",
+        "circle",
+        "star"
+      ],
+      [
+        "circle",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "hexagon",
+        null,
+        "hexagon",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "circle"
+      ],
+      [
+        "star",
+        "circle",
+        "triangle",
+        "circle",
+        "star"
+      ]
+    ],
+    "lesson": "Triangle finds the Star. Four Stars wait at the corners \u2014 but Triangle can absorb them for costume. Four Hexagons ring the player. The hunter is finally prey. 11-move win, 376 paths.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "11 moves",
+      "distinctPaths": 376,
+      "corruptionRequired": true,
+      "hunterRequired": true
+    }
+  },
+  {
+    "id": 36,
+    "playerElement": "triangle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "triangle",
+        "hexagon",
+        "triangle",
+        "hexagon",
+        "triangle"
+      ],
+      [
+        "circle",
+        "star",
+        "triangle",
+        "star",
+        "circle"
+      ],
+      [
+        "triangle",
+        "triangle",
+        null,
+        "triangle",
+        "triangle"
+      ],
+      [
+        "circle",
+        "star",
+        "triangle",
+        "star",
+        "circle"
+      ],
+      [
+        "triangle",
+        "hexagon",
+        "triangle",
+        "hexagon",
+        "triangle"
+      ]
+    ],
+    "lesson": "Triangle hard. Four Stars press in from the diagonals \u2014 two moves away, inescapable. Hexagons guard the outer edge. Triangle hunts every Star to survive. 11-move win, 188 paths.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "11 moves",
+      "distinctPaths": 188,
+      "corruptionRequired": true,
+      "hunterRequired": true
+    }
+  },
+  {
     "id": 37,
     "playerElement": "square",
     "playerStart": [
