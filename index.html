@@ -1539,7 +1539,7 @@
     }
 
     // Fog — always rendered over whatever background is active
-    drawMistLayer(now, 'bg');
+    drawMist(now);
 
     // Shooting stars (rare)
     if(now-lastShoot>nextShoot){spawnShooter();lastShoot=now;nextShoot=rand(4000,10000);}
