@@ -1373,23 +1373,22 @@
   function drawFogOnCtx(ctx, W, H, now, layerName) {
     for (const m of MIST) {
       if (m.layer !== layerName) continue;
-      // Smooth horizontal drift with seamless wrap
-      const drift = (m.ox + now * m.dx * W);
-      const cx = ((drift % W) + W) % W;
-      const cy = m.oy * H + Math.sin(now * 0.00016 + m.phase) * H * 0.015;
+      // Smooth horizontal drift with seamless wrap — ox is normalized (0–1), must multiply by W
+      const cx = ((m.ox * W + now * m.dx * W) % W + W) % W;
+      const cy = m.oy * H + Math.sin(now * 0.00016 + m.phase) * H * 0.018;
       const rx = m.rx * W;
       const ry = m.ry * H;
       // Breathe: alpha pulses in and out slowly
-      const alpha = m.maxA * (0.35 + 0.65 * (0.5 + 0.5 * Math.sin(now * 0.00020 + m.phase)));
+      const alpha = m.maxA * (0.4 + 0.6 * (0.5 + 0.5 * Math.sin(now * 0.00018 + m.phase)));
 
       ctx.save();
       ctx.translate(cx, cy);
       ctx.scale(rx / 100, ry / 100);
       const g = ctx.createRadialGradient(0,0,0, 0,0,100);
-      g.addColorStop(0,   `rgba(215,205,250,${alpha})`);
-      g.addColorStop(0.40,`rgba(190,180,235,${alpha * 0.55})`);
-      g.addColorStop(0.75,`rgba(165,158,220,${alpha * 0.20})`);
-      g.addColorStop(1,   'rgba(140,135,210,0)');
+      g.addColorStop(0,   `rgba(220,210,255,${alpha})`);
+      g.addColorStop(0.35,`rgba(195,185,245,${alpha * 0.60})`);
+      g.addColorStop(0.70,`rgba(170,160,230,${alpha * 0.25})`);
+      g.addColorStop(1,   'rgba(145,138,215,0)');
       ctx.fillStyle = g;
       ctx.beginPath(); ctx.arc(0,0,100,0,Math.PI*2); ctx.fill();
       ctx.restore();
