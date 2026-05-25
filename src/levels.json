@@ -1518,7 +1518,7 @@
   },
   {
     "id": 25,
-    "playerElement": "circle",
+    "playerElement": "square",
     "playerStart": [
       2,
       2
@@ -1526,52 +1526,52 @@
     "winScore": 50,
     "grid": [
       [
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
+        "moon",
+        "square",
+        "hexagon",
+        "square",
         "circle"
       ],
       [
+        "square",
         "triangle",
-        "square",
         "circle",
-        "square",
-        "triangle"
+        "triangle",
+        "square"
       ],
       [
-        "circle",
-        "triangle",
+        "hexagon",
+        "moon",
         null,
-        "triangle",
-        "circle"
+        "circle",
+        "hexagon"
       ],
       [
+        "square",
         "triangle",
-        "square",
         "circle",
-        "square",
-        "triangle"
+        "triangle",
+        "square"
       ],
       [
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
+        "moon",
+        "square",
+        "hexagon",
+        "square",
         "circle"
       ]
     ],
-    "lesson": "PLACEHOLDER \u2014 Level 25. Grid and lesson TBD by Chris.",
-    "shapeCounts": {
-      "circle": 8,
-      "triangle": 8,
-      "square": 4,
-      "hexagon": 0
+    "lesson": "Square meets asymmetric Moon threat. Three moons block the west flank \u2014 Moon at (2,1) cuts left from the start. Hexagons on cardinals are absorbable. 17-move win, 36 paths.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "17 moves",
+      "distinctPaths": 36,
+      "hunterRequired": true
     }
   },
   {
     "id": 26,
-    "playerElement": "triangle",
+    "playerElement": "square",
     "playerStart": [
       2,
       2
@@ -1579,47 +1579,47 @@
     "winScore": 50,
     "grid": [
       [
+        "square",
         "circle",
-        "triangle",
+        "square",
         "circle",
-        "triangle",
+        "square"
+      ],
+      [
+        "circle",
+        "moon",
+        "hexagon",
+        "moon",
         "circle"
       ],
       [
-        "triangle",
         "square",
-        "circle",
-        "square",
-        "triangle"
-      ],
-      [
-        "circle",
-        "triangle",
+        "hexagon",
         null,
-        "triangle",
-        "circle"
-      ],
-      [
-        "triangle",
-        "square",
-        "circle",
-        "square",
-        "triangle"
+        "hexagon",
+        "square"
       ],
       [
         "circle",
-        "triangle",
-        "circle",
-        "triangle",
+        "moon",
+        "hexagon",
+        "moon",
         "circle"
+      ],
+      [
+        "square",
+        "circle",
+        "square",
+        "circle",
+        "square"
       ]
     ],
-    "lesson": "PLACEHOLDER \u2014 Level 26. Grid and lesson TBD by Chris.",
-    "shapeCounts": {
-      "circle": 8,
-      "triangle": 8,
-      "square": 4,
-      "hexagon": 0
+    "lesson": "Square gauntlet. Every adjacent cell from the start is a Hexagon \u2014 costume is mandatory on move 1. Four Moons lock the inner diagonals. 11-move win, 8 paths. The tightest Square puzzle yet.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "11 moves",
+      "distinctPaths": 8,
+      "hunterRequired": true
     }
   },
   {
@@ -1632,104 +1632,51 @@
     "winScore": 50,
     "grid": [
       [
+        "hexagon",
         "circle",
-        "triangle",
         "circle",
-        "triangle",
+        "circle",
+        "hexagon"
+      ],
+      [
+        "circle",
+        "moon",
+        "circle",
+        "moon",
         "circle"
       ],
       [
         "triangle",
-        "square",
         "circle",
-        "square",
-        "triangle"
-      ],
-      [
-        "circle",
-        "triangle",
         null,
-        "triangle",
-        "circle"
-      ],
-      [
-        "triangle",
-        "square",
         "circle",
-        "square",
         "triangle"
       ],
       [
         "circle",
-        "triangle",
+        "moon",
         "circle",
-        "triangle",
+        "moon",
         "circle"
+      ],
+      [
+        "hexagon",
+        "circle",
+        "circle",
+        "circle",
+        "hexagon"
       ]
     ],
-    "lesson": "PLACEHOLDER \u2014 Level 27. Grid and lesson TBD by Chris.",
-    "shapeCounts": {
-      "circle": 8,
-      "triangle": 8,
-      "square": 4,
-      "hexagon": 0
+    "lesson": "Circle mastery. Four Moons on inner diagonals \u2014 all absorbable by Circle. Four Hexagons in corners \u2014 all death to Circle, route wide. 11-move win, 792 paths \u2014 many valid lines.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "11 moves",
+      "distinctPaths": 792,
+      "hunterRequired": true
     }
   },
   {
     "id": 28,
-    "playerElement": "square",
-    "playerStart": [
-      2,
-      2
-    ],
-    "winScore": 50,
-    "grid": [
-      [
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle"
-      ],
-      [
-        "triangle",
-        "square",
-        "circle",
-        "square",
-        "triangle"
-      ],
-      [
-        "circle",
-        "triangle",
-        null,
-        "triangle",
-        "circle"
-      ],
-      [
-        "triangle",
-        "square",
-        "circle",
-        "square",
-        "triangle"
-      ],
-      [
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle"
-      ]
-    ],
-    "lesson": "PLACEHOLDER \u2014 Level 28. Grid and lesson TBD by Chris.",
-    "shapeCounts": {
-      "circle": 8,
-      "triangle": 8,
-      "square": 4,
-      "hexagon": 0
-    }
-  },
-  {
-    "id": 29,
     "playerElement": "circle",
     "playerStart": [
       2,
@@ -1740,45 +1687,98 @@
       [
         "circle",
         "triangle",
-        "circle",
+        "hexagon",
         "triangle",
         "circle"
       ],
       [
         "triangle",
-        "square",
+        "moon",
         "circle",
-        "square",
+        "moon",
         "triangle"
       ],
       [
         "circle",
-        "triangle",
+        "circle",
         null,
-        "triangle",
+        "circle",
         "circle"
       ],
       [
         "triangle",
-        "square",
-        "circle",
-        "square",
+        "triangle",
+        "moon",
+        "triangle",
         "triangle"
       ],
       [
         "circle",
-        "triangle",
-        "circle",
-        "triangle",
+        "moon",
+        "hexagon",
+        "moon",
         "circle"
       ]
     ],
-    "lesson": "PLACEHOLDER \u2014 Level 29. Grid and lesson TBD by Chris.",
-    "shapeCounts": {
-      "circle": 8,
-      "triangle": 8,
-      "square": 4,
-      "hexagon": 0
+    "lesson": "Circle under pressure. Five Moons asymmetrically placed \u2014 near-forced Moon absorbs. Two Hexagons (top, bottom center) are death. 12-move win, 12 paths. The reflecting pool grows narrow.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "12 moves",
+      "distinctPaths": 12,
+      "hunterRequired": true
+    }
+  },
+  {
+    "id": 29,
+    "playerElement": "triangle",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "moon",
+        "circle",
+        "triangle",
+        "circle",
+        "moon"
+      ],
+      [
+        "circle",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "hexagon",
+        null,
+        "hexagon",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "circle"
+      ],
+      [
+        "moon",
+        "circle",
+        "triangle",
+        "circle",
+        "moon"
+      ]
+    ],
+    "lesson": "Triangle in the Moon realm. Four Moons guard the corners \u2014 death, avoid. Four Hexagons form the inner ring adjacent to the player \u2014 all absorbable. 11-move win, 376 paths.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "11 moves",
+      "distinctPaths": 376,
+      "hunterRequired": true
     }
   },
   {
@@ -1791,47 +1791,47 @@
     "winScore": 50,
     "grid": [
       [
-        "circle",
         "triangle",
-        "circle",
+        "hexagon",
         "triangle",
-        "circle"
-      ],
-      [
-        "triangle",
-        "square",
-        "circle",
-        "square",
+        "hexagon",
         "triangle"
       ],
       [
         "circle",
+        "moon",
+        "triangle",
+        "moon",
+        "circle"
+      ],
+      [
+        "triangle",
         "triangle",
         null,
         "triangle",
-        "circle"
-      ],
-      [
-        "triangle",
-        "square",
-        "circle",
-        "square",
         "triangle"
       ],
       [
         "circle",
+        "moon",
         "triangle",
-        "circle",
-        "triangle",
+        "moon",
         "circle"
+      ],
+      [
+        "triangle",
+        "hexagon",
+        "triangle",
+        "hexagon",
+        "triangle"
       ]
     ],
-    "lesson": "PLACEHOLDER \u2014 Level 30. Grid and lesson TBD by Chris.",
-    "shapeCounts": {
-      "circle": 8,
-      "triangle": 8,
-      "square": 4,
-      "hexagon": 0
+    "lesson": "Triangle final trial. Four Moons lock the inner diagonals \u2014 death. Four Hexagons on outer non-corners absorb for costume. Dense triangle wall. 11-move win, 16 paths. The actor holds shape to the last.",
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "11 moves",
+      "distinctPaths": 16,
+      "hunterRequired": true
     }
   }
 ]
