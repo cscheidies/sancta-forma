@@ -3,6 +3,12 @@
 import { initState, getValidMoves, applyMove, RULES } from './engine.js';
 import * as sfx from './sfx.js';
 
+// Returns the actual rendered logo bottom + gap, falling back to 220px.
+// window.__logoH is set (and kept current) by syncLogoH() in index.html.
+function logoH() {
+  return (window.__logoH || 220) + 'px';
+}
+
 // Per-rite background images
 const LEVEL_BACKGROUNDS = {
   1:  './bg_rite1.jpg',
@@ -269,7 +275,7 @@ export class GameScreen {
     const screen = document.createElement('div');
     screen.className = 'screen';
     screen.innerHTML = `
-      <div style="height:310px;flex-shrink:0"></div>
+      <div style="height:${logoH()};flex-shrink:0"></div>
       <div class="howto-screen">
         <div class="screen-header">
           <h2 class="eerie-h2" style="margin-bottom:4px">How to Play</h2>
@@ -370,7 +376,7 @@ export class GameScreen {
     screen.className = 'screen narrative-screen';
     screen.innerHTML = `
       <div class="narrative-wrap">
-        <div style="height:310px;flex-shrink:0"></div>
+        <div style="height:${logoH()};flex-shrink:0"></div>
         <div class="narr-wrap-inner narr-entering" id="narr-inner"></div>
       </div>
     `;
@@ -432,7 +438,7 @@ export class GameScreen {
     screen.className = 'screen level-select';
 
     screen.innerHTML = `
-      <div class="screen-header" style="height:310px;flex-shrink:0"></div>
+      <div class="screen-header" style="height:${logoH()};flex-shrink:0"></div>
 
       <!-- REMOVED inline sigil — replaced by #global-logo fixed element -->
       <div style="display:none">
@@ -633,7 +639,7 @@ export class GameScreen {
     // Spacer so the grid sits below the fixed global logo
     const logoWrap = document.createElement('div');
     logoWrap.className = 'game-logo-wrap';
-    logoWrap.style.height = '310px';
+    logoWrap.style.height = logoH();
     logoWrap.style.flexShrink = '0';
     // Order: spacer → grid → HUD
     wrapper.insertBefore(logoWrap, wrapper.firstChild);

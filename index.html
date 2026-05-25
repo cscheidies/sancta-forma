@@ -37,7 +37,7 @@
       background: var(--bg);
       color: var(--text);
       font-family: var(--font-main);
-      min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -498,10 +498,11 @@
       color: var(--text);
     }
 
-    /* ── Grid SVG ──────────────────────────────────────── */
+    /* ── Grid SVG — fills available space below logo ──────── */
     .game-grid {
-      max-width: 400px;
-      width: 100%;
+      /* Square: constrained by both width and remaining height */
+      width:      min(92vw, calc(100dvh - var(--logo-h, 240px) - 140px));
+      max-width:  400px;
       height: auto;
       display: block;
       border-radius: 8px;
@@ -518,14 +519,11 @@
       z-index: 60;
       pointer-events: none;
       text-align: center;
-      padding-top: 6px;
-      /* Hard height cap — spacers key off this value (310px) */
-      max-height: 310px;
-      overflow: visible;
+      padding-top: clamp(4px, 1vh, 10px);
     }
     #global-logo .sf-sigil {
-      width: 180px;
-      height: 164px;
+      width:   clamp(80px,  20vmin, 160px);
+      height:  clamp(73px,  18vmin, 146px);
       display: block;
       margin: 0 auto;
     }
@@ -534,11 +532,11 @@
       line-height: 1.05;
     }
     #global-logo .sf-sancta {
-      font-size: 1.0rem;
+      font-size: clamp(0.55rem, 1.4vmin, 0.95rem);
       letter-spacing: 0.30em;
     }
     #global-logo .sf-forma {
-      font-size: 2.0rem;
+      font-size: clamp(1.1rem, 3.2vmin, 1.9rem);
       letter-spacing: 0.18em;
     }
 
@@ -976,7 +974,11 @@
     @media (max-width: 420px) {
       .screen-header h1 { font-size: 1.8rem; }
       .dpad-btn { width: 46px; height: 46px; }
-      .game-grid { max-width: 360px; }
+    }
+    /* Short screens (landscape phone) */
+    @media (max-height: 600px) {
+      .hud { padding: 6px 12px; gap: 3px; }
+      .realm-label { font-size: 1.2rem; margin-top: 10px; }
     }
     /* Reduced-motion: skip animations, show text immediately */
     @media (prefers-reduced-motion: reduce) {
@@ -1539,6 +1541,23 @@
   window.addEventListener('resize', init);
   init();
   requestAnimationFrame(draw);
+
+  // ── Logo height sync — measures actual rendered logo, sets CSS var ──
+  // All spacers in ui.js read window.__logoH; CSS reads --logo-h
+  function syncLogoH() {
+    const logo = document.getElementById('global-logo');
+    if (!logo) return;
+    const h = logo.getBoundingClientRect().bottom + 16; // 16px breathing gap
+    document.documentElement.style.setProperty('--logo-h', `${h}px`);
+    window.__logoH = h;
+  }
+  // Run after fonts load (Cinzel Decorative affects height)
+  if (document.fonts) {
+    document.fonts.ready.then(() => { syncLogoH(); });
+  }
+  syncLogoH(); // immediate estimate
+  window.addEventListener('resize', syncLogoH);
+  window.addEventListener('orientationchange', () => setTimeout(syncLogoH, 150));
 })();
 
 
