@@ -1323,30 +1323,30 @@
   // ox/oy = normalized start position, dx = horizontal drift px/ms, ry = vertical spread
   // layer: 'bg' drawn behind stars, 'fg' drawn over everything (above game)
   const MIST = [
-    // ── Mountain / ground fog (existing, lower screen) ────────────────
-    {ox:0.50, oy:0.64, rx:0.55, ry:0.055, maxA:0.11, dx: 0.000008, phase:0.0, layer:'bg'},
-    {ox:0.30, oy:0.66, rx:0.42, ry:0.050, maxA:0.09, dx:-0.000006, phase:1.4, layer:'bg'},
-    {ox:0.70, oy:0.68, rx:0.38, ry:0.045, maxA:0.08, dx: 0.000010, phase:2.8, layer:'bg'},
-    {ox:0.50, oy:0.73, rx:0.70, ry:0.065, maxA:0.20, dx: 0.000005, phase:0.6, layer:'bg'},
-    {ox:0.35, oy:0.76, rx:0.60, ry:0.055, maxA:0.18, dx:-0.000008, phase:1.9, layer:'bg'},
-    {ox:0.65, oy:0.75, rx:0.55, ry:0.050, maxA:0.16, dx: 0.000007, phase:3.2, layer:'bg'},
-    {ox:0.20, oy:0.82, rx:0.30, ry:0.040, maxA:0.25, dx:-0.000004, phase:0.3, layer:'bg'},
-    {ox:0.80, oy:0.83, rx:0.28, ry:0.038, maxA:0.22, dx: 0.000005, phase:2.1, layer:'bg'},
-    {ox:0.50, oy:0.85, rx:0.45, ry:0.035, maxA:0.28, dx:-0.000006, phase:1.0, layer:'bg'},
+    // ── Lower screen fog banks ────────────────────────────────────────
+    {ox:0.50, oy:0.62, rx:0.60, ry:0.07, maxA:0.22, dx: 0.000008, phase:0.0, layer:'bg'},
+    {ox:0.25, oy:0.65, rx:0.48, ry:0.06, maxA:0.18, dx:-0.000006, phase:1.4, layer:'bg'},
+    {ox:0.75, oy:0.67, rx:0.44, ry:0.06, maxA:0.16, dx: 0.000010, phase:2.8, layer:'bg'},
+    {ox:0.50, oy:0.72, rx:0.75, ry:0.08, maxA:0.32, dx: 0.000005, phase:0.6, layer:'bg'},
+    {ox:0.30, oy:0.76, rx:0.65, ry:0.07, maxA:0.28, dx:-0.000008, phase:1.9, layer:'bg'},
+    {ox:0.70, oy:0.74, rx:0.58, ry:0.07, maxA:0.26, dx: 0.000007, phase:3.2, layer:'bg'},
+    {ox:0.15, oy:0.82, rx:0.35, ry:0.05, maxA:0.35, dx:-0.000004, phase:0.3, layer:'bg'},
+    {ox:0.85, oy:0.83, rx:0.32, ry:0.05, maxA:0.32, dx: 0.000005, phase:2.1, layer:'bg'},
+    {ox:0.50, oy:0.86, rx:0.50, ry:0.05, maxA:0.38, dx:-0.000006, phase:1.0, layer:'bg'},
     // ── Mid-screen drifting banks ─────────────────────────────────────
-    {ox:0.10, oy:0.45, rx:0.55, ry:0.060, maxA:0.06, dx: 0.000012, phase:0.7, layer:'bg'},
-    {ox:0.90, oy:0.50, rx:0.48, ry:0.055, maxA:0.05, dx:-0.000009, phase:2.2, layer:'bg'},
-    {ox:0.45, oy:0.42, rx:0.60, ry:0.050, maxA:0.04, dx: 0.000007, phase:4.1, layer:'bg'},
-    {ox:0.70, oy:0.55, rx:0.44, ry:0.048, maxA:0.05, dx:-0.000011, phase:1.5, layer:'bg'},
-    // ── Upper wisps — float into top quarter occasionally ────────────
-    {ox:0.20, oy:0.25, rx:0.38, ry:0.042, maxA:0.035,dx: 0.000015, phase:0.9, layer:'bg'},
-    {ox:0.80, oy:0.20, rx:0.32, ry:0.038, maxA:0.030,dx:-0.000013, phase:3.3, layer:'bg'},
-    {ox:0.55, oy:0.30, rx:0.42, ry:0.040, maxA:0.032,dx: 0.000010, phase:5.1, layer:'bg'},
-    // ── Foreground wisps — drawn above game content, very subtle ─────
-    {ox:-0.05,oy:0.55, rx:0.35, ry:0.038, maxA:0.045,dx: 0.000018, phase:1.2, layer:'fg'},
-    {ox: 1.05,oy:0.60, rx:0.32, ry:0.035, maxA:0.040,dx:-0.000016, phase:2.7, layer:'fg'},
-    {ox:0.30, oy:0.48, rx:0.28, ry:0.032, maxA:0.030,dx: 0.000020, phase:0.5, layer:'fg'},
-    {ox:0.75, oy:0.52, rx:0.30, ry:0.030, maxA:0.028,dx:-0.000018, phase:3.8, layer:'fg'},
+    {ox:0.05, oy:0.45, rx:0.60, ry:0.07, maxA:0.14, dx: 0.000012, phase:0.7, layer:'bg'},
+    {ox:0.95, oy:0.50, rx:0.52, ry:0.07, maxA:0.12, dx:-0.000009, phase:2.2, layer:'bg'},
+    {ox:0.40, oy:0.42, rx:0.65, ry:0.06, maxA:0.10, dx: 0.000007, phase:4.1, layer:'bg'},
+    {ox:0.70, oy:0.55, rx:0.50, ry:0.06, maxA:0.12, dx:-0.000011, phase:1.5, layer:'bg'},
+    // ── Upper wisps ───────────────────────────────────────────────────
+    {ox:0.15, oy:0.25, rx:0.42, ry:0.05, maxA:0.09, dx: 0.000015, phase:0.9, layer:'bg'},
+    {ox:0.85, oy:0.20, rx:0.36, ry:0.05, maxA:0.08, dx:-0.000013, phase:3.3, layer:'bg'},
+    {ox:0.50, oy:0.32, rx:0.48, ry:0.05, maxA:0.08, dx: 0.000010, phase:5.1, layer:'bg'},
+    // ── Foreground wisps — over UI, very subtle ───────────────────────
+    {ox:-0.05,oy:0.55, rx:0.40, ry:0.05, maxA:0.10, dx: 0.000018, phase:1.2, layer:'fg'},
+    {ox: 1.05,oy:0.60, rx:0.36, ry:0.04, maxA:0.09, dx:-0.000016, phase:2.7, layer:'fg'},
+    {ox:0.35, oy:0.48, rx:0.32, ry:0.04, maxA:0.07, dx: 0.000020, phase:0.5, layer:'fg'},
+    {ox:0.72, oy:0.52, rx:0.34, ry:0.04, maxA:0.07, dx:-0.000018, phase:3.8, layer:'fg'},
   ];
 
   function drawMistLayer(now, layerName) {
@@ -1479,30 +1479,25 @@
   function draw(now) {
     C.clearRect(0,0,W,H);
 
-    if (window.sfPhotoMode) {
-      // Photo mode — transparent canvas, only stars + shooting stars over the photo bg
-      for (const s of stars) {
-        s.y+=s.spd; if(s.y>H*0.65+s.r){s.y=-s.r;s.x=rand(0,W);}
-        s.ph+=s.phSpd;
-        const a=Math.max(0.03,s.baseA*(0.70+0.30*Math.sin(s.ph)));
-        C.beginPath(); C.arc(s.x,s.y,s.r,0,Math.PI*2);
-        C.fillStyle=`rgba(220,215,255,${a})`; C.fill();
-      }
-    } else {
-      // Full generated scene (used only when no photo bg is active)
-      for (const s of stars) {
-        s.y+=s.spd; if(s.y>H*0.65+s.r){s.y=-s.r;s.x=rand(0,W);}
-        s.ph+=s.phSpd;
-        const a=Math.max(0.03,s.baseA*(0.70+0.30*Math.sin(s.ph)));
-        C.beginPath(); C.arc(s.x,s.y,s.r,0,Math.PI*2);
-        C.fillStyle=`rgba(220,215,255,${a})`; C.fill();
-      }
+    // Stars — always rendered
+    for (const s of stars) {
+      s.y+=s.spd; if(s.y>H*0.65+s.r){s.y=-s.r;s.x=rand(0,W);}
+      s.ph+=s.phSpd;
+      const a=Math.max(0.03,s.baseA*(0.70+0.30*Math.sin(s.ph)));
+      C.beginPath(); C.arc(s.x,s.y,s.r,0,Math.PI*2);
+      C.fillStyle=`rgba(220,215,255,${a})`; C.fill();
+    }
+
+    if (!window.sfPhotoMode) {
+      // Full generated scene (no photo bg)
       C.globalAlpha=0.75+0.25*Math.sin(now*0.00022);
       C.drawImage(nebCanvas,0,0);
       C.globalAlpha=1;
       C.drawImage(sceneCanvas,0,0);
-      drawMist(now);
     }
+
+    // Fog — always rendered over whatever background is active
+    drawMistLayer(now, 'bg');
 
     // Shooting stars (rare)
     if(now-lastShoot>nextShoot){spawnShooter();lastShoot=now;nextShoot=rand(4000,10000);}
