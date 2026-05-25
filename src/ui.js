@@ -110,6 +110,11 @@ import {
 } from './renderer.js';
 
 // ── Realm definitions ─────────────────────────────────────────────────────
+const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
+function realmLabel(realm) {
+  return `Realm ${ROMAN[realm.id - 1] || realm.id} — ${realm.name}`;
+}
+
 const REALMS = [
   { id: 1, name: 'The First Rites',   levelIds: [1,2,3,4,5,6]          },
   { id: 2, name: 'The Hexagon Rites', levelIds: [7,8,9,10,11,12]       },
@@ -521,7 +526,7 @@ export class GameScreen {
         </div>
         <button class="realm-arrow" id="realm-next" aria-label="Next realm">&#8250;</button>
       </div>
-      <div class="realm-label" id="realm-name">${realm.name.toUpperCase()}</div>
+      <div class="realm-label" id="realm-name">${realmLabel(realm).toUpperCase()}</div>
 
       <div class="title-btn-row" style="margin-top:20px; padding-bottom:8px">
         <button class="title-btn" id="ls-how">HOW</button>
@@ -848,7 +853,7 @@ export class GameScreen {
       <h2 class="eerie-h2">Rite ${winRoman} <span class="win-sub-title">Complete</span></h2>
       <p class="overlay-score">Essence gathered: ${this.state.player.score}</p>
       ${isLastInRealm && realmComplete && nextRealm
-        ? `<p class="overlay-sub" style="color:rgba(200,160,255,0.8);margin-bottom:4px">${currentRealm.name} — all rites sanctified.</p>`
+        ? `<p class="overlay-sub" style="color:rgba(200,160,255,0.8);margin-bottom:4px">${realmLabel(currentRealm)} — all rites sanctified.</p>`
         : ''}
       ${nextBtn}
       <button class="btn-ghost" id="btn-levels">← Return to the Rites</button>
