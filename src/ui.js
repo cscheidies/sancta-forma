@@ -208,12 +208,6 @@ function updateHUD(hud, state) {
     currentNameEl.style.color = '#ff6020';
     if (arrow) arrow.style.color = '#ff6020';
     hud.style.boxShadow = '0 0 22px rgba(255,80,20,0.55), inset 0 0 20px rgba(200,60,0,0.15)';
-  } else if (player.transformed) {
-    // Transformed — flash red warning, show current (foreign) element
-    currentNameEl.textContent = `${player.element.toUpperCase()} ⚠`;
-    currentNameEl.style.color = '#ff4747';
-    if (arrow) arrow.style.color = '#ff4747';
-    hud.style.boxShadow = '0 0 18px rgba(255,40,40,0.45), inset 0 0 20px rgba(200,20,20,0.12)';
   } else if (player.corruption > 0) {
     currentNameEl.textContent = player.element.toUpperCase();
     currentNameEl.style.color = '#ffcc00';
@@ -759,13 +753,8 @@ export class GameScreen {
     const event = this.state.lastEvent;
     if (event) {
       if (event.type === 'same')         sfx.absorbSame(this.state.player.originalElement);
-      else if (event.type === 'nemesis') sfx.absorbNemesis(event.absorbed);
       else if (event.type === 'cross')   sfx.absorbCross(event.absorbed);
       else if (event.type === 'safe')    sfx.absorbSafe();
-      else if (event.type === 'transform') {
-        sfx.transform(this.state.player.element);
-        this._showTransformHint(this.state.player.element, this.state.player.originalElement);
-      }
       else if (event.type === 'costume') {
         sfx.costume?.();
         this._showTransformHint('costumed', this.state.player.originalElement);

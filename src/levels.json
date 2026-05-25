@@ -1160,7 +1160,7 @@
   },
   {
     "id": 19,
-    "playerElement": "circle",
+    "playerElement": "square",
     "playerStart": [
       2,
       2
@@ -1168,51 +1168,118 @@
     "winScore": 50,
     "grid": [
       [
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
+        "moon",
+        "square",
+        "hexagon",
+        "square",
         "circle"
       ],
       [
+        "square",
         "triangle",
-        "square",
         "circle",
-        "square",
-        "triangle"
+        "triangle",
+        "square"
       ],
       [
+        "hexagon",
         "circle",
-        "triangle",
         null,
-        "triangle",
-        "circle"
+        "circle",
+        "hexagon"
       ],
       [
+        "square",
         "triangle",
-        "square",
         "circle",
-        "square",
-        "triangle"
+        "triangle",
+        "square"
       ],
       [
         "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle"
+        "square",
+        "hexagon",
+        "square",
+        "moon"
       ]
     ],
-    "lesson": "PLACEHOLDER \u2014 Level 19. Grid and lesson TBD by Chris.",
+    "lesson": "Square meets the Moon for the first time. Two moons lurk in the NW and SE corners \u2014 death to Square. Four hexagons on cardinal axes can be absorbed. Navigate outward from the safe middle. 15-move win, 52 paths.",
     "shapeCounts": {
-      "circle": 8,
-      "triangle": 8,
-      "square": 4,
-      "hexagon": 0
+      "square": 8,
+      "circle": 6,
+      "triangle": 4,
+      "hexagon": 4,
+      "moon": 2
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "15 moves",
+      "distinctPaths": 52,
+      "hunterRequired": true
     }
   },
   {
     "id": 20,
+    "playerElement": "square",
+    "playerStart": [
+      2,
+      2
+    ],
+    "winScore": 50,
+    "grid": [
+      [
+        "moon",
+        "circle",
+        "square",
+        "circle",
+        "moon"
+      ],
+      [
+        "circle",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "circle"
+      ],
+      [
+        "square",
+        "hexagon",
+        null,
+        "hexagon",
+        "square"
+      ],
+      [
+        "circle",
+        "triangle",
+        "hexagon",
+        "triangle",
+        "circle"
+      ],
+      [
+        "moon",
+        "circle",
+        "square",
+        "circle",
+        "moon"
+      ]
+    ],
+    "lesson": "Square hard. Four moons in every corner \u2014 death. Four hexagons form the inner ring around the player. Only 8 winning paths. First move is critical: hexagon forces a costume, and the Moon closes every escape. Think before moving.",
+    "shapeCounts": {
+      "square": 4,
+      "circle": 8,
+      "triangle": 4,
+      "hexagon": 4,
+      "moon": 4
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "17 moves",
+      "distinctPaths": 8,
+      "hunterRequired": true
+    }
+  },
+  {
+    "id": 21,
     "playerElement": "circle",
     "playerStart": [
       2,
@@ -1222,99 +1289,53 @@
     "grid": [
       [
         "circle",
+        "circle",
+        "hexagon",
+        "circle",
+        "circle"
+      ],
+      [
+        "circle",
         "triangle",
         "circle",
         "triangle",
         "circle"
       ],
       [
-        "triangle",
+        "moon",
         "square",
-        "circle",
-        "square",
-        "triangle"
-      ],
-      [
-        "circle",
-        "triangle",
         null,
+        "square",
+        "moon"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
         "triangle",
         "circle"
       ],
       [
-        "triangle",
-        "square",
         "circle",
-        "square",
-        "triangle"
-      ],
-      [
         "circle",
-        "triangle",
+        "hexagon",
         "circle",
-        "triangle",
         "circle"
       ]
     ],
-    "lesson": "PLACEHOLDER \u2014 Level 20. Grid and lesson TBD by Chris.",
+    "lesson": "Circle meets the Moon \u2014 the first hunter it can absorb. Two moons flank the player east and west, absorbable for -3 and a costume. Two hexagons on the north and south edges are death \u2014 avoid them. 8-move win, 76 paths.",
     "shapeCounts": {
-      "circle": 8,
-      "triangle": 8,
-      "square": 4,
-      "hexagon": 0
-    }
-  },
-  {
-    "id": 21,
-    "playerElement": "triangle",
-    "playerStart": [
-      2,
-      2
-    ],
-    "winScore": 50,
-    "grid": [
-      [
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle"
-      ],
-      [
-        "triangle",
-        "square",
-        "circle",
-        "square",
-        "triangle"
-      ],
-      [
-        "circle",
-        "triangle",
-        null,
-        "triangle",
-        "circle"
-      ],
-      [
-        "triangle",
-        "square",
-        "circle",
-        "square",
-        "triangle"
-      ],
-      [
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle"
-      ]
-    ],
-    "lesson": "PLACEHOLDER \u2014 Level 21. Grid and lesson TBD by Chris.",
-    "shapeCounts": {
-      "circle": 8,
-      "triangle": 8,
-      "square": 4,
-      "hexagon": 0
+      "circle": 14,
+      "triangle": 4,
+      "hexagon": 2,
+      "moon": 2,
+      "square": 2
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "8 moves",
+      "distinctPaths": 76,
+      "hunterRequired": true
     }
   },
   {
@@ -1329,50 +1350,56 @@
       [
         "circle",
         "triangle",
-        "circle",
+        "hexagon",
         "triangle",
         "circle"
       ],
       [
         "triangle",
-        "square",
+        "moon",
         "circle",
-        "square",
+        "moon",
         "triangle"
       ],
       [
         "circle",
-        "triangle",
+        "circle",
         null,
-        "triangle",
+        "circle",
         "circle"
       ],
       [
         "triangle",
-        "square",
+        "moon",
         "circle",
-        "square",
+        "moon",
         "triangle"
       ],
       [
         "circle",
         "triangle",
-        "circle",
+        "hexagon",
         "triangle",
         "circle"
       ]
     ],
-    "lesson": "PLACEHOLDER \u2014 Level 22. Grid and lesson TBD by Chris.",
+    "lesson": "Circle mastery. Four moons on the diagonals \u2014 all absorbable. Two hexagons top and bottom \u2014 both death. The Moon is now Circle's weapon. 12-move win, 16 paths. The reflecting pool remembers everything.",
     "shapeCounts": {
-      "circle": 8,
+      "circle": 10,
       "triangle": 8,
-      "square": 4,
-      "hexagon": 0
+      "hexagon": 2,
+      "moon": 4
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "12 moves",
+      "distinctPaths": 16,
+      "hunterRequired": true
     }
   },
   {
     "id": 23,
-    "playerElement": "square",
+    "playerElement": "triangle",
     "playerStart": [
       2,
       2
@@ -1380,52 +1407,58 @@
     "winScore": 50,
     "grid": [
       [
+        "moon",
         "circle",
         "triangle",
         "circle",
+        "moon"
+      ],
+      [
+        "circle",
+        "triangle",
+        "hexagon",
         "triangle",
         "circle"
       ],
       [
         "triangle",
-        "square",
-        "circle",
-        "square",
-        "triangle"
-      ],
-      [
-        "circle",
-        "triangle",
+        "hexagon",
         null,
-        "triangle",
-        "circle"
-      ],
-      [
-        "triangle",
-        "square",
-        "circle",
-        "square",
+        "hexagon",
         "triangle"
       ],
       [
         "circle",
         "triangle",
+        "hexagon",
+        "triangle",
+        "circle"
+      ],
+      [
+        "circle",
         "circle",
         "triangle",
+        "circle",
         "circle"
       ]
     ],
-    "lesson": "PLACEHOLDER \u2014 Level 23. Grid and lesson TBD by Chris.",
+    "lesson": "Triangle enters the Moon realm. Two moons in the NW and NE corners are death \u2014 route away from them. Four hexagons adjacent to the player \u2014 absorbable by Triangle. 11-move win, 376 paths.",
     "shapeCounts": {
-      "circle": 8,
       "triangle": 8,
-      "square": 4,
-      "hexagon": 0
+      "circle": 10,
+      "hexagon": 4,
+      "moon": 2
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "11 moves",
+      "distinctPaths": 376,
+      "hunterRequired": true
     }
   },
   {
     "id": 24,
-    "playerElement": "circle",
+    "playerElement": "triangle",
     "playerStart": [
       2,
       2
@@ -1433,9 +1466,9 @@
     "winScore": 50,
     "grid": [
       [
-        "circle",
+        "moon",
         "triangle",
-        "circle",
+        "hexagon",
         "triangle",
         "circle"
       ],
@@ -1447,11 +1480,11 @@
         "triangle"
       ],
       [
+        "hexagon",
         "circle",
-        "triangle",
         null,
-        "triangle",
-        "circle"
+        "circle",
+        "hexagon"
       ],
       [
         "triangle",
@@ -1463,17 +1496,24 @@
       [
         "circle",
         "triangle",
-        "circle",
+        "hexagon",
         "triangle",
-        "circle"
+        "moon"
       ]
     ],
-    "lesson": "PLACEHOLDER \u2014 Level 24. Grid and lesson TBD by Chris.",
+    "lesson": "Triangle hard. Two moons in opposing corners \u2014 death. Four hexagons on outer cardinals \u2014 absorbable. Squares are safe transit. 17-move win, 36 paths. The actor does not turn back.",
     "shapeCounts": {
-      "circle": 8,
       "triangle": 8,
+      "circle": 6,
       "square": 4,
-      "hexagon": 0
+      "hexagon": 4,
+      "moon": 2
+    },
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "17 moves",
+      "distinctPaths": 36,
+      "hunterRequired": true
     }
   },
   {
