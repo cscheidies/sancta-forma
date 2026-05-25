@@ -5,9 +5,10 @@ Run `node scripts/verify-features.js` after any revert. Fix before deploying.
 
 ## index.html
 
-### 1. Fog Rendering (commit 2745cd4)
+### 1. Fog Rendering (commits 2745cd4, 15026b5)
 - `drawFogOnCtx` must use `m.ox * W` in the drift calculation
-- grep check: `grep "m.ox \* W" index.html`
+- The render loop must call `drawMist(now)` — NOT `drawMistLayer`
+- grep check: `grep "m.ox \* W" index.html && grep "drawMist(now)" index.html`
 
 ### 2. Glowing "Restore the Balance" text (commit fc36f52)
 - The `.restore-cta` element must exist with `animation: restorePulse`
