@@ -29,18 +29,6 @@ const LEVEL_BACKGROUNDS = {
   16: './bg_rite16.jpg',
   17: './bg_rite17.jpg',
   18: './bg_rite18.jpg',
-  19: './bg_rite19.jpg',
-  20: './bg_rite20.jpg',
-  21: './bg_rite21.jpg',
-  22: './bg_rite22.jpg',
-  23: './bg_rite23.jpg',
-  24: './bg_rite24.jpg',
-  25: './bg_rite25.jpg',
-  26: './bg_rite26.jpg',
-  27: './bg_rite27.jpg',
-  28: './bg_rite28.jpg',
-  29: './bg_rite29.jpg',
-  30: './bg_rite30.jpg',
 };
 
 // Cell fill opacity per level — higher = darker grid (use when bg is bright/light)
@@ -116,11 +104,6 @@ import {
 } from './renderer.js';
 
 // ── Realm definitions ─────────────────────────────────────────────────────
-const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
-function realmLabel(realm) {
-  return `Realm ${ROMAN[realm.id - 1] || realm.id} — ${realm.name}`;
-}
-
 const REALMS = [
   { id: 1, name: 'The First Rites',   levelIds: [1,2,3,4,5,6]          },
   { id: 2, name: 'The Hexagon Rites', levelIds: [7,8,9,10,11,12]       },
@@ -532,7 +515,7 @@ export class GameScreen {
         </div>
         <button class="realm-arrow" id="realm-next" aria-label="Next realm">&#8250;</button>
       </div>
-      <div class="realm-label" id="realm-name">${realmLabel(realm).toUpperCase()}</div>
+      <div class="realm-label" id="realm-name">${realm.name.toUpperCase()}</div>
 
       <div class="title-btn-row" style="margin-top:20px; padding-bottom:8px">
         <button class="title-btn" id="ls-how">HOW</button>
@@ -859,7 +842,7 @@ export class GameScreen {
       <h2 class="eerie-h2">Rite ${winRoman} <span class="win-sub-title">Complete</span></h2>
       <p class="overlay-score">Essence gathered: ${this.state.player.score}</p>
       ${isLastInRealm && realmComplete && nextRealm
-        ? `<p class="overlay-sub" style="color:rgba(200,160,255,0.8);margin-bottom:4px">${realmLabel(currentRealm)} — all rites sanctified.</p>`
+        ? `<p class="overlay-sub" style="color:rgba(200,160,255,0.8);margin-bottom:4px">${currentRealm.name} — all rites sanctified.</p>`
         : ''}
       ${nextBtn}
       <button class="btn-ghost" id="btn-levels">← Return to the Rites</button>
@@ -876,54 +859,49 @@ export class GameScreen {
     const id = parseInt(this.hud.dataset.level);
     const isDeath = reason === 'lose-death';
 
-    // Shattering element — use player's original element shape
-    const el = this.state?.player?.originalElement || 'circle';
-    const shatterSVG = {
-      circle:   `<circle cx="120" cy="120" r="90" fill="none" stroke="#cc2200" stroke-width="5"/>
-                 <circle cx="120" cy="120" r="60" fill="none" stroke="#aa1100" stroke-width="3" opacity="0.6"/>`,
-      square:   `<rect x="30" y="30" width="180" height="180" fill="none" stroke="#cc2200" stroke-width="5"/>
-                 <rect x="55" y="55" width="130" height="130" fill="none" stroke="#aa1100" stroke-width="3" opacity="0.6"/>`,
-      triangle: `<polygon points="120,15 220,210 20,210" fill="none" stroke="#cc2200" stroke-width="5"/>
-                 <polygon points="120,45 195,195 45,195" fill="none" stroke="#aa1100" stroke-width="3" opacity="0.6"/>`,
-    }[el] || '';
-
-    // Fragment lines radiating outward
-    const frags = Array.from({length:8}, (_,i) => {
-      const a = i * Math.PI/4;
-      const x1 = 120 + Math.cos(a)*60, y1 = 120 + Math.sin(a)*60;
-      const x2 = 120 + Math.cos(a)*160, y2 = 120 + Math.sin(a)*160;
-      return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"
-               stroke="#ff2200" stroke-width="2.5" opacity="0.7"
-               class="shatter-frag" style="animation-delay:${0.5 + i*0.04}s"/>`;
-    }).join('');
-
-    const shatterEl = `
-      <svg class="death-shatter" viewBox="0 0 240 240" width="280" height="280">
-        <g class="shatter-shape">${shatterSVG}</g>
-        ${frags}
+    const deathSkull = `
+      <svg class="death-skull" viewBox="0 0 80 80" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="skull-glow">
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+          <radialGradient id="skull-grad" cx="45%" cy="38%" r="55%">
+            <stop offset="0%"  stop-color="#ff3a3a"/>
+            <stop offset="60%" stop-color="#990000"/>
+            <stop offset="100%" stop-color="#440000"/>
+          </radialGradient>
+        </defs>
+        <!-- Cranium -->
+        <ellipse cx="40" cy="34" rx="26" ry="24" fill="url(#skull-grad)" filter="url(#skull-glow)"/>
+        <!-- Jaw -->
+        <rect x="20" y="50" width="40" height="14" rx="4" fill="url(#skull-grad)" filter="url(#skull-glow)"/>
+        <!-- Jaw teeth gaps -->
+        <rect x="27" y="56" width="6"  height="10" rx="2" fill="#0d1117"/>
+        <rect x="37" y="56" width="6"  height="10" rx="2" fill="#0d1117"/>
+        <rect x="47" y="56" width="6"  height="10" rx="2" fill="#0d1117"/>
+        <!-- Eye sockets -->
+        <ellipse cx="29" cy="36" rx="8" ry="9" fill="#0d1117"/>
+        <ellipse cx="51" cy="36" rx="8" ry="9" fill="#0d1117"/>
+        <!-- Eye glow (red pupils) -->
+        <ellipse cx="29" cy="37" rx="4" ry="4.5" fill="#ff2020" opacity="0.7" filter="url(#skull-glow)"/>
+        <ellipse cx="51" cy="37" rx="4" ry="4.5" fill="#ff2020" opacity="0.7" filter="url(#skull-glow)"/>
+        <!-- Nose cavity -->
+        <path d="M 37,46 L 40,42 L 43,46 Z" fill="#0d1117"/>
+        <!-- Crack -->
+        <path d="M 40,10 L 38,22 L 42,30 L 40,38" stroke="#ff4444" stroke-width="1.2" fill="none" opacity="0.6"/>
       </svg>`;
-
-    const brushes = `
-      <div class="death-brush brush-1"></div>
-      <div class="death-brush brush-2"></div>
-      <div class="death-brush brush-3"></div>
-      <div class="death-brush brush-4"></div>
-      <div class="death-brush brush-5"></div>`;
 
     const roman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][id - 1] || id;
     const content = isDeath ? `
-      ${brushes}
-      ${shatterEl}
-      <div class="death-content">
-        <div class="death-header">
-          <img src="./death_skull.png" class="death-skull-img" alt="Death" />
-          <h2 class="death-title">DEATH</h2>
-          <p class="death-sub">The corruption consumed you</p>
-        </div>
-        <p class="overlay-score">Essence gathered: ${this.state.player.score}</p>
-        <button class="btn-danger" id="btn-retry">↺ Perform the Rite Again</button>
-        <button class="btn-ghost" id="btn-levels">← Return to the Rites</button>
+      <div class="death-header">
+        ${deathSkull}
+        <h2 class="death-title">DEATH</h2>
+        <p class="death-sub">The corruption consumed you</p>
       </div>
+      <p class="overlay-score">Essence gathered: ${this.state.player.score}</p>
+      <button class="btn-danger" id="btn-retry">↺ Perform the Rite Again</button>
+      <button class="btn-ghost" id="btn-levels">← Return to the Rites</button>
     ` : `
       <div class="overlay-icon bound-icon">⬡</div>
       <h2 class="eerie-h2">BOUND</h2>
