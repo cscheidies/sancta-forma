@@ -269,7 +269,7 @@ export class GameScreen {
     const screen = document.createElement('div');
     screen.className = 'screen';
     screen.innerHTML = `
-      <div style="height:160px;flex-shrink:0"></div>
+      <div style="height:260px;flex-shrink:0"></div>
       <div class="howto-screen">
         <div class="screen-header">
           <h2 class="eerie-h2" style="margin-bottom:4px">How to Play</h2>
@@ -370,7 +370,7 @@ export class GameScreen {
     screen.className = 'screen narrative-screen';
     screen.innerHTML = `
       <div class="narrative-wrap">
-        <div style="height:154px;flex-shrink:0"></div>
+        <div style="height:260px;flex-shrink:0"></div>
         <div class="narr-wrap-inner narr-entering" id="narr-inner"></div>
       </div>
     `;
@@ -432,7 +432,7 @@ export class GameScreen {
     screen.className = 'screen level-select';
 
     screen.innerHTML = `
-      <div class="screen-header" style="height:128px;flex-shrink:0"></div>
+      <div class="screen-header" style="height:260px;flex-shrink:0"></div>
 
       <!-- REMOVED inline sigil — replaced by #global-logo fixed element -->
       <div style="display:none">
@@ -633,7 +633,7 @@ export class GameScreen {
     // Spacer so the grid sits below the fixed global logo
     const logoWrap = document.createElement('div');
     logoWrap.className = 'game-logo-wrap';
-    logoWrap.style.height = '154px';
+    logoWrap.style.height = '260px';
     logoWrap.style.flexShrink = '0';
     // Order: spacer → grid → HUD
     wrapper.insertBefore(logoWrap, wrapper.firstChild);
