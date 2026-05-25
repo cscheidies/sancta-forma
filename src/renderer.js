@@ -345,50 +345,181 @@ export function renderState(svg, state) {
 
 }
 
-export function flashCell(svg, row, col, color) {
+export function flashCell(svg, row, col, color, playerElement = 'circle') {
   const fxLayer = svg.querySelector('#layer-fx');
   const cx = col * CELL_SIZE + CELL_SIZE / 2;
   const cy = row * CELL_SIZE + CELL_SIZE / 2;
+  const S = CELL_SIZE;
 
-  // Brief colour flash on the cell (kept short)
+  // Brief colour flash on the cell (shared)
   const flash = svgEl('rect', {
-    x: col * CELL_SIZE + 1, y: row * CELL_SIZE + 1,
-    width: CELL_SIZE - 2, height: CELL_SIZE - 2,
+    x: col * S + 1, y: row * S + 1,
+    width: S - 2, height: S - 2,
     fill: color, 'fill-opacity': '0.35', rx: '4',
   });
   fxLayer.appendChild(flash);
   flash.animate([{ opacity: 0.35 }, { opacity: 0 }], { duration: 180, fill: 'forwards' })
     .onfinish = () => flash.remove();
 
-  // Expanding ripple ring — smooth, subtle
-  const ring = svgEl('circle', {
-    cx, cy, r: '4',
-    fill: 'none',
-    stroke: color,
-    'stroke-width': '2',
-    'stroke-opacity': '0.7',
-  });
-  fxLayer.appendChild(ring);
-  const maxR = CELL_SIZE * 0.62;
-  ring.animate(
-    [
-      { r: '4',         strokeOpacity: '0.7', strokeWidth: '2.5' },
-      { r: `${maxR}`,   strokeOpacity: '0',   strokeWidth: '0.5' },
-    ],
-    { duration: 440, easing: 'ease-out', fill: 'forwards' }
-  ).onfinish = () => ring.remove();
+  if (playerElement === 'square') {
+    // ── Square: expanding square outline + corner sparks ──────────────
+    const maxHalf = S * 0.60;
+    const sq = svgEl('rect', {
+      x: cx - 4, y: cy - 4, width: 8, height: 8,
+      fill: 'none', stroke: color, 'stroke-width': '2.5', 'stroke-opacity': '0.8',
+    });
+    fxLayer.appendChild(sq);
+    sq.animate(
+      [
+        { transform: `translate(0,0) scale(1)`,         strokeOpacity: '0.8', strokeWidth: '2.5' },
+        { transform: `translate(${-maxHalf+4}px,${-maxHalf+4}px) scale(1)`, strokeOpacity: '0',   strokeWidth: '0.5' },
+      ],
+      { duration: 480, easing: 'ease-out', fill: 'forwards' }
+    ).onfinish = () => sq.remove();
 
-  // Soft inner pulse — small filled circle that fades
+    // Expand rect directly via attribute animation alternative — use two rects
+    const sq2 = svgEl('rect', {
+      x: cx - S*0.55, y: cy - S*0.55,
+      width: S*1.1, height: S*1.1,
+      fill: 'none', stroke: color, 'stroke-width': '1.5', 'stroke-opacity': '0',
+    });
+    fxLayer.appendChild(sq2);
+    sq2.animate(
+      [
+        { strokeOpacity: '0.5', transform: 'scale(0.5)', transformOrigin: `${cx}px ${cy}px` },
+        { strokeOpacity: '0',   transform: 'scale(1.1)', transformOrigin: `${cx}px ${cy}px` },
+      ],
+      { duration: 420, easing: 'ease-out', fill: 'forwards' }
+    ).onfinish = () => sq2.remove();
+
+    // Corner sparks
+    const corners = [[-1,-1],[1,-1],[1,1],[-1,1]];
+    for (const [dx,dy] of corners) {
+      const spark = svgEl('line', {
+        x1: cx + dx*S*0.12, y1: cy + dy*S*0.12,
+        x2: cx + dx*S*0.12, y2: cy + dy*S*0.12,
+        stroke: color, 'stroke-width': '1.5', 'stroke-opacity': '0.9',
+      });
+      fxLayer.appendChild(spark);
+      spark.animate(
+        [
+          { transform: 'translate(0,0)', strokeOpacity: '0.9' },
+          { transform: `translate(${dx*S*0.45}px,${dy*S*0.45}px)`, strokeOpacity: '0' },
+        ],
+        { duration: 340, easing: 'ease-out', fill: 'forwards' }
+      ).onfinish = () => spark.remove();
+    }
+
+  } else if (playerElement === 'triangle') {
+    // ── Triangle: expanding triangle + radiating lines ─────────────────
+    const r = S * 0.55;
+    const triPts = (scale) => {
+      const pts = [];
+      for (let i = 0; i < 3; i++) {
+        const a = (i / 3) * Math.PI * 2 - Math.PI / 2;
+        pts.push(`${(cx + Math.cos(a) * r * scale).toFixed(1)},${(cy + Math.sin(a) * r * scale).toFixed(1)}`);
+      }
+      return pts.join(' ');
+    };
+    const tri = svgEl('polygon', {
+      points: triPts(0.2),
+      fill: 'none', stroke: color, 'stroke-width': '2.5', 'stroke-opacity': '0.85',
+    });
+    fxLayer.appendChild(tri);
+    tri.animate(
+      [
+        { strokeOpacity: '0.85', strokeWidth: '2.5' },
+        { strokeOpacity: '0',   strokeWidth: '0.5' },
+      ],
+      { duration: 520, easing: 'ease-out', fill: 'forwards' }
+    ).onfinish = () => tri.remove();
+    // Animate points manually via JS
+    let t0 = null;
+    function animTri(ts) {
+      if (!t0) t0 = ts;
+      const p = Math.min((ts - t0) / 520, 1);
+      const scale = 0.2 + p * 0.85;
+      tri.setAttribute('points', triPts(scale));
+      if (p < 1) requestAnimationFrame(animTri);
+    }
+    requestAnimationFrame(animTri);
+
+    // 3 radiating lines from vertices
+    for (let i = 0; i < 3; i++) {
+      const a = (i / 3) * Math.PI * 2 - Math.PI / 2;
+      const startR = r * 0.25;
+      const endR   = r * 1.1;
+      const line = svgEl('line', {
+        x1: cx + Math.cos(a)*startR, y1: cy + Math.sin(a)*startR,
+        x2: cx + Math.cos(a)*startR, y2: cy + Math.sin(a)*startR,
+        stroke: color, 'stroke-width': '1.8', 'stroke-opacity': '0.75',
+      });
+      fxLayer.appendChild(line);
+      line.animate(
+        [
+          { transform: 'scale(1)',   strokeOpacity: '0.75', transformOrigin: `${cx}px ${cy}px` },
+          { transform: 'scale(1.8)', strokeOpacity: '0',    transformOrigin: `${cx}px ${cy}px` },
+        ],
+        { duration: 400, easing: 'ease-out', fill: 'forwards', delay: 40 }
+      ).onfinish = () => line.remove();
+      // Actually animate x2/y2 for the line extension
+      let lt0 = null;
+      const lx1 = cx + Math.cos(a)*startR, ly1 = cy + Math.sin(a)*startR;
+      function animLine(ts) {
+        if (!lt0) lt0 = ts;
+        const p = Math.min((ts - lt0) / 380, 1);
+        const curR = startR + (endR - startR) * p;
+        line.setAttribute('x2', cx + Math.cos(a)*curR);
+        line.setAttribute('y2', cy + Math.sin(a)*curR);
+        line.setAttribute('stroke-opacity', (0.75 * (1-p)).toFixed(2));
+        if (p < 1) requestAnimationFrame(animLine);
+        else line.remove();
+      }
+      requestAnimationFrame(animLine);
+    }
+
+  } else {
+    // ── Circle (default): original ripple ring + inner pulse ──────────
+    const ring = svgEl('circle', {
+      cx, cy, r: '4',
+      fill: 'none', stroke: color,
+      'stroke-width': '2', 'stroke-opacity': '0.7',
+    });
+    fxLayer.appendChild(ring);
+    const maxR = S * 0.62;
+    ring.animate(
+      [
+        { r: '4',       strokeOpacity: '0.7', strokeWidth: '2.5' },
+        { r: `${maxR}`, strokeOpacity: '0',   strokeWidth: '0.5' },
+      ],
+      { duration: 440, easing: 'ease-out', fill: 'forwards' }
+    ).onfinish = () => ring.remove();
+
+    // Second outer ring — slight delay
+    const ring2 = svgEl('circle', {
+      cx, cy, r: '4', fill: 'none', stroke: color,
+      'stroke-width': '1.2', 'stroke-opacity': '0',
+    });
+    fxLayer.appendChild(ring2);
+    ring2.animate(
+      [
+        { r: '8',             strokeOpacity: '0.45', strokeWidth: '1.5' },
+        { r: `${maxR * 1.2}`, strokeOpacity: '0',    strokeWidth: '0.4' },
+      ],
+      { duration: 560, easing: 'ease-out', fill: 'forwards', delay: 80 }
+    ).onfinish = () => ring2.remove();
+  }
+
+  // Shared: soft inner dot pulse (all elements)
   const dot = svgEl('circle', {
-    cx, cy, r: `${CELL_SIZE * 0.18}`,
-    fill: color,
-    'fill-opacity': '0.55',
+    cx, cy, r: `${S * 0.18}`,
+    fill: color, 'fill-opacity': '0.55',
   });
   fxLayer.appendChild(dot);
   dot.animate(
     [
-      { r: `${CELL_SIZE * 0.18}`, fillOpacity: '0.55' },
-      { r: `${CELL_SIZE * 0.38}`, fillOpacity: '0' },
+      { r: `${S * 0.18}`, fillOpacity: '0.55' },
+      { r: `${S * 0.40}`, fillOpacity: '0' },
     ],
     { duration: 300, easing: 'ease-out', fill: 'forwards' }
   ).onfinish = () => dot.remove();

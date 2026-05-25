@@ -781,7 +781,7 @@ export class GameScreen {
     // Visual FX
     if (event) {
       const cellColor = ELEMENT_COLORS[event.absorbed] || '#fff';
-      flashCell(this.svg, targetRow, targetCol, cellColor);
+      flashCell(this.svg, targetRow, targetCol, cellColor, this.state.player.originalElement);
       showScorePopup(this.svg, targetRow, targetCol, event.scoreDelta);
     }
 

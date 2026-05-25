@@ -1315,46 +1315,61 @@
   }
 
   // ── Mist layers (animated) ────────────────────────────────────────────
+  // ox/oy = normalized start position, dx = horizontal drift px/ms, ry = vertical spread
+  // layer: 'bg' drawn behind stars, 'fg' drawn over everything (above game)
   const MIST = [
-    // Background mist between mountains and stones
-    {ox:0.50, oy:0.64, rx:0.55, ry:0.055, maxA:0.11, speed:0.000014, phase:0.0},
-    {ox:0.30, oy:0.66, rx:0.42, ry:0.050, maxA:0.09, speed:-0.000011,phase:1.4},
-    {ox:0.70, oy:0.68, rx:0.38, ry:0.045, maxA:0.08, speed:0.000016, phase:2.8},
-    // Ground-level mist at stone bases (denser, lower)
-    {ox:0.50, oy:0.73, rx:0.70, ry:0.065, maxA:0.20, speed:0.000009, phase:0.6},
-    {ox:0.35, oy:0.76, rx:0.60, ry:0.055, maxA:0.18, speed:-0.000013,phase:1.9},
-    {ox:0.65, oy:0.75, rx:0.55, ry:0.050, maxA:0.16, speed:0.000010, phase:3.2},
-    // Foreground wisps at bottom
-    {ox:0.20, oy:0.82, rx:0.30, ry:0.040, maxA:0.25, speed:-0.000007,phase:0.3},
-    {ox:0.80, oy:0.83, rx:0.28, ry:0.038, maxA:0.22, speed:0.000008, phase:2.1},
-    {ox:0.50, oy:0.85, rx:0.45, ry:0.035, maxA:0.28, speed:-0.000010,phase:1.0},
+    // ── Mountain / ground fog (existing, lower screen) ────────────────
+    {ox:0.50, oy:0.64, rx:0.55, ry:0.055, maxA:0.11, dx: 0.000008, phase:0.0, layer:'bg'},
+    {ox:0.30, oy:0.66, rx:0.42, ry:0.050, maxA:0.09, dx:-0.000006, phase:1.4, layer:'bg'},
+    {ox:0.70, oy:0.68, rx:0.38, ry:0.045, maxA:0.08, dx: 0.000010, phase:2.8, layer:'bg'},
+    {ox:0.50, oy:0.73, rx:0.70, ry:0.065, maxA:0.20, dx: 0.000005, phase:0.6, layer:'bg'},
+    {ox:0.35, oy:0.76, rx:0.60, ry:0.055, maxA:0.18, dx:-0.000008, phase:1.9, layer:'bg'},
+    {ox:0.65, oy:0.75, rx:0.55, ry:0.050, maxA:0.16, dx: 0.000007, phase:3.2, layer:'bg'},
+    {ox:0.20, oy:0.82, rx:0.30, ry:0.040, maxA:0.25, dx:-0.000004, phase:0.3, layer:'bg'},
+    {ox:0.80, oy:0.83, rx:0.28, ry:0.038, maxA:0.22, dx: 0.000005, phase:2.1, layer:'bg'},
+    {ox:0.50, oy:0.85, rx:0.45, ry:0.035, maxA:0.28, dx:-0.000006, phase:1.0, layer:'bg'},
+    // ── Mid-screen drifting banks ─────────────────────────────────────
+    {ox:0.10, oy:0.45, rx:0.55, ry:0.060, maxA:0.06, dx: 0.000012, phase:0.7, layer:'bg'},
+    {ox:0.90, oy:0.50, rx:0.48, ry:0.055, maxA:0.05, dx:-0.000009, phase:2.2, layer:'bg'},
+    {ox:0.45, oy:0.42, rx:0.60, ry:0.050, maxA:0.04, dx: 0.000007, phase:4.1, layer:'bg'},
+    {ox:0.70, oy:0.55, rx:0.44, ry:0.048, maxA:0.05, dx:-0.000011, phase:1.5, layer:'bg'},
+    // ── Upper wisps — float into top quarter occasionally ────────────
+    {ox:0.20, oy:0.25, rx:0.38, ry:0.042, maxA:0.035,dx: 0.000015, phase:0.9, layer:'bg'},
+    {ox:0.80, oy:0.20, rx:0.32, ry:0.038, maxA:0.030,dx:-0.000013, phase:3.3, layer:'bg'},
+    {ox:0.55, oy:0.30, rx:0.42, ry:0.040, maxA:0.032,dx: 0.000010, phase:5.1, layer:'bg'},
+    // ── Foreground wisps — drawn above game content, very subtle ─────
+    {ox:-0.05,oy:0.55, rx:0.35, ry:0.038, maxA:0.045,dx: 0.000018, phase:1.2, layer:'fg'},
+    {ox: 1.05,oy:0.60, rx:0.32, ry:0.035, maxA:0.040,dx:-0.000016, phase:2.7, layer:'fg'},
+    {ox:0.30, oy:0.48, rx:0.28, ry:0.032, maxA:0.030,dx: 0.000020, phase:0.5, layer:'fg'},
+    {ox:0.75, oy:0.52, rx:0.30, ry:0.030, maxA:0.028,dx:-0.000018, phase:3.8, layer:'fg'},
   ];
 
-  function drawMist(now) {
+  function drawMistLayer(now, layerName) {
     for (const m of MIST) {
-      // Drift x slowly
-      const xDrift = Math.sin(now * m.speed + m.phase) * 0.06;
-      const cx = (m.ox + xDrift) * W;
-      const cy = m.oy * H;
+      if (m.layer !== layerName) continue;
+      // True horizontal drift — wraps around screen edges
+      const rawX = (m.ox + now * m.dx) % 1.4;
+      const cx = ((rawX + 1.4) % 1.4 - 0.2 + 0.2) * W; // keep in [-0.2, 1.2] range
+      const cy = m.oy * H + Math.sin(now * 0.00018 + m.phase) * H * 0.012;
       const rx = m.rx * W;
       const ry = m.ry * H;
-
-      // Alpha pulses slowly — in AND out independently
-      const alpha = m.maxA * (0.45 + 0.55 * Math.sin(now * 0.00025 + m.phase));
+      const alpha = m.maxA * (0.40 + 0.60 * Math.sin(now * 0.00022 + m.phase));
 
       C.save();
       C.translate(cx, cy);
-      C.scale(rx/100, ry/100);
-
+      C.scale(rx / 100, ry / 100);
       const g = C.createRadialGradient(0,0,0, 0,0,100);
-      g.addColorStop(0,   `rgba(200,195,240,${alpha})`);
-      g.addColorStop(0.5, `rgba(180,175,220,${alpha*0.5})`);
-      g.addColorStop(1,   'rgba(150,145,200,0)');
+      g.addColorStop(0,   `rgba(210,200,245,${alpha})`);
+      g.addColorStop(0.45,`rgba(185,178,228,${alpha * 0.5})`);
+      g.addColorStop(1,   'rgba(155,148,205,0)');
       C.fillStyle = g;
       C.beginPath(); C.arc(0,0,100,0,Math.PI*2); C.fill();
       C.restore();
     }
   }
+
+  // Keep old name as alias for bg layer (called in draw())
+  function drawMist(now) { drawMistLayer(now, 'bg'); }
 
   // ── Nebulae (dim, purple/red only — fits the mood) ────────────────────
   let nebCanvas = null;
@@ -1508,6 +1523,9 @@
       spawnNarrText(now); narrLastSpawn = now; narrNextSpawn = rand(6000, 14000);
     }
     drawNarrTexts(now);
+
+    // Foreground fog wisps — drawn last, faintly over UI
+    drawMistLayer(now, 'fg');
 
     requestAnimationFrame(draw);
   }
