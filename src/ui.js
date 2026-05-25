@@ -870,38 +870,7 @@ export class GameScreen {
     const id = parseInt(this.hud.dataset.level);
     const isDeath = reason === 'lose-death';
 
-    const deathSkull = `
-      <svg class="death-skull" viewBox="0 0 80 80" width="80" height="80" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="skull-glow">
-            <feGaussianBlur stdDeviation="2.5" result="blur"/>
-            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-          </filter>
-          <radialGradient id="skull-grad" cx="45%" cy="38%" r="55%">
-            <stop offset="0%"  stop-color="#ff3a3a"/>
-            <stop offset="60%" stop-color="#990000"/>
-            <stop offset="100%" stop-color="#440000"/>
-          </radialGradient>
-        </defs>
-        <!-- Cranium -->
-        <ellipse cx="40" cy="34" rx="26" ry="24" fill="url(#skull-grad)" filter="url(#skull-glow)"/>
-        <!-- Jaw -->
-        <rect x="20" y="50" width="40" height="14" rx="4" fill="url(#skull-grad)" filter="url(#skull-glow)"/>
-        <!-- Jaw teeth gaps -->
-        <rect x="27" y="56" width="6"  height="10" rx="2" fill="#0d1117"/>
-        <rect x="37" y="56" width="6"  height="10" rx="2" fill="#0d1117"/>
-        <rect x="47" y="56" width="6"  height="10" rx="2" fill="#0d1117"/>
-        <!-- Eye sockets -->
-        <ellipse cx="29" cy="36" rx="8" ry="9" fill="#0d1117"/>
-        <ellipse cx="51" cy="36" rx="8" ry="9" fill="#0d1117"/>
-        <!-- Eye glow (red pupils) -->
-        <ellipse cx="29" cy="37" rx="4" ry="4.5" fill="#ff2020" opacity="0.7" filter="url(#skull-glow)"/>
-        <ellipse cx="51" cy="37" rx="4" ry="4.5" fill="#ff2020" opacity="0.7" filter="url(#skull-glow)"/>
-        <!-- Nose cavity -->
-        <path d="M 37,46 L 40,42 L 43,46 Z" fill="#0d1117"/>
-        <!-- Crack -->
-        <path d="M 40,10 L 38,22 L 42,30 L 40,38" stroke="#ff4444" stroke-width="1.2" fill="none" opacity="0.6"/>
-      </svg>`;
+    const deathSkull = `<img src="./death_skull.png" class="death-skull-img" alt="Death" />`;
 
     const roman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][id - 1] || id;
     const content = isDeath ? `
