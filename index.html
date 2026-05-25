@@ -315,12 +315,33 @@
     }
 
     .sf-tagline {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.22em;
-      color: rgba(180,140,255,0.45);
+      font-family: var(--font-eerie);
+      font-size: clamp(0.95rem, 2.2vw, 1.25rem);
+      letter-spacing: 0.28em;
+      color: rgba(210,170,255,0.90);
       margin-top: 10px;
       text-transform: uppercase;
+      text-shadow:
+        0 0 10px rgba(160,80,255,0.80),
+        0 0 28px rgba(130,50,240,0.55),
+        0 0 55px rgba(100,30,200,0.30);
+      animation: tagline-breathe 4s ease-in-out infinite alternate;
+    }
+    @keyframes tagline-breathe {
+      from {
+        text-shadow:
+          0 0 8px  rgba(160,80,255,0.70),
+          0 0 22px rgba(130,50,240,0.45),
+          0 0 45px rgba(100,30,200,0.22);
+        opacity: 0.85;
+      }
+      to {
+        text-shadow:
+          0 0 14px rgba(180,100,255,0.95),
+          0 0 36px rgba(150,60,255,0.70),
+          0 0 70px rgba(120,40,220,0.45);
+        opacity: 1;
+      }
     }
 
     .level-grid {
