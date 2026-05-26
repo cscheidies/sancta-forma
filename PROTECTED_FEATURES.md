@@ -56,3 +56,9 @@ grep "state.grid.length" src/ui.js       # variable-grid (ui)
 ```
 
 All 9 must return results. If any fail — fix before `npm run build && npx vercel deploy --prod`.
+
+**Also verify before every deploy:**
+```bash
+grep "base: '\./'\\|base: \"\\./\"" vite.config.js   # must be ./ not /dev/
+```
+⚠️ Merging from dev will pull `base: '/dev/'` — always reset to `'./'` on master before building.
