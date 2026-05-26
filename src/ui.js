@@ -2,6 +2,7 @@
 
 import { initState, getValidMoves, applyMove, RULES } from './engine.js';
 import * as sfx from './sfx.js';
+import { SFNTracker, buildSFNToken } from './sfn.js';
 
 // Returns the actual rendered logo bottom + gap, falling back to 220px.
 // window.__logoH is set (and kept current) by syncLogoH() in index.html.
@@ -789,8 +790,16 @@ export class GameScreen {
           <span class="hud-score"></span>
         </div>
       </div>
+      <div class="hud-trace">
+        <span class="hud-trace-label">Trace</span>
+        <div class="hud-trace-strip" id="hud-trace-strip"></div>
+      </div>
     `;
     this.hud.querySelector('.hud-back').addEventListener('click', () => this.showLevelSelect());
+
+    // SFN trace strip
+    this.tracker = new SFNTracker('hud-trace-strip');
+    this._sfnMoveCount = 0;
 
     // Grid SVG
     this.svg = createGridSVG({
@@ -918,6 +927,14 @@ export class GameScreen {
     const prevScore = this.state.player.score;
     this.state = applyMove(this.state, dir);
 
+    // SFN trace — record move immediately after state update
+    if (this.tracker && this.state.lastEvent) {
+      const token = buildSFNToken(targetCol, targetRow, this.state.lastEvent, this.state.status);
+      this.tracker.add(token);
+      this._sfnMoveCount++;
+      if (this._sfnMoveCount % 5 === 0) this.tracker.shift();
+    }
+
     // Sound effects
     const event = this.state.lastEvent;
     if (event) {
@@ -954,12 +971,16 @@ export class GameScreen {
     // End conditions
     if (this.state.status === 'win') {
       sfx.win();
+      this.tracker?.win();
       setTimeout(() => this._showWin(), 400);
     } else if (this.state.status === 'lose-death') {
       sfx.death();
+      this.tracker?.loss('corruption');
       setTimeout(() => this._showLose(this.state.status), 400);
     } else if (this.state.status === 'lose-stuck') {
       sfx.stuck();
+      // costumed + no cleanse available → LOSS:costume; plain dead-end → LOSS:stuck
+      this.tracker?.loss(this.state.player.costumed ? 'costume' : 'stuck');
       setTimeout(() => this._showLose(this.state.status), 400);
     }
   }
