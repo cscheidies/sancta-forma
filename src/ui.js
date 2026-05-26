@@ -545,6 +545,8 @@ export class GameScreen {
     if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
     if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
 
+    // Intro-only passages — shown when player taps WHY or on first play.
+    // Realm-milestone passages live in PRE_LEVEL_BEATS; do not add them here.
     const passages = [
       {
         heading: 'Before',
@@ -587,98 +589,6 @@ export class GameScreen {
           'they must outlast the hunters.',
         ],
       },
-      {
-        heading: 'Threshold',
-        lines: [
-          'The small field is behind you.',
-          'What you learned there',
-          'you will need now.',
-          'The world is larger than you remember.',
-          'All three hunters walk it together.',
-          'Past is prologue.',
-        ],
-      },
-      {
-        heading: 'Wider',
-        lines: [
-          'The pattern is older than the field.',
-          'It rises in the stars.',
-          'It hides in the cells beneath your foot.',
-          'What hunted you in the small field',
-          'hunts you here in different bodies.',
-          'Learn to see them before they reach you.',
-        ],
-      },
-      {
-        heading: 'Speaks',
-        lines: [
-          'You have walked the pattern long enough.',
-          'Now it walks toward you.',
-          'You begin where the field places you,',
-          'not where you choose.',
-          'The hunters are not waiting.',
-          'They are arriving.',
-        ],
-      },
-      {
-        heading: 'Ultima Vigilia',
-        lines: [
-          'The acies had not held.',
-          'It was not a failure of the forms.',
-          'The forms had held what they were made to hold.',
-          'But the pressure had been greater than what the forms',
-          'could press against, and the line had moved,',
-          'and the forms had moved with it.',
-          'Now there was no line.',
-          'There was only the place behind the line,',
-          'the watch they kept',
-          'while what they had been defending burned cold.',
-          'The Square stood on ground that had been ground.',
-          'The Circle held water that had been water.',
-          'The Triangle pointed at horizons that had been horizons.',
-          'This was not the end.',
-          'The forms had not yet been the ones who ended.',
-          'But this was the last place before the end,',
-          'and they knew it.',
-          'Ultima vigilia. The last watch.',
-        ],
-      },
-      {
-        heading: 'Acies',
-        lines: [
-          'The middle of the action ends somewhere.',
-          'For the forms, it ended at acies —',
-          'the cutting edge.',
-          'What pressed in had no form of its own.',
-          'It made forms — hexagons, moons, stars —',
-          'and threw them forward.',
-          'There was no negotiation.',
-          'There never had been.',
-          'The Square stood where it had always stood.',
-          'The Circle held the water against the wind.',
-          'The Triangle pointed at the dark.',
-          'Acies. Not the last line.',
-          'But a line, and a line is enough.',
-        ],
-      },
-      {
-        heading: 'In Medias Res',
-        lines: [
-          'The forms had been awake too long',
-          'to remember when the waking began.',
-          'There was no sleep left to return to.',
-          'The hunters did not pause.',
-          'The stones, the pool, the peaks —',
-          'each had become a place where the forms',
-          'held a line against shapes',
-          'that should not have existed.',
-          'No origin. No purpose anyone alive could name.',
-          'Only pressure.',
-          'The middle of the action is no place to begin.',
-          'They had not begun.',
-          'They were already there.',
-        ],
-      },
     ];
 
     let passageIdx = 0;
@@ -698,12 +608,13 @@ export class GameScreen {
     const renderPassage = (idx) => {
       const p = passages[idx];
       const stagger = 0.18;
+      const btnDelay = (0.2 + p.lines.length * stagger).toFixed(2);
       inner.innerHTML = `
         <div class="narr-heading">${p.heading}</div>
-        <div class="narr-lines" style="margin-top:10px">
-          ${p.lines.map((l,i) => `<p class="narr-line" style="animation-delay:${0.2 + i*stagger}s">${l}</p>`).join('')}
+        <div class="narr-lines" style="margin-top:14px">
+          ${p.lines.map((l,i) => `<p class="narr-line" style="animation-delay:${(0.2 + i*stagger).toFixed(2)}s">${l}</p>`).join('')}
         </div>
-        <div class="narr-actions" style="animation-delay:0.35s">
+        <div class="narr-actions" style="animation-delay:${btnDelay}s">
           ${idx < passages.length - 1
             ? `<button class="btn-primary" id="narr-next">Continue →</button>`
             : `<button class="btn-primary" id="narr-begin">✦ Begin the Rites</button>`
