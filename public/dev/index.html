@@ -566,6 +566,20 @@
       font-size: clamp(1.1rem, 3.2vmin, 1.9rem);
       letter-spacing: 0.18em;
     }
+    #dev-badge {
+      margin-top: 5px;
+      font-family: monospace;
+      font-size: clamp(0.55rem, 1.3vmin, 0.78rem);
+      letter-spacing: 0.18em;
+      color: rgba(255, 200, 60, 0.9);
+      text-shadow: 0 0 8px rgba(255,160,0,0.7), 0 0 2px #000;
+      animation: devPulse 2.8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes devPulse {
+      0%, 100% { opacity: 0.7; }
+      50%       { opacity: 1.0; }
+    }
 
     /* ── Costumed player pulse ─────────────────────────────── */
     .player-costumed {
@@ -1055,6 +1069,7 @@
     <span class="sf-sancta">SANCTA</span>
     <span class="sf-forma">FORMA</span>
   </div>
+  <div id="dev-badge" style="display:none">⚠ DEV BUILD</div>
 </div>
 
 <div id="app"></div>
@@ -1594,6 +1609,12 @@
     document.fonts.ready.then(() => { syncLogoH(); });
   }
   syncLogoH(); // immediate estimate
+
+  // Show DEV badge when running under /dev path
+  if (window.location.pathname.startsWith('/dev')) {
+    const badge = document.getElementById('dev-badge');
+    if (badge) badge.style.display = 'block';
+  }
   window.addEventListener('resize', syncLogoH);
   window.addEventListener('orientationchange', () => setTimeout(syncLogoH, 150));
 })();
