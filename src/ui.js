@@ -920,13 +920,8 @@ export class GameScreen {
 
     const deathSkull = `
       <div class="death-dissolve">
-        <div class="d-ring"></div>
+        <div class="d-fog"></div>
         <div class="d-core"></div>
-        <div class="d-particle"></div>
-        <div class="d-particle"></div>
-        <div class="d-particle"></div>
-        <div class="d-particle"></div>
-        <div class="d-particle"></div>
       </div>`;
 
     const roman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][id - 1] || id;

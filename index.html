@@ -811,58 +811,63 @@
     }
     .death-dissolve {
       position: relative;
-      width: 180px;
-      height: 180px;
+      width: 200px;
+      height: 200px;
       margin: 0 auto 8px;
     }
+    /* Core — implodes to a point then detonates */
     .death-dissolve .d-core {
       position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: radial-gradient(circle at 48% 42%,
-        rgba(255,80,40,0.95) 0%,
-        rgba(200,10,10,0.80) 35%,
-        rgba(120,0,0,0.40)   65%,
-        transparent          100%);
-      animation: dissolve-core 2.4s ease-in-out infinite;
-    }
-    .death-dissolve .d-ring {
-      position: absolute;
-      inset: -18px;
+      inset: 20px;
       border-radius: 50%;
       background: radial-gradient(circle,
-        transparent 38%,
-        rgba(180,0,0,0.18) 55%,
-        rgba(255,20,20,0.08) 70%,
+        #fff 0%,
+        rgba(255,80,20,1) 25%,
+        rgba(180,0,0,0.9) 55%,
         transparent 100%);
-      animation: dissolve-ring 2.4s ease-in-out infinite;
+      animation: implode-explode 2.2s cubic-bezier(0.4,0,0.2,1) infinite;
+      transform-origin: center;
     }
-    .death-dissolve .d-particle {
+    /* Fog — the outward bloom after detonation */
+    .death-dissolve .d-fog {
       position: absolute;
+      inset: -30px;
       border-radius: 50%;
-      background: rgba(255,40,20,0.7);
-      animation: dissolve-particle 2.4s ease-in-out infinite;
+      background: radial-gradient(circle,
+        rgba(255,40,10,0.55) 0%,
+        rgba(160,0,0,0.25)  40%,
+        rgba(80,0,0,0.08)   70%,
+        transparent         100%);
+      animation: fog-bloom 2.2s cubic-bezier(0.4,0,0.2,1) infinite;
+      transform-origin: center;
     }
-    .death-dissolve .d-particle:nth-child(3) { width:8px; height:8px; top:18%; left:60%; animation-delay:-0.3s; }
-    .death-dissolve .d-particle:nth-child(4) { width:5px; height:5px; top:70%; left:25%; animation-delay:-0.8s; }
-    .death-dissolve .d-particle:nth-child(5) { width:6px; height:6px; top:30%; left:20%; animation-delay:-1.3s; }
-    .death-dissolve .d-particle:nth-child(6) { width:4px; height:4px; top:65%; left:72%; animation-delay:-1.8s; }
-    .death-dissolve .d-particle:nth-child(7) { width:7px; height:7px; top:12%; left:42%; animation-delay:-0.6s; }
-    @keyframes dissolve-core {
-      0%   { opacity: 1;    transform: scale(1);    filter: blur(0px); }
-      40%  { opacity: 0.85; transform: scale(1.08); filter: blur(1px); }
-      70%  { opacity: 0.5;  transform: scale(1.18); filter: blur(6px); }
-      100% { opacity: 1;    transform: scale(1);    filter: blur(0px); }
+    @keyframes implode-explode {
+      /* rest */
+      0%   { transform: scale(1);    opacity: 0.9; filter: blur(0px);  }
+      /* build — slow squeeze inward */
+      30%  { transform: scale(0.7);  opacity: 1.0; filter: blur(0px);  }
+      /* implosion point — flash white-hot */
+      42%  { transform: scale(0.08); opacity: 1.0; filter: blur(0px);  }
+      /* DETONATION — instant outward burst */
+      44%  { transform: scale(2.8);  opacity: 0.9; filter: blur(2px);  }
+      /* rapid expansion into fog */
+      55%  { transform: scale(4.5);  opacity: 0.4; filter: blur(8px);  }
+      /* dissipate */
+      75%  { transform: scale(5.5);  opacity: 0;   filter: blur(18px); }
+      /* reset invisible */
+      76%  { transform: scale(0.2);  opacity: 0;   filter: blur(0);    }
+      /* fade back in */
+      100% { transform: scale(1);    opacity: 0.9; filter: blur(0px);  }
     }
-    @keyframes dissolve-ring {
-      0%   { opacity: 0.3; transform: scale(0.9); }
-      50%  { opacity: 0.8; transform: scale(1.15); }
-      100% { opacity: 0.3; transform: scale(0.9); }
-    }
-    @keyframes dissolve-particle {
-      0%   { opacity: 0.8; transform: scale(1)   translateY(0);   filter: blur(0); }
-      50%  { opacity: 0.3; transform: scale(1.5) translateY(-12px); filter: blur(3px); }
-      100% { opacity: 0.8; transform: scale(1)   translateY(0);   filter: blur(0); }
+    @keyframes fog-bloom {
+      0%   { transform: scale(0.4);  opacity: 0;   filter: blur(0);    }
+      42%  { transform: scale(0.4);  opacity: 0;   filter: blur(0);    }
+      /* bloom outward with the explosion */
+      48%  { transform: scale(1.2);  opacity: 0.8; filter: blur(4px);  }
+      65%  { transform: scale(2.0);  opacity: 0.4; filter: blur(14px); }
+      78%  { transform: scale(2.6);  opacity: 0;   filter: blur(28px); }
+      79%  { transform: scale(0.4);  opacity: 0;   filter: blur(0);    }
+      100% { transform: scale(0.4);  opacity: 0;   filter: blur(0);    }
     }
     .death-title {
       font-family: var(--font-mono);
