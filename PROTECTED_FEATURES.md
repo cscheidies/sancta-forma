@@ -77,3 +77,16 @@ grep "Threshold" src/ui.js            # narrative passage
 ```
 
 All 6 must return results after any revert touching ui.js or levels.json.
+
+## Realm IX — The Outer Pattern (Rites 49–54)
+
+Added 2026-05-25. Six 10×10 levels. First realm with death-hunters at 10×10 scale.
+
+```bash
+grep "id: 9" src/ui.js                # Realm IX entry
+grep "The Outer Pattern" src/ui.js    # realm name
+grep "bg_rite54" src/ui.js            # bg map complete through 54
+grep '"id": 49' src/levels.json       # first rite present
+grep '"id": 54' src/levels.json       # finale present
+grep "Wider" src/ui.js                # narrative passage
+```

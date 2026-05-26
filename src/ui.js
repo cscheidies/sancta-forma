@@ -59,6 +59,12 @@ const LEVEL_BACKGROUNDS = {
   46: './bg_rite46.jpg',
   47: './bg_rite47.jpg',
   48: './bg_rite48.jpg',
+  49: './bg_rite49.jpg',
+  50: './bg_rite50.jpg',
+  51: './bg_rite51.jpg',
+  52: './bg_rite52.jpg',
+  53: './bg_rite53.jpg',
+  54: './bg_rite54.jpg',
 };
 
 // Cell fill opacity per level — higher = darker grid (use when bg is bright/light)
@@ -81,6 +87,12 @@ const LEVEL_CELL_OPACITY = {
   46: 0.36,
   47: 0.42,
   48: 0.48,
+  49: 0.32,
+  50: 0.36,
+  51: 0.30,
+  52: 0.38,
+  53: 0.28,
+  54: 0.46,
 };
 function levelCellOpacity(levelId) {
   return LEVEL_CELL_OPACITY[levelId] ?? 0.22;
@@ -154,6 +166,7 @@ const REALMS = [
   { id: 6, name: 'The Star Rites',    levelIds: [31,32,33,34,35,36]    },
   { id: 7, name: 'The Star Journey',    levelIds: [37,38,39,40,41,42]    },
   { id: 8, name: 'The Threshold Rites', levelIds: [43,44,45,46,47,48]    },
+  { id: 9, name: 'The Outer Pattern',    levelIds: [49,50,51,52,53,54]    },
 ];
 
 function getRealmForLevel(levelId) {
@@ -415,6 +428,17 @@ export class GameScreen {
           'The world is larger than you remember.',
           'All three hunters walk it together.',
           'Past is prologue.',
+        ],
+      },
+      {
+        heading: 'Wider',
+        lines: [
+          'The pattern is older than the field.',
+          'It rises in the stars.',
+          'It hides in the cells beneath your foot.',
+          'What hunted you in the small field',
+          'hunts you here in different bodies.',
+          'Learn to see them before they reach you.',
         ],
       },
     ];
