@@ -226,10 +226,32 @@ const REALMS = [
   { id: 10, name: 'The Pattern Speaks',  levelIds: [55,56,57,58,59,60]    },
   { id: 11, name: 'In Medias Res',       levelIds: [61,62,63,64,65,66]    },
   { id: 12, name: 'Acies',              levelIds: [67,68,69,70,71,72]    },
+  { id: 13, name: 'Ultima Vigilia',     levelIds: [73,74,75,76,77,78]    },
 ];
 
 // Per-form narrative beats shown before the first rite of each form in a realm.
 const PRE_LEVEL_BEATS = {
+  73: {
+    heading: 'The Stones Were Whole',
+    lines: [
+      'The Square remembered when the stones had been whole.',
+      'The Square remembered when remembering was easy.',
+    ],
+  },
+  75: {
+    heading: 'Every Watch Before',
+    lines: [
+      'The Circle had outlasted every watch before this one.',
+      'The Circle did not assume it would outlast this one.',
+    ],
+  },
+  77: {
+    heading: 'No Words',
+    lines: [
+      'The Triangle pointed at what was coming.',
+      'There were no words for what was coming.',
+    ],
+  },
   67: {
     heading: 'The Ground',
     lines: [
@@ -590,6 +612,29 @@ export class GameScreen {
           'not where you choose.',
           'The hunters are not waiting.',
           'They are arriving.',
+        ],
+      },
+      {
+        heading: 'Ultima Vigilia',
+        lines: [
+          'The acies had not held.',
+          'It was not a failure of the forms.',
+          'The forms had held what they were made to hold.',
+          'But the pressure had been greater than what the forms',
+          'could press against, and the line had moved,',
+          'and the forms had moved with it.',
+          'Now there was no line.',
+          'There was only the place behind the line,',
+          'the watch they kept',
+          'while what they had been defending burned cold.',
+          'The Square stood on ground that had been ground.',
+          'The Circle held water that had been water.',
+          'The Triangle pointed at horizons that had been horizons.',
+          'This was not the end.',
+          'The forms had not yet been the ones who ended.',
+          'But this was the last place before the end,',
+          'and they knew it.',
+          'Ultima vigilia. The last watch.',
         ],
       },
       {
