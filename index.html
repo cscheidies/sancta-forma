@@ -809,13 +809,60 @@
       align-items: center;
       gap: 6px;
     }
-    .death-skull {
-      filter: drop-shadow(0 0 12px rgba(255,30,30,0.8));
-      animation: skull-pulse 1.6s ease-in-out infinite;
+    .death-dissolve {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 8px;
     }
-    @keyframes skull-pulse {
-      0%, 100% { filter: drop-shadow(0 0 10px rgba(255,30,30,0.7)); transform: scale(1); }
-      50%       { filter: drop-shadow(0 0 22px rgba(255,30,30,1.0)); transform: scale(1.04); }
+    .death-dissolve .d-core {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 48% 42%,
+        rgba(255,80,40,0.95) 0%,
+        rgba(200,10,10,0.80) 35%,
+        rgba(120,0,0,0.40)   65%,
+        transparent          100%);
+      animation: dissolve-core 2.4s ease-in-out infinite;
+    }
+    .death-dissolve .d-ring {
+      position: absolute;
+      inset: -18px;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+        transparent 38%,
+        rgba(180,0,0,0.18) 55%,
+        rgba(255,20,20,0.08) 70%,
+        transparent 100%);
+      animation: dissolve-ring 2.4s ease-in-out infinite;
+    }
+    .death-dissolve .d-particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,40,20,0.7);
+      animation: dissolve-particle 2.4s ease-in-out infinite;
+    }
+    .death-dissolve .d-particle:nth-child(3) { width:8px; height:8px; top:18%; left:60%; animation-delay:-0.3s; }
+    .death-dissolve .d-particle:nth-child(4) { width:5px; height:5px; top:70%; left:25%; animation-delay:-0.8s; }
+    .death-dissolve .d-particle:nth-child(5) { width:6px; height:6px; top:30%; left:20%; animation-delay:-1.3s; }
+    .death-dissolve .d-particle:nth-child(6) { width:4px; height:4px; top:65%; left:72%; animation-delay:-1.8s; }
+    .death-dissolve .d-particle:nth-child(7) { width:7px; height:7px; top:12%; left:42%; animation-delay:-0.6s; }
+    @keyframes dissolve-core {
+      0%   { opacity: 1;    transform: scale(1);    filter: blur(0px); }
+      40%  { opacity: 0.85; transform: scale(1.08); filter: blur(1px); }
+      70%  { opacity: 0.5;  transform: scale(1.18); filter: blur(6px); }
+      100% { opacity: 1;    transform: scale(1);    filter: blur(0px); }
+    }
+    @keyframes dissolve-ring {
+      0%   { opacity: 0.3; transform: scale(0.9); }
+      50%  { opacity: 0.8; transform: scale(1.15); }
+      100% { opacity: 0.3; transform: scale(0.9); }
+    }
+    @keyframes dissolve-particle {
+      0%   { opacity: 0.8; transform: scale(1)   translateY(0);   filter: blur(0); }
+      50%  { opacity: 0.3; transform: scale(1.5) translateY(-12px); filter: blur(3px); }
+      100% { opacity: 0.8; transform: scale(1)   translateY(0);   filter: blur(0); }
     }
     .death-title {
       font-family: var(--font-mono);
