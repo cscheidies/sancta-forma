@@ -214,11 +214,12 @@ function drawOriginalGhost(originalElement, col, row) {
 
 export function createGridSVG(opts = {}) {
   const cellFillOpacity = opts.cellFillOpacity ?? 0.22;
-  const size = CELL_SIZE * 5;
+  const gridSize = opts.size ?? 5;
+  const dim = CELL_SIZE * gridSize;
   const svg = svgEl('svg', {
-    viewBox: `0 0 ${size} ${size}`,
-    width: size,
-    height: size,
+    viewBox: `0 0 ${dim} ${dim}`,
+    width: dim,
+    height: dim,
     class: 'game-grid',
   });
 
@@ -233,8 +234,8 @@ export function createGridSVG(opts = {}) {
   svg.appendChild(defs);
 
   // Grid background cells — dark stone/obsidian
-  for (let r = 0; r < 5; r++) {
-    for (let c = 0; c < 5; c++) {
+  for (let r = 0; r < gridSize; r++) {
+    for (let c = 0; c < gridSize; c++) {
       // Base cell — semi-transparent so background art shows through
       svg.appendChild(svgEl('rect', {
         x: c * CELL_SIZE + 1,
@@ -261,8 +262,8 @@ export function createGridSVG(opts = {}) {
   }
 
   // Corner rune marks on each cell (tiny cross-hatch at corners)
-  for (let r = 0; r < 5; r++) {
-    for (let c = 0; c < 5; c++) {
+  for (let r = 0; r < gridSize; r++) {
+    for (let c = 0; c < gridSize; c++) {
       const x0 = c * CELL_SIZE, y0 = r * CELL_SIZE;
       const corners = [[x0+2,y0+2],[x0+CELL_SIZE-2,y0+2],[x0+2,y0+CELL_SIZE-2],[x0+CELL_SIZE-2,y0+CELL_SIZE-2]];
       for (const [cx2, cy2] of corners) {
@@ -288,11 +289,12 @@ export function renderState(svg, state) {
   playerLayer.innerHTML = '';
 
   const { grid, player } = state;
+  const size = grid.length;
   const deathHunters = new Set(getDeathHunters(player.element));
 
   // Draw all grid shapes + danger overlays
-  for (let r = 0; r < 5; r++) {
-    for (let c = 0; c < 5; c++) {
+  for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
       const cell = grid[r][c];
       if (!cell) continue;
       shapesLayer.appendChild(drawGridShape(cell.type, c, r));
