@@ -141,7 +141,6 @@ const REALMS = [
   { id: 5, name: 'Moon Passage',      levelIds: [25,26,27,28,29,30]    },
   { id: 6, name: 'The Star Rites',    levelIds: [31,32,33,34,35,36]    },
   { id: 7, name: 'The Star Journey',  levelIds: [37,38,39,40,41,42]    },
-  { id: 8, name: 'TEST — 10×10 Smoke', levelIds: [43]                  },
 ];
 
 function getRealmForLevel(levelId) {
