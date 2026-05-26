@@ -1228,11 +1228,14 @@ export class GameScreen {
 
     const deathSkull = `
       <div class="death-dissolve">
+        <div class="d-base"></div>
         <div class="d-puff"></div>
         <div class="d-puff"></div>
         <div class="d-puff"></div>
         <div class="d-puff"></div>
-        <div class="d-core"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
       </div>`;
 
     const roman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][id - 1] || id;

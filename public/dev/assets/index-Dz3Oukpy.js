@@ -211,11 +211,14 @@
       <div class="death-header">
         
       <div class="death-dissolve">
+        <div class="d-base"></div>
         <div class="d-puff"></div>
         <div class="d-puff"></div>
         <div class="d-puff"></div>
         <div class="d-puff"></div>
-        <div class="d-core"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
       </div>
         <h2 class="death-title">DEATH</h2>
         <p class="death-sub">The corruption consumed you</p>
