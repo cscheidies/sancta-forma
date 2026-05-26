@@ -45,13 +45,13 @@ run the grep checks above and fix anything missing.
 **After any revert:**
 ```bash
 grep "m.ox \* W" index.html             # fog fix
-grep "restorePulse" index.html           # glowing text
+grep "tagline-breathe" index.html        # glowing text (.sf-tagline animation)
 grep "realmLabel" src/ui.js              # roman numerals
 grep "Star Journey" src/ui.js            # realm VII
 grep "bg_rite42" src/ui.js               # bg map
 grep "filter.*id < realmId" src/ui.js    # unlock chain
 grep "state.grid.length" src/engine.js   # variable-grid (engine)
-grep "state.grid.length" src/renderer.js # variable-grid (renderer)
+grep "grid\.length" src/renderer.js      # variable-grid (renderer — uses grid after destructuring)
 grep "state.grid.length" src/ui.js       # variable-grid (ui)
 ```
 
