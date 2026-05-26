@@ -219,10 +219,33 @@ const REALMS = [
   { id: 9,  name: 'The Outer Pattern',    levelIds: [49,50,51,52,53,54]    },
   { id: 10, name: 'The Pattern Speaks',  levelIds: [55,56,57,58,59,60]    },
   { id: 11, name: 'In Medias Res',       levelIds: [61,62,63,64,65,66]    },
+  { id: 12, name: 'Acies',              levelIds: [67,68,69,70,71,72]    },
 ];
 
 // Per-form narrative beats shown before the first rite of each form in a realm.
 const PRE_LEVEL_BEATS = {
+  67: {
+    heading: 'The Ground',
+    lines: [
+      'The ground beneath the Square did not move.',
+      'This was the whole point of being the Square.',
+    ],
+  },
+  69: {
+    heading: 'The Lines',
+    lines: [
+      'The Circle had seen many lines.',
+      'The Circle had outlasted some of them.',
+      'Not all.',
+    ],
+  },
+  71: {
+    heading: 'The Point',
+    lines: [
+      'A point does not flinch.',
+      'The Triangle was not made for flinching.',
+    ],
+  },
   61: {
     heading: 'The Stones',
     lines: [
@@ -561,6 +584,24 @@ export class GameScreen {
           'not where you choose.',
           'The hunters are not waiting.',
           'They are arriving.',
+        ],
+      },
+      {
+        heading: 'Acies',
+        lines: [
+          'The middle of the action ends somewhere.',
+          'For the forms, it ended at acies —',
+          'the cutting edge.',
+          'What pressed in had no form of its own.',
+          'It made forms — hexagons, moons, stars —',
+          'and threw them forward.',
+          'There was no negotiation.',
+          'There never had been.',
+          'The Square stood where it had always stood.',
+          'The Circle held the water against the wind.',
+          'The Triangle pointed at the dark.',
+          'Acies. Not the last line.',
+          'But a line, and a line is enough.',
         ],
       },
       {
