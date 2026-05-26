@@ -525,6 +525,75 @@
       color: var(--text);
     }
 
+    /* ── SFN Trace strip ──────────────────────────────────── */
+    .hud-trace {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 2px;
+      padding: 7px 10px;
+      background: rgba(60, 30, 120, 0.06);
+      border: 1px solid rgba(120, 60, 220, 0.18);
+      border-radius: 6px;
+      min-height: 30px;
+    }
+    .hud-trace-label {
+      font-family: var(--font-eerie);
+      font-style: italic;
+      font-size: 0.62rem;
+      color: var(--arcane-dim);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .hud-trace-strip {
+      flex: 1;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-dim);
+      letter-spacing: 0.03em;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(120, 60, 220, 0.3) transparent;
+      padding: 1px 0;
+    }
+    .hud-trace-strip::-webkit-scrollbar { height: 3px; }
+    .hud-trace-strip::-webkit-scrollbar-track { background: transparent; }
+    .hud-trace-strip::-webkit-scrollbar-thumb {
+      background: rgba(120, 60, 220, 0.3);
+      border-radius: 2px;
+    }
+    .hud-trace-strip .move          { margin-right: 9px; }
+    .hud-trace-strip .move-latest   {
+      color: var(--arcane);
+      text-shadow: 0 0 8px rgba(140, 80, 255, 0.55);
+    }
+    .hud-trace-strip .move-shift    {
+      color: var(--arcane-dim);
+      font-style: italic;
+      opacity: 0.75;
+    }
+    .hud-trace-strip .move-outcome-win {
+      color: var(--green);
+      font-weight: bold;
+      text-shadow: 0 0 8px rgba(105, 255, 71, 0.55);
+      margin-left: 6px;
+    }
+    .hud-trace-strip .move-outcome-loss {
+      color: var(--red);
+      font-weight: bold;
+      text-shadow: 0 0 8px rgba(255, 71, 71, 0.55);
+      margin-left: 6px;
+    }
+    .hud-trace-strip .empty-state {
+      color: var(--arcane-dim);
+      font-style: italic;
+      opacity: 0.5;
+      font-family: var(--font-eerie);
+      font-size: 0.78rem;
+    }
+
     /* ── Grid SVG — fills available space below logo ──────── */
     .game-grid {
       /* Square: constrained by both width and remaining height */
@@ -1243,7 +1312,7 @@
          fine in both. */
     }
   </style>
-  <script type="module" crossorigin src="/dev/assets/index-DDoE36lf.js"></script>
+  <script type="module" crossorigin src="/dev/assets/index-BjrPrdbK.js"></script>
 </head>
 <div class="bg-layer" id="bg-title" style="background-image:url('./bg_title.jpg');opacity:1"></div>
 <div class="bg-layer" id="bg-a" style="opacity:0"></div>
