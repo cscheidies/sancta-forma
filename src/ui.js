@@ -920,7 +920,10 @@ export class GameScreen {
 
     const deathSkull = `
       <div class="death-dissolve">
-        <div class="d-fog"></div>
+        <div class="d-puff"></div>
+        <div class="d-puff"></div>
+        <div class="d-puff"></div>
+        <div class="d-puff"></div>
         <div class="d-core"></div>
       </div>`;
 
