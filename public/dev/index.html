@@ -1137,8 +1137,102 @@
         transition: none !important;
       }
     }
+
+    /* ───────────────────────────────────────────────────────────────────────────
+       Orientation-aware layout
+       ─────────────────────────────────────────────────────────────────────────── */
+
+    /* Portrait (default — existing behavior, do not change anything that wasn't
+       already there). HUD sits below the grid. */
+    @media (orientation: portrait) {
+      .game-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .game-wrapper > .game-grid {
+        order: 2;
+      }
+      .game-wrapper > .hud {
+        order: 3;
+        width: 100%;
+        max-width: 480px;
+      }
+      .game-wrapper > .game-logo-wrap {
+        order: 1;
+      }
+    }
+
+    /* Landscape — HUD sits to the right of the grid */
+    @media (orientation: landscape) {
+      .game-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 32px;
+        padding: 16px;
+        /* Constrain so wide screens don't sprawl */
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      .game-wrapper > .game-logo-wrap {
+        /* Hide the spacer in landscape — the global logo overlay handles top space.
+           Without this the layout has a phantom column. */
+        display: none;
+      }
+      .game-wrapper > .game-grid {
+        order: 1;
+        /* Cap the grid so a 20×20 doesn't overflow narrow phone landscape.
+           The SVG viewBox auto-scales; we just clamp the display size. */
+        max-height: calc(100vh - 32px);
+        max-width: calc(100vh - 32px); /* keep it square */
+        height: auto;
+        width: auto;
+      }
+      .game-wrapper > .hud {
+        order: 2;
+        flex-shrink: 0;
+        width: 280px;
+        max-width: 35vw;
+        /* Stack rows vertically inside the HUD even though the HUD itself is in
+           a row layout — preserves readability of identity/score/corruption. */
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      /* Tighten HUD internal spacing for landscape so it fits next to grid */
+      .hud .hud-row,
+      .hud .hud-identity {
+        margin: 0;
+      }
+
+      /* On very short landscape (e.g. landscape phone), tighten further */
+      @media (max-height: 480px) {
+        .game-wrapper {
+          gap: 16px;
+          padding: 8px;
+        }
+        .game-wrapper > .hud {
+          width: 220px;
+        }
+      }
+    }
+
+    /* Non-game screens (title, level select, narrative, howto) — keep portrait
+       layout always. These screens don't need a landscape variant because they're
+       text-and-buttons-centered, not spatially demanding. */
+    .screen.title-screen,
+    .screen.level-select,
+    .screen.narrative-screen,
+    .screen.howto-screen {
+      /* No orientation-specific overrides — existing centered layout works
+         fine in both. */
+    }
   </style>
-  <script type="module" crossorigin src="/dev/assets/index-Dykx7cJG.js"></script>
+  <script type="module" crossorigin src="/dev/assets/index-D7BqUr-e.js"></script>
 </head>
 <div class="bg-layer" id="bg-title" style="background-image:url('./bg_title.jpg');opacity:1"></div>
 <div class="bg-layer" id="bg-a" style="opacity:0"></div>
