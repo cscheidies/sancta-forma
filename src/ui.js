@@ -797,8 +797,9 @@ export class GameScreen {
     `;
     this.hud.querySelector('.hud-back').addEventListener('click', () => this.showLevelSelect());
 
-    // SFN trace strip
-    this.tracker = new SFNTracker('hud-trace-strip');
+    // SFN trace strip — pass the element directly (hud isn't in the DOM yet,
+    // so getElementById would return null; querySelector on hud works immediately)
+    this.tracker = new SFNTracker(this.hud.querySelector('#hud-trace-strip'));
     this._sfnMoveCount = 0;
 
     // Grid SVG
