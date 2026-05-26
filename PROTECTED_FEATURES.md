@@ -105,3 +105,40 @@ grep "Speaks" src/ui.js                # narrative passage
 ```
 
 All 6 must return results after any revert touching ui.js or levels.json.
+
+
+## Orientation-aware layout
+
+The game adapts to landscape and portrait via CSS media queries.
+
+In landscape: HUD sits to the right of the grid.
+In portrait: HUD sits below the grid (current behavior).
+
+```bash
+grep "@media (orientation: landscape)" index.html
+grep "isLandscape" src/ui.js
+grep "onOrientationChange" src/ui.js
+```
+
+All 3 must return results after any revert touching index.html or src/ui.js.
+
+## Landscape layout — logo clearance
+
+Landscape layout uses `--logo-offset` (set by `syncLogoH()`) as `padding-top` on the
+wrapper so the grid never collides with the fixed-position logo.
+
+```bash
+grep "padding-top: calc(var(--logo-offset" index.html
+grep -- "--logo-offset" index.html
+grep "syncLogoH" index.html
+```
+
+## Dev mode unlock-all
+
+The /dev path unlocks every level and skips localStorage persistence.
+Regex: `^/dev(/|$)` — /dev-build and /development do NOT activate it.
+
+```bash
+grep "isDevMode" src/ui.js
+grep "_devModeOverride" src/ui.js
+```

@@ -9,6 +9,37 @@ function logoH() {
   return (window.__logoH || 220) + 'px';
 }
 
+// ── Orientation detection (CSS handles layout; JS only exposes the state) ───
+//
+// Per MDN as of 2024, window.orientation and the orientationchange event are
+// deprecated. The Screen Orientation API (screen.orientation) is the modern
+// standard, but matchMedia is simpler and universally supported including
+// older iOS Safari.
+
+const _orientationMQ = window.matchMedia('(orientation: landscape)');
+
+export function isLandscape() {
+  return _orientationMQ.matches;
+}
+
+// Notify any registered callbacks when orientation changes. Used by code that
+// needs to react beyond CSS layout (e.g., recalculating SVG hit-test math if
+// the grid resizes — currently nothing uses this, but it's wired in).
+const _orientationListeners = new Set();
+
+export function onOrientationChange(callback) {
+  _orientationListeners.add(callback);
+  return () => _orientationListeners.delete(callback);
+}
+
+_orientationMQ.addEventListener('change', (e) => {
+  for (const cb of _orientationListeners) {
+    try { cb(e.matches /* isLandscape */); } catch (err) {
+      console.error('Orientation listener error:', err);
+    }
+  }
+});
+
 // Per-rite background images
 const LEVEL_BACKGROUNDS = {
   1:  './bg_rite1.jpg',
@@ -202,13 +233,32 @@ function isRealmUnlocked(realmId, progress) {
 
 const STORAGE_KEY = 'shape-puzzle-progress';
 
+// Detect dev mode by URL path. Anything matching /dev or /dev/* activates
+// unlock-all behavior. Production at sanctaforma.com (no /dev) keeps the
+// normal unlock chain. /dev-build or /development paths do NOT activate this.
+function isDevMode() {
+  if (typeof window === 'undefined') return false;
+  return /^\/dev(\/|$)/.test(window.location.pathname);
+}
+
 function loadProgress() {
+  // Dev mode: every level unlocked and completed for friction-free testing.
+  if (isDevMode()) {
+    const allLevelIds = REALMS.flatMap(r => r.levelIds);
+    return {
+      unlocked:  allLevelIds.slice(),
+      completed: allLevelIds.slice(),
+      _devModeOverride: true,
+    };
+  }
+  // Production: load from localStorage as before.
   try {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { unlocked: [1], completed: [] };
   } catch { return { unlocked: [1], completed: [] }; }
 }
 
 function saveProgress(progress) {
+  if (isDevMode()) return; // don't clobber real progress with dev sessions
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 }
 
@@ -311,6 +361,7 @@ export class GameScreen {
     this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
     if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
+    if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
 
     const screen = document.createElement('div');
     screen.className = 'screen title-screen';
@@ -335,6 +386,7 @@ export class GameScreen {
   showHowToPlay() {
     clearLevelBg();
     this.container.innerHTML = '';
+    if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
 
     const screen = document.createElement('div');
     screen.className = 'screen';
@@ -389,6 +441,7 @@ export class GameScreen {
     this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
     if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
+    if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
 
     const passages = [
       {
@@ -529,6 +582,7 @@ export class GameScreen {
     clearLevelBg();
     this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
+    if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
     if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
 
     const screen = document.createElement('div');
@@ -689,6 +743,14 @@ export class GameScreen {
     // Build layout
     const wrapper = document.createElement('div');
     wrapper.className = 'game-wrapper';
+    if (isLandscape()) wrapper.classList.add('orientation-landscape');
+    else wrapper.classList.add('orientation-portrait');
+
+    // Keep the class hint in sync if user rotates mid-game
+    this._orientationUnsub = onOrientationChange((landscape) => {
+      wrapper.classList.toggle('orientation-landscape', landscape);
+      wrapper.classList.toggle('orientation-portrait', !landscape);
+    });
 
     // HUD
     this.hud = document.createElement('div');

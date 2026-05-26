@@ -1137,6 +1137,111 @@
         transition: none !important;
       }
     }
+
+    /* ───────────────────────────────────────────────────────────────────────────
+       Orientation-aware layout
+       ─────────────────────────────────────────────────────────────────────────── */
+
+    /* Portrait (default — existing behavior, do not change anything that wasn't
+       already there). HUD sits below the grid. */
+    @media (orientation: portrait) {
+      .game-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .game-wrapper > .game-grid {
+        order: 2;
+      }
+      .game-wrapper > .hud {
+        order: 3;
+        width: 100%;
+        max-width: 480px;
+      }
+      .game-wrapper > .game-logo-wrap {
+        order: 1;
+      }
+    }
+
+    /* Landscape — HUD sits to the right of the grid */
+    @media (orientation: landscape) {
+      .game-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 24px;
+        padding: 16px;
+        /* Push the entire wrapper below the fixed logo overlay. The logo's
+           rendered height is exposed by index.html as --logo-offset (set by
+           syncLogoH()); fallback 180px if unset. */
+        padding-top: calc(var(--logo-offset, 180px) + 8px);
+        /* Constrain so wide screens don't sprawl */
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      .game-wrapper > .game-logo-wrap {
+        /* Keep spacer present but zero-sized — wrapper padding-top handles
+           vertical clearance. display:none avoids a phantom flex column. */
+        display: none;
+      }
+      .game-wrapper > .game-grid {
+        order: 1;
+        /* The grid is square. Cap by both viewport dimensions so it fits in the
+           landscape window without overflow or collision with the HUD.
+           Subtract logo-offset so it never creeps above the logo. */
+        max-height: calc(100vh - var(--logo-offset, 180px) - 32px);
+        max-width: calc(100vh - var(--logo-offset, 180px) - 32px);
+        width: auto;
+        height: auto;
+      }
+      .game-wrapper > .hud {
+        order: 2;
+        flex-shrink: 0;
+        width: 300px;
+        max-width: 35vw;
+        /* Stack rows vertically inside the HUD even though the HUD itself is in
+           a row layout — preserves readability of identity/score/corruption. */
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 0;
+      }
+
+      /* Tighten HUD internal spacing for landscape so it fits next to grid */
+      .hud .hud-row,
+      .hud .hud-identity {
+        margin: 0;
+      }
+
+      /* On very short landscape (e.g. landscape phone), tighten further */
+      @media (max-height: 480px) {
+        .game-wrapper {
+          gap: 16px;
+          padding: 8px;
+          padding-top: calc(var(--logo-offset, 120px) + 4px);
+        }
+        .game-wrapper > .hud {
+          width: 240px;
+        }
+        .game-wrapper > .game-grid {
+          max-height: calc(100vh - var(--logo-offset, 120px) - 16px);
+          max-width: calc(100vh - var(--logo-offset, 120px) - 16px);
+        }
+      }
+    }
+
+    /* Non-game screens (title, level select, narrative, howto) — keep portrait
+       layout always. These screens don't need a landscape variant because they're
+       text-and-buttons-centered, not spatially demanding. */
+    .screen.title-screen,
+    .screen.level-select,
+    .screen.narrative-screen,
+    .screen.howto-screen {
+      /* No orientation-specific overrides — existing centered layout works
+         fine in both. */
+    }
   </style>
 </head>
 <div class="bg-layer" id="bg-title" style="background-image:url('./bg_title.jpg');opacity:1"></div>
@@ -1704,6 +1809,8 @@
     if (!logo) return;
     const h = logo.getBoundingClientRect().bottom + 16; // 16px breathing gap
     document.documentElement.style.setProperty('--logo-h', `${h}px`);
+    // Also expose as --logo-offset for landscape layout padding-top calculation
+    document.documentElement.style.setProperty('--logo-offset', `${h}px`);
     window.__logoH = h;
   }
   // Run after fonts load (Cinzel Decorative affects height)
