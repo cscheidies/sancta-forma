@@ -53,6 +53,12 @@ const LEVEL_BACKGROUNDS = {
   40: './bg_rite40.jpg',
   41: './bg_rite41.jpg',
   42: './bg_rite42.jpg',
+  43: './bg_rite43.jpg',
+  44: './bg_rite44.jpg',
+  45: './bg_rite45.jpg',
+  46: './bg_rite46.jpg',
+  47: './bg_rite47.jpg',
+  48: './bg_rite48.jpg',
 };
 
 // Cell fill opacity per level — higher = darker grid (use when bg is bright/light)
@@ -69,6 +75,12 @@ const LEVEL_CELL_OPACITY = {
   16: 0.34,
   17: 0.42,  // purple night, moderate
   18: 0.48,  // bright full-moon mountain sky — finale
+  43: 0.22,  // Realm VIII — tune once backgrounds are in
+  44: 0.26,
+  45: 0.30,
+  46: 0.36,
+  47: 0.42,
+  48: 0.48,
 };
 function levelCellOpacity(levelId) {
   return LEVEL_CELL_OPACITY[levelId] ?? 0.22;
@@ -140,7 +152,8 @@ const REALMS = [
   { id: 4, name: 'Moon Rites',        levelIds: [19,20,21,22,23,24]    },
   { id: 5, name: 'Moon Passage',      levelIds: [25,26,27,28,29,30]    },
   { id: 6, name: 'The Star Rites',    levelIds: [31,32,33,34,35,36]    },
-  { id: 7, name: 'The Star Journey',  levelIds: [37,38,39,40,41,42]    },
+  { id: 7, name: 'The Star Journey',    levelIds: [37,38,39,40,41,42]    },
+  { id: 8, name: 'The Threshold Rites', levelIds: [43,44,45,46,47,48]    },
 ];
 
 function getRealmForLevel(levelId) {
@@ -391,6 +404,17 @@ export class GameScreen {
           'between strength and dissolution.',
           'To restore the universe,',
           'they must outlast the hunters.',
+        ],
+      },
+      {
+        heading: 'Threshold',
+        lines: [
+          'The small field is behind you.',
+          'What you learned there',
+          'you will need now.',
+          'The world is larger than you remember.',
+          'All three hunters walk it together.',
+          'Past is prologue.',
         ],
       },
     ];
