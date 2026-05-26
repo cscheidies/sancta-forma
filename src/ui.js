@@ -676,6 +676,7 @@ export class GameScreen {
     clearLevelBg();
     this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
+    if (this._lsKeyCleanup) { this._lsKeyCleanup(); this._lsKeyCleanup = null; }
     if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
     if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
 
@@ -823,6 +824,64 @@ export class GameScreen {
 
     screen.querySelector('#ls-how').addEventListener('click', () => this.showHowToPlay());
     screen.querySelector('#ls-why').addEventListener('click', () => this.showNarrative());
+
+    // ── Keyboard navigation for level select ──────────────────────────────
+    // Cards are laid out in a 3×2 grid (3 cols). Arrow keys move focus;
+    // Enter/Space starts the focused unlocked rite.
+    const cards = Array.from(grid.querySelectorAll('.level-card'));
+    const COLS = 3;
+    let lsFocus = -1; // -1 = no keyboard focus yet
+
+    const setFocus = (idx) => {
+      cards.forEach(c => c.classList.remove('ls-focused'));
+      lsFocus = Math.max(0, Math.min(cards.length - 1, idx));
+      cards[lsFocus].classList.add('ls-focused');
+      cards[lsFocus].scrollIntoView({ block: 'nearest' });
+    };
+
+    const lsKey = (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        e.preventDefault();
+        if (lsFocus === -1) { setFocus(0); return; }
+        const next = lsFocus + 1;
+        if (next < cards.length) setFocus(next);
+        else if (nextRealm && isRealmUnlocked(nextRealm.id, this.progress)) {
+          document.removeEventListener('keydown', lsKey);
+          this.showLevelSelect(nextRealm.id);
+        }
+      } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        e.preventDefault();
+        if (lsFocus === -1) { setFocus(cards.length - 1); return; }
+        const prev = lsFocus - 1;
+        if (prev >= 0) setFocus(prev);
+        else if (prevRealm) {
+          document.removeEventListener('keydown', lsKey);
+          this.showLevelSelect(prevRealm.id);
+        }
+      } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+        e.preventDefault();
+        if (lsFocus === -1) { setFocus(0); return; }
+        const down = lsFocus + COLS;
+        if (down < cards.length) setFocus(down);
+      } else if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+        e.preventDefault();
+        if (lsFocus === -1) { setFocus(0); return; }
+        const up = lsFocus - COLS;
+        if (up >= 0) setFocus(up);
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (lsFocus === -1) { setFocus(0); return; }
+        const card = cards[lsFocus];
+        if (!card.classList.contains('locked')) card.click();
+      } else if (e.key === 'Escape') {
+        document.removeEventListener('keydown', lsKey);
+        this.showTitle();
+      }
+    };
+    document.addEventListener('keydown', lsKey);
+    // Clean up when navigating away
+    this._lsKeyCleanup = () => document.removeEventListener('keydown', lsKey);
+
     this.container.appendChild(screen);
   }
 
@@ -840,6 +899,7 @@ export class GameScreen {
       return;
     }
 
+    if (this._lsKeyCleanup) { this._lsKeyCleanup(); this._lsKeyCleanup = null; }
     setLevelBg(levelId);
     this.container.innerHTML = '';
     this.state = initState(level);
@@ -1144,6 +1204,19 @@ export class GameScreen {
       document.getElementById('btn-next')?.addEventListener('click', () => this.startLevel(nextId));
       document.getElementById('btn-next-realm')?.addEventListener('click', () => this.showLevelSelect(nextRealm?.id));
       document.getElementById('btn-levels')?.addEventListener('click', () => this.showLevelSelect());
+
+      // Enter key fires the primary next button from the win screen
+      const winKey = (e) => {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        document.removeEventListener('keydown', winKey);
+        const btnNext = document.getElementById('btn-next');
+        const btnRealm = document.getElementById('btn-next-realm');
+        if (btnNext) btnNext.click();
+        else if (btnRealm) btnRealm.click();
+        else this.showLevelSelect();
+      };
+      document.addEventListener('keydown', winKey);
     });
   }
 

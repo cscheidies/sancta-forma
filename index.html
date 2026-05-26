@@ -378,6 +378,13 @@
     .level-card:not(.locked):hover { transform: translateY(-2px); background: #1c2330; }
     .level-card.locked { opacity: 0.4; cursor: default; }
     .level-card.completed { border-color: var(--green); }
+    .level-card.ls-focused:not(.locked) {
+      transform: translateY(-2px);
+      background: #1c2330;
+      border-color: var(--elem-color, rgba(160,80,255,0.8));
+      box-shadow: 0 0 0 2px var(--elem-color, rgba(140,60,220,0.7)), 0 0 18px rgba(140,60,220,0.35);
+    }
+    .level-card.ls-focused:not(.locked)::before { opacity: 0.5; }
 
     .card-rite {
       font-family: var(--font-mono);
