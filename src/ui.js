@@ -212,7 +212,39 @@ const REALMS = [
   { id: 8, name: 'The Threshold Rites', levelIds: [43,44,45,46,47,48]    },
   { id: 9,  name: 'The Outer Pattern',    levelIds: [49,50,51,52,53,54]    },
   { id: 10, name: 'The Pattern Speaks',  levelIds: [55,56,57,58,59,60]    },
+  { id: 11, name: 'In Medias Res',       levelIds: [61,62,63,64,65,66]    },
 ];
+
+// Per-form narrative beats shown before the first rite of each form in a realm.
+const PRE_LEVEL_BEATS = {
+  61: {
+    heading: 'The Stones',
+    lines: [
+      'The stones had been here longer than the Square',
+      'remembered being the Square.',
+      'They had not asked to hold the line.',
+      'Holding was what they were.',
+    ],
+  },
+  63: {
+    heading: 'The Pool',
+    lines: [
+      'The pool had not been still in a long time.',
+      'Whatever passed across the moon\'s face',
+      'passed also across the pool,',
+      'and the Circle saw both without choosing.',
+    ],
+  },
+  65: {
+    heading: 'The Peaks',
+    lines: [
+      'The peaks were sharper than the Triangle.',
+      'They always had been.',
+      'The Triangle did not envy them.',
+      'The Triangle pointed.',
+    ],
+  },
+};
 
 function getRealmForLevel(levelId) {
   return REALMS.find(r => r.levelIds.includes(levelId)) || REALMS[0];
@@ -525,6 +557,24 @@ export class GameScreen {
           'They are arriving.',
         ],
       },
+      {
+        heading: 'In Medias Res',
+        lines: [
+          'The forms had been awake too long',
+          'to remember when the waking began.',
+          'There was no sleep left to return to.',
+          'The hunters did not pause.',
+          'The stones, the pool, the peaks —',
+          'each had become a place where the forms',
+          'held a line against shapes',
+          'that should not have existed.',
+          'No origin. No purpose anyone alive could name.',
+          'Only pressure.',
+          'The middle of the action is no place to begin.',
+          'They had not begun.',
+          'They were already there.',
+        ],
+      },
     ];
 
     let passageIdx = 0;
@@ -581,6 +631,28 @@ export class GameScreen {
     };
 
     renderPassage(passageIdx);
+  }
+
+  _showPreLevelBeat(beat, onContinue) {
+    if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
+    this.container.innerHTML = '';
+    const screen = document.createElement('div');
+    screen.className = 'screen narrative-screen';
+    screen.innerHTML = `
+      <div class="narrative-wrap">
+        <div class="narr-wrap-inner narr-entered">
+          <div class="narr-heading">${beat.heading}</div>
+          <div class="narr-lines">
+            ${beat.lines.map(l => `<p class="narr-line">${l}</p>`).join('')}
+          </div>
+          <div class="narr-actions" style="margin-top:40px">
+            <button class="btn-primary" id="beat-continue">Continue</button>
+          </div>
+        </div>
+      </div>
+    `;
+    this.container.appendChild(screen);
+    screen.querySelector('#beat-continue').addEventListener('click', onContinue);
   }
 
   showLevelSelect(realmId) {
@@ -742,6 +814,16 @@ export class GameScreen {
   startLevel(levelId) {
     const level = this.levels.find(l => l.id === levelId);
     if (!level) return;
+
+    // Show a brief narrative beat before certain levels (first rite of each form in a realm).
+    // The beat is shown once per session per level — tracked in _beatsShown set.
+    if (!this._beatsShown) this._beatsShown = new Set();
+    const beat = PRE_LEVEL_BEATS[levelId];
+    if (beat && !this._beatsShown.has(levelId)) {
+      this._beatsShown.add(levelId);
+      this._showPreLevelBeat(beat, () => this.startLevel(levelId));
+      return;
+    }
 
     setLevelBg(levelId);
     this.container.innerHTML = '';
