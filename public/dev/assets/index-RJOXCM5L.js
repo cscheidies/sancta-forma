@@ -7,7 +7,10 @@
         <button class="title-btn primary" id="title-begin">ENTER THE RITES</button>
         <button class="title-btn" id="title-why">WHY</button>
       </div>
-    `,this.container.appendChild(e),requestAnimationFrame(()=>e.classList.add("visible")),e.querySelector("#title-how").addEventListener("click",()=>this.showHowToPlay()),e.querySelector("#title-begin").addEventListener("click",()=>this.showLevelSelect()),e.querySelector("#title-why").addEventListener("click",()=>this.showNarrative())}showHowToPlay(){F(),this.container.innerHTML="",this._orientationUnsub&&(this._orientationUnsub(),this._orientationUnsub=null);const e=document.createElement("div");e.className="screen",e.innerHTML=`
+      <div class="title-btn-row" style="margin-top:14px">
+        <button class="title-btn" id="title-forge">◇ THE FORGE</button>
+      </div>
+    `,this.container.appendChild(e),requestAnimationFrame(()=>e.classList.add("visible")),e.querySelector("#title-how").addEventListener("click",()=>this.showHowToPlay()),e.querySelector("#title-begin").addEventListener("click",()=>this.showLevelSelect()),e.querySelector("#title-why").addEventListener("click",()=>this.showNarrative()),e.querySelector("#title-forge").addEventListener("click",()=>{window.location.href=(window.location.pathname.startsWith("/dev"),"/forge.html")})}showHowToPlay(){F(),this.container.innerHTML="",this._orientationUnsub&&(this._orientationUnsub(),this._orientationUnsub=null);const e=document.createElement("div");e.className="screen",e.innerHTML=`
       <div style="height:${H()};flex-shrink:0"></div>
       <div class="howto-screen">
         <div class="screen-header">

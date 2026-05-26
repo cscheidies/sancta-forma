@@ -374,6 +374,9 @@ export class GameScreen {
         <button class="title-btn primary" id="title-begin">ENTER THE RITES</button>
         <button class="title-btn" id="title-why">WHY</button>
       </div>
+      <div class="title-btn-row" style="margin-top:14px">
+        <button class="title-btn" id="title-forge">◇ THE FORGE</button>
+      </div>
     `;
 
     this.container.appendChild(screen);
@@ -382,6 +385,9 @@ export class GameScreen {
     screen.querySelector('#title-how').addEventListener('click', () => this.showHowToPlay());
     screen.querySelector('#title-begin').addEventListener('click', () => this.showLevelSelect());
     screen.querySelector('#title-why').addEventListener('click', () => this.showNarrative());
+    screen.querySelector('#title-forge').addEventListener('click', () => {
+      window.location.href = window.location.pathname.startsWith('/dev') ? '/forge.html' : '/forge.html';
+    });
   }
 
   showHowToPlay() {

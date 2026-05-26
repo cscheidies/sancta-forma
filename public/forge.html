@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sancta Forma — The Forge</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Share+Tech+Mono&family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #06070d; --surface: #0d0f18; --border: #1e1a30; --border2: #2a2040;
+  --text: #ddd5f0; --text-dim: #6b6080; --green: #69ff47; --yellow: #ffcc00;
+  --red: #ff4747; --arcane: #9060ff; --arcane-dim: #4a2a9a;
+  --font-mono: 'Share Tech Mono', monospace; --font-main: 'Space Grotesk', sans-serif;
+  --font-eerie: 'Cormorant Garamond', serif; --font-title: 'Cinzel Decorative', serif;
+}
+html, body { background: var(--bg); color: var(--text); font-family: var(--font-main); min-height: 100dvh; overflow-x: hidden; }
+.bg-base { position: fixed; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 20%, rgba(80,40,160,0.30), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 50% 100%, rgba(60,20,120,0.25), transparent 60%),
+    radial-gradient(ellipse at 15% 50%, rgba(40,20,80,0.20), transparent 40%),
+    radial-gradient(ellipse at 85% 50%, rgba(40,20,80,0.20), transparent 40%),
+    linear-gradient(180deg, #06070d 0%, #0a0612 50%, #06070d 100%);
+}
+.bg-vignette { position: fixed; inset: 0; z-index: 2; pointer-events: none;
+  background: radial-gradient(ellipse 90% 85% at 50% 50%, transparent 30%, rgba(0,0,0,0.45) 65%, rgba(0,0,0,0.88) 85%, #000 100%);
+}
+.bg-stars { position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background-image: radial-gradient(1px 1px at 20% 30%, rgba(200,170,255,0.7) 50%, transparent 100%),
+    radial-gradient(1px 1px at 60% 70%, rgba(180,150,240,0.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 80% 20%, rgba(220,190,255,0.6) 50%, transparent 100%),
+    radial-gradient(1px 1px at 30% 80%, rgba(160,130,220,0.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 90% 90%, rgba(200,170,255,0.6) 50%, transparent 100%),
+    radial-gradient(1px 1px at 10% 60%, rgba(180,150,240,0.4) 50%, transparent 100%),
+    radial-gradient(1px 1px at 50% 10%, rgba(220,190,255,0.5) 50%, transparent 100%),
+    radial-gradient(1px 1px at 70% 40%, rgba(200,170,255,0.5) 50%, transparent 100%);
+  opacity: 0.8;
+}
+.page { position: relative; z-index: 4; min-height: 100dvh; padding: 28px 16px 60px; display: flex; flex-direction: column; }
+
+/* ── Return link ── */
+.return-link { position: fixed; top: 14px; left: 16px; z-index: 100;
+  font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(200,160,255,0.65); text-decoration: none;
+  background: rgba(20,10,40,0.55); border: 1px solid rgba(160,80,255,0.25);
+  backdrop-filter: blur(8px); border-radius: 5px; padding: 6px 12px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.return-link:hover { color: rgba(230,190,255,1.0); border-color: rgba(160,80,255,0.65); background: rgba(60,20,100,0.50); }
+
+.brand { display: flex; flex-direction: column; align-items: center; gap: 0; margin-bottom: 8px; }
+.sf-sigil { width: clamp(80px, 16vmin, 120px); height: clamp(73px, 14.6vmin, 110px);
+  animation: sigil-spin 90s linear infinite, sigil-pulse 4s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 8px rgba(160,80,255,0.5));
+}
+@keyframes sigil-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes sigil-pulse { from { filter: drop-shadow(0 0 6px rgba(160,80,255,0.40)); } to { filter: drop-shadow(0 0 18px rgba(160,80,255,0.85)); } }
+.sf-title { display: flex; flex-direction: column; align-items: center; line-height: 1; margin-top: -4px; gap: 2px; }
+.sf-sancta { font-family: var(--font-title); font-size: clamp(0.7rem, 1.5vmin, 1.0rem); font-weight: 400; letter-spacing: 0.42em; color: #c8a8ff;
+  text-shadow: 0 0 12px rgba(180,100,255,0.90), 0 0 28px rgba(140,60,220,0.60); animation: sf-flicker 6s infinite;
+}
+.sf-forma { font-family: var(--font-title); font-size: clamp(1.4rem, 3vmin, 2.0rem); font-weight: 900; letter-spacing: 0.18em; color: #f0e8ff;
+  text-shadow: 0 0 10px rgba(200,160,255,1.0), 0 0 30px rgba(160,80,255,0.70), 0 0 70px rgba(120,40,220,0.40), 0 2px 4px rgba(0,0,0,0.8);
+  animation: sf-flicker 6s infinite 0.4s;
+}
+@keyframes sf-flicker { 0%,100% { opacity: 1; } 88% { opacity: 1; } 89% { opacity: 0.55; } 90% { opacity: 1; } 93% { opacity: 0.75; } 94% { opacity: 1; } }
+.sf-realm { font-family: var(--font-eerie); font-size: clamp(1.1rem, 2.4vmin, 1.5rem); font-weight: 600; letter-spacing: 0.22em; color: #d4aaff;
+  text-align: center; margin-top: 16px; text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(180,100,255,0.95), 0 0 28px rgba(140,60,220,0.70), 0 0 60px rgba(120,40,200,0.40);
+  animation: realm-glow 4s ease-in-out infinite alternate;
+}
+@keyframes realm-glow { from { text-shadow: 0 0 10px rgba(180,100,255,0.85), 0 0 24px rgba(140,60,220,0.55); } to { text-shadow: 0 0 18px rgba(200,120,255,1.00), 0 0 40px rgba(160,80,255,0.80), 0 0 80px rgba(140,50,220,0.50); } }
+.sf-subtitle { font-family: var(--font-eerie); font-style: italic; font-size: 0.9rem; color: rgba(210,185,255,0.70); text-align: center; margin-top: 4px; letter-spacing: 0.04em; }
+
+.forge { margin: 32px auto 0; width: 100%; max-width: 1100px; display: grid; grid-template-columns: minmax(280px, 1fr) minmax(300px, 1fr); gap: 18px; }
+@media (max-width: 760px) { .forge { grid-template-columns: 1fr; } }
+
+.panel { background: rgba(8, 6, 18, 0.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border2); border-radius: 12px; padding: 18px;
+  box-shadow: 0 0 20px rgba(100,50,200,0.10), inset 0 0 30px rgba(80,40,160,0.04); position: relative;
+}
+.panel-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border2); }
+.panel-head .glyph { font-size: 1.3rem; color: var(--arcane); text-shadow: 0 0 10px rgba(140,80,255,0.7); }
+.panel-head h2 { font-family: var(--font-eerie); font-size: 0.95rem; letter-spacing: 0.20em; color: #c8a8ff; text-transform: uppercase; text-shadow: 0 0 8px rgba(140,80,255,0.4); }
+
+.row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; align-items: flex-end; }
+.field { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 110px; }
+.field-label { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.18em; color: var(--arcane-dim); text-transform: uppercase; }
+select, textarea, input[type="text"] { background: rgba(10,8,22,0.85); color: var(--text); border: 1px solid var(--border2); border-radius: 6px; padding: 9px 10px; font-family: var(--font-mono); font-size: 0.82rem; transition: border-color 0.2s, box-shadow 0.2s; }
+select:focus, textarea:focus, input:focus { outline: none; border-color: var(--arcane); box-shadow: 0 0 12px rgba(140,80,255,0.4); }
+textarea { width: 100%; min-height: 220px; resize: vertical; line-height: 1.8; letter-spacing: 0.14em; white-space: pre; }
+
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+button { font-family: var(--font-eerie); cursor: pointer; border-radius: 6px; transition: all 0.15s; }
+.btn-primary { background: linear-gradient(135deg, #3a1a80, #5a2aaa); color: #e0d0ff; border: 1px solid #6a3fff; padding: 11px 22px; font-size: 0.80rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; text-shadow: 0 0 8px rgba(180,120,255,0.6); box-shadow: 0 0 18px rgba(100,50,220,0.30); }
+.btn-primary:hover { background: linear-gradient(135deg, #4a2a90, #7a3acc); box-shadow: 0 0 28px rgba(120,60,255,0.55); }
+.btn-primary:disabled { opacity: 0.35; cursor: not-allowed; box-shadow: none; }
+.btn-ghost { background: rgba(20,10,40,0.55); color: rgba(200,160,255,0.75); border: 1px solid rgba(160,80,255,0.30); backdrop-filter: blur(8px); padding: 9px 18px; font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; }
+.btn-ghost:hover { color: rgba(230,190,255,1.0); border-color: rgba(160,80,255,0.70); background: rgba(60,20,100,0.50); }
+.btn-accent { background: rgba(40,20,80,0.65); color: var(--yellow); border: 1px solid rgba(255,200,60,0.40); padding: 9px 18px; font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; }
+.btn-accent:hover { background: rgba(80,40,20,0.70); border-color: rgba(255,200,60,0.80); color: #fff; }
+.btn-accent:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.status { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; border: 1px solid; display: flex; align-items: center; gap: 8px; }
+.status .icon { font-size: 0.95rem; }
+.status.ok { color: var(--green); border-color: rgba(105,255,71,0.30); background: rgba(20,60,20,0.20); }
+.status.warn { color: var(--yellow); border-color: rgba(255,204,0,0.30); background: rgba(60,50,10,0.20); }
+.status.err { color: var(--red); border-color: rgba(255,71,71,0.30); background: rgba(60,20,20,0.20); }
+
+.preview-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.preview-grid { width: 100%; max-width: 360px; aspect-ratio: 1 / 1; background: radial-gradient(ellipse at center, rgba(40,25,80,0.6), rgba(15,10,30,0.8)); border: 1px solid rgba(120,70,220,0.35); border-radius: 8px; box-shadow: inset 0 0 30px rgba(100,50,200,0.10), 0 0 20px rgba(80,40,160,0.20); }
+.legend { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px 16px; font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; width: 100%; max-width: 360px; }
+.legend span b { color: var(--arcane); font-weight: 400; display: inline-block; width: 14px; text-align: center; text-shadow: 0 0 4px rgba(140,80,255,0.6); }
+
+.help-text { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.06em; color: var(--text-dim); line-height: 1.7; margin-top: 10px; padding: 10px 12px; background: rgba(20,15,40,0.3); border-radius: 6px; border-left: 2px solid var(--arcane-dim); }
+.help-text code { color: var(--arcane); background: rgba(80,40,160,0.18); padding: 1px 5px; border-radius: 3px; }
+
+.modal-back { position: fixed; inset: 0; z-index: 90; background: rgba(4,2,12,0.85); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 20px; }
+.modal-back.active { display: flex; }
+.modal { background: rgba(10,6,24,0.95); border: 1px solid #6a3fff; border-radius: 12px; padding: 24px; max-width: 480px; width: 100%; box-shadow: 0 0 40px rgba(100,60,255,0.30), inset 0 0 30px rgba(80,40,200,0.08); }
+.modal h3 { font-family: var(--font-eerie); font-size: 1.1rem; letter-spacing: 0.18em; color: #c8a8ff; text-transform: uppercase; text-align: center; margin-bottom: 12px; text-shadow: 0 0 10px rgba(140,80,255,0.6); }
+.modal .sub { font-family: var(--font-eerie); font-style: italic; text-align: center; color: rgba(210,185,255,0.75); font-size: 0.85rem; margin-bottom: 14px; }
+.share-code { width: 100%; background: rgba(4,2,14,0.95); border: 1px solid var(--border2); border-radius: 6px; padding: 14px; font-family: var(--font-mono); font-size: 0.76rem; color: var(--text); letter-spacing: 0.12em; line-height: 1.6; white-space: pre; min-height: 180px; resize: vertical; }
+.modal-actions { display: flex; gap: 10px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+
+.test-mode { position: fixed; inset: 0; z-index: 80; background: radial-gradient(ellipse 60% 50% at 50% 20%, rgba(80,40,160,0.30), transparent 60%), radial-gradient(ellipse 70% 60% at 50% 100%, rgba(60,20,120,0.25), transparent 60%), linear-gradient(180deg, #06070d 0%, #0a0612 50%, #06070d 100%); display: none; flex-direction: column; align-items: center; padding: 16px; overflow-y: auto; }
+.test-mode.active { display: flex; }
+.test-mode .vignette { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 90% 85% at 50% 50%, transparent 30%, rgba(0,0,0,0.45) 65%, rgba(0,0,0,0.88) 85%, #000 100%); }
+.test-mini { position: relative; z-index: 2; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.test-mini svg { width: 34px; height: 31px; animation: sigil-spin 90s linear infinite; }
+.test-mini .name { font-family: var(--font-title); font-size: 0.72rem; letter-spacing: 0.30em; color: rgba(200,160,255,0.7); }
+
+.hud { position: relative; z-index: 2; width: 100%; max-width: 420px; background: rgba(8, 6, 18, 0.55); backdrop-filter: blur(12px); border: 1px solid var(--border2); border-radius: 10px; padding: 10px 16px; margin-bottom: 12px; box-shadow: 0 0 20px rgba(100,50,200,0.10), inset 0 0 30px rgba(80,40,160,0.05); }
+.hud-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.hud-level { font-family: var(--font-eerie); font-size: 0.74rem; color: var(--arcane); letter-spacing: 0.14em; text-shadow: 0 0 8px rgba(140,80,255,0.5); }
+.hud-identity { display: flex; align-items: center; gap: 8px; background: rgba(60,30,120,0.08); border: 1px solid rgba(120,60,220,0.20); border-radius: 6px; padding: 8px 12px; margin-bottom: 6px; }
+.hud-id-col { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
+.hud-id-label { font-family: var(--font-eerie); font-size: 0.55rem; letter-spacing: 0.14em; color: var(--arcane-dim); text-transform: uppercase; }
+.hud-id-name { font-family: var(--font-mono); font-size: 0.74rem; font-weight: bold; letter-spacing: 0.08em; color: var(--text); }
+.hud-id-arrow { font-size: 1.1rem; color: #3d4d5e; }
+.hud-stats { display: flex; justify-content: space-between; align-items: center; }
+.hud-stat { display: flex; flex-direction: column; gap: 2px; }
+.hud-stat-right { align-items: flex-end; }
+.hud-stat-label { font-family: var(--font-eerie); font-size: 0.55rem; letter-spacing: 0.14em; color: var(--arcane-dim); text-transform: uppercase; }
+.hud-stat-val { font-family: var(--font-mono); font-size: 0.95rem; font-weight: bold; color: var(--text); }
+.hud-stat-val.warn { color: var(--yellow); }
+.hud-stat-val.danger { color: var(--red); }
+.hud-mood { text-align: center; font-family: var(--font-eerie); font-style: italic; font-size: 0.80rem; color: var(--arcane); margin-top: 6px; letter-spacing: 0.06em; min-height: 1.2em; }
+
+.test-grid { position: relative; z-index: 2; width: 100%; max-width: 420px; aspect-ratio: 1 / 1; background: radial-gradient(ellipse at center, rgba(40,25,80,0.6), rgba(15,10,30,0.85)); border: 1px solid rgba(120,70,220,0.40); border-radius: 8px; box-shadow: inset 0 0 40px rgba(100,50,200,0.15), 0 0 30px rgba(80,40,160,0.25); margin-bottom: 16px; cursor: pointer; }
+
+.dpad { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 4px; user-select: none; margin-bottom: 14px; }
+.dpad-row { display: flex; gap: 4px; }
+.dpad-btn { width: 56px; height: 56px; background: rgba(20,10,45,0.40); border: 1px solid var(--border2); border-radius: 6px; color: var(--arcane-dim); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 8px rgba(80,40,160,0.12); font-family: var(--font-mono); cursor: pointer; }
+.dpad-btn:hover { background: rgba(40,20,80,0.6); color: var(--arcane); border-color: var(--arcane-dim); }
+.dpad-btn:active { background: rgba(60,20,120,0.70); border-color: var(--arcane); color: var(--arcane); box-shadow: 0 0 12px rgba(120,60,255,0.40); }
+.dpad-spacer { width: 56px; height: 56px; }
+
+.test-result { position: relative; z-index: 3; width: 100%; max-width: 420px; padding: 18px 22px; border-radius: 10px; text-align: center; margin-bottom: 12px; background: rgba(8,4,22,0.95); border: 1px solid; display: none; }
+.test-result.show { display: block; }
+.test-result.win { border-color: #6a3fff; box-shadow: 0 0 40px rgba(100,60,255,0.25); }
+.test-result.lose { border-color: #5a2060; }
+.test-result h3 { font-family: var(--font-eerie); font-size: 1.4rem; letter-spacing: 0.20em; margin-bottom: 6px; text-transform: uppercase; }
+.test-result.win h3 { color: #c8a8ff; text-shadow: 0 0 14px rgba(160,80,255,0.7); }
+.test-result.lose h3 { color: #ff7a7a; text-shadow: 0 0 14px rgba(255,40,40,0.5); }
+.test-result p { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.06em; margin-top: 4px; }
+.test-actions { position: relative; z-index: 2; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+#toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(60,20,100,0.92); border: 1px solid var(--arcane); color: #fff; padding: 9px 18px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.08em; opacity: 0; pointer-events: none; transition: opacity 0.3s; z-index: 200; text-transform: uppercase; box-shadow: 0 0 18px rgba(120,60,255,0.4); }
+#toast.show { opacity: 1; }
+#toast.danger { background: rgba(140,30,30,0.92); border-color: #ff4747; box-shadow: 0 0 18px rgba(255,40,40,0.4); }
+
+.shape-S { fill: #4da3ff; stroke: #88c0ff; }
+.shape-C { fill: #ff85c4; stroke: #ffb0d8; }
+.shape-T { fill: #ffb43d; stroke: #ffd080; }
+.shape-H { fill: #8060ff; stroke: #b090ff; }
+.shape-M { fill: #b8c8e0; stroke: #e0e8f4; }
+.shape-X { fill: #ffd84d; stroke: #fff080; }
+.shape-player { stroke-width: 2.5; filter: drop-shadow(0 0 4px rgba(255,255,255,0.7)); }
+.shape-player.costumed { animation: costume-pulse 0.7s ease-in-out infinite alternate; }
+@keyframes costume-pulse { from { filter: drop-shadow(0 0 6px rgba(255,80,20,0.5)); } to { filter: drop-shadow(0 0 18px rgba(255,80,20,1.0)); } }
+.move-hint { fill: none; stroke: #9060ff; stroke-width: 0.5; animation: hint-pulse 1.2s ease-in-out infinite alternate; }
+@keyframes hint-pulse { from { opacity: 0.35; } to { opacity: 0.85; } }
+</style>
+</head>
+<body>
+
+<a class="return-link" href="/" id="return-link">← Sancta Forma</a>
+
+<div class="bg-base"></div>
+<div class="bg-stars"></div>
+<div class="bg-vignette"></div>
+
+<div class="page">
+  <div class="brand">
+    <svg class="sf-sigil" viewBox="0 0 100 100" aria-hidden="true">
+      <defs>
+        <radialGradient id="sigilGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#c8a8ff" stop-opacity="0.4" />
+          <stop offset="60%" stop-color="#7a3acc" stop-opacity="0.2" />
+          <stop offset="100%" stop-color="#3a1a80" stop-opacity="0" />
+        </radialGradient>
+      </defs>
+      <circle cx="50" cy="50" r="46" fill="url(#sigilGlow)" />
+      <polygon points="50,8 92,80 8,80" fill="none" stroke="#c8a8ff" stroke-width="1.4" opacity="0.85" stroke-linejoin="round"/>
+      <rect x="22" y="22" width="56" height="56" fill="none" stroke="#a878ff" stroke-width="1.4" opacity="0.9" transform="rotate(45 50 50)"/>
+      <circle cx="50" cy="50" r="18" fill="none" stroke="#e0d0ff" stroke-width="1.4" opacity="0.95"/>
+      <circle cx="50" cy="50" r="3" fill="#fff" opacity="0.9">
+        <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+    <div class="sf-title">
+      <span class="sf-sancta">SANCTA</span>
+      <span class="sf-forma">FORMA</span>
+    </div>
+    <div class="sf-realm">The Forge</div>
+    <div class="sf-subtitle">Shape new rites. Share them with the faithful.</div>
+  </div>
+
+  <div class="forge">
+    <section class="panel">
+      <div class="panel-head"><span class="glyph">◇</span><h2>Inscribe the Rite</h2></div>
+      <div class="row">
+        <div class="field">
+          <span class="field-label">Form of the Player</span>
+          <select id="player-select"><option value="S">▢ Square</option><option value="C">◯ Circle</option><option value="T">△ Triangle</option></select>
+        </div>
+        <div class="field">
+          <span class="field-label">Grid Sigil</span>
+          <select id="size-select"><option value="5">5 × 5</option><option value="10">10 × 10</option><option value="20">20 × 20</option></select>
+        </div>
+        <div class="field">
+          <span class="field-label">Restore at</span>
+          <input type="text" id="win-score" value="50" />
+        </div>
+      </div>
+
+      <textarea id="grid-input" spellcheck="false" placeholder="C S H S C&#10;S T C T S&#10;H C P C H&#10;S T C T S&#10;C S H S C"></textarea>
+
+      <div class="help-text">Tokens — <code>S</code> Square · <code>C</code> Circle · <code>T</code> Triangle · <code>H</code> Hexagon · <code>M</code> Moon · <code>X</code> Star · <code>P</code> Player · <code>.</code> Empty.
+      Spacing is forgiven. Paste a Share Code to import.
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-primary" id="test-btn" disabled>▶ Walk the Rite</button>
+        <button class="btn-accent" id="share-btn" disabled>✦ Share</button>
+        <button class="btn-ghost" id="example-btn">Load Example</button>
+        <button class="btn-ghost" id="clear-btn">Clear</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><span class="glyph">✦</span><h2>The Rite as Inscribed</h2></div>
+      <div id="status" class="status ok"><span class="icon">◯</span><span>Awaiting inscription.</span></div>
+      <div class="preview-wrap">
+        <svg id="preview-grid" class="preview-grid" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="legend">
+          <span><b>▢</b> Square</span><span><b>◯</b> Circle</span>
+          <span><b>△</b> Triangle</span><span><b>P</b> Player start</span>
+          <span><b>⬡</b> Hexagon</span><span><b>☾</b> Moon</span>
+          <span><b>✦</b> Star</span><span><b>·</b> Empty</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div id="test-mode" class="test-mode">
+  <div class="vignette"></div>
+  <div class="test-mini">
+    <svg viewBox="0 0 100 100">
+      <polygon points="50,8 92,80 8,80" fill="none" stroke="#c8a8ff" stroke-width="3" stroke-linejoin="round"/>
+      <rect x="22" y="22" width="56" height="56" fill="none" stroke="#a878ff" stroke-width="3" transform="rotate(45 50 50)"/>
+      <circle cx="50" cy="50" r="18" fill="none" stroke="#e0d0ff" stroke-width="3"/>
+    </svg>
+    <span class="name">SANCTA FORMA · WALKING</span>
+  </div>
+
+  <div class="hud">
+    <div class="hud-top">
+      <span class="hud-level">Custom Rite</span>
+      <button class="btn-ghost" id="exit-btn" style="padding: 4px 10px; font-size: 0.55rem;">◀ Back</button>
+    </div>
+    <div class="hud-identity">
+      <div class="hud-id-col"><span class="hud-id-label">Of the Form</span><span class="hud-id-name" id="hud-player">—</span></div>
+      <span class="hud-id-arrow">→</span>
+      <div class="hud-id-col"><span class="hud-id-label">Bearing</span><span class="hud-id-name" id="hud-state">pure</span></div>
+    </div>
+    <div class="hud-stats">
+      <div class="hud-stat"><span class="hud-stat-label">Restoration</span><span class="hud-stat-val" id="hud-score">0 / 50</span></div>
+      <div class="hud-stat hud-stat-right"><span class="hud-stat-label">Corruption</span><span class="hud-stat-val" id="hud-corruption">0 / 2</span></div>
+    </div>
+    <div class="hud-mood" id="hud-mood">It waits.</div>
+  </div>
+
+  <svg id="test-grid" class="test-grid" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"></svg>
+
+  <div class="dpad">
+    <div class="dpad-row"><div class="dpad-spacer"></div><button class="dpad-btn" data-dir="up">↑</button><div class="dpad-spacer"></div></div>
+    <div class="dpad-row"><button class="dpad-btn" data-dir="left">←</button><div class="dpad-spacer"></div><button class="dpad-btn" data-dir="right">→</button></div>
+    <div class="dpad-row"><div class="dpad-spacer"></div><button class="dpad-btn" data-dir="down">↓</button><div class="dpad-spacer"></div></div>
+  </div>
+
+  <div id="test-result" class="test-result"></div>
+  <div class="test-actions">
+    <button class="btn-primary" id="restart-btn">↻ Walk Again</button>
+    <button class="btn-ghost" id="exit-btn-2">Back to the Forge</button>
+  </div>
+</div>
+
+<div id="share-modal" class="modal-back">
+  <div class="modal">
+    <h3>✦ Share This Rite ✦</h3>
+    <p class="sub">Copy the inscription. Anyone with the Forge may walk it.</p>
+    <textarea class="share-code" id="share-code" readonly></textarea>
+    <div class="modal-actions">
+      <button class="btn-primary" id="copy-btn">⎘ Copy to Clipboard</button>
+      <button class="btn-ghost" id="close-share-btn">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ════ Return link — dev path awareness ════
+(function() {
+  const isDevPath = /^\/dev(\/|$)/.test(window.location.pathname);
+  const link = document.getElementById('return-link');
+  if (link) link.href = isDevPath ? '/dev/' : '/';
+})();
+
+// ════ ENGINE ════
+const HUNTERS = new Set(['H','M','X']);
+const VALID = new Set(['S','C','T','H','M','X','P','.']);
+const CORRUPTION_MAX = { S: 2, C: 1, T: 1 };
+const HUNTER_KILLS = { H: new Set(['C']), M: new Set(['S','T']), X: new Set(['C','S']) };
+
+function isSafeTransit(p,t){ return (p==='S'&&t==='T')||(p==='T'&&t==='S'); }
+function isCurveMismatch(p,t){ return (p==='C'&&(t==='S'||t==='T'))||((p==='S'||p==='T')&&t==='C'); }
+function nameOf(t){ return ({S:'Square',C:'Circle',T:'Triangle',H:'Hexagon',M:'Moon',X:'Star',P:'Player'})[t]||t; }
+
+function makeState(grid, pe, ws=50){
+  let pr=-1,pc=-1;
+  for(let r=0;r<grid.length;r++) for(let c=0;c<grid[0].length;c++) if(grid[r][c]==='P'){pr=r;pc=c;}
+  const cells=grid.map(r=>r.slice());
+  if(pr>=0) cells[pr][pc]='.';
+  return { cells, player:{row:pr,col:pc,element:pe}, score:0, corruption:0, costumed:false, over:false, won:false, loseReason:null, winScore:ws, moves:0 };
+}
+function inBounds(s,r,c){ return r>=0&&r<s.cells.length&&c>=0&&c<s.cells[0].length; }
+function legalMoves(s){
+  if(s.over) return [];
+  const out=[];
+  for(const [dr,dc,n] of [[-1,0,'up'],[1,0,'down'],[0,-1,'left'],[0,1,'right']]){
+    const nr=s.player.row+dr,nc=s.player.col+dc;
+    if(!inBounds(s,nr,nc)) continue;
+    if(s.cells[nr][nc]==='.') continue;
+    out.push({dr,dc,name:n,target:s.cells[nr][nc]});
+  }
+  return out;
+}
+function moveAndClear(s,nr,nc){
+  s.cells[s.player.row][s.player.col]='.';
+  s.cells[nr][nc]='.';
+  s.player.row=nr; s.player.col=nc;
+  s.moves++;
+}
+function checkEnd(s){
+  if(s.over) return;
+  if(s.score>=s.winScore){s.over=true;s.won=true;return;}
+  if(legalMoves(s).length===0){s.over=true;s.loseReason='No paths remain.';}
+}
+function attemptMove(s,dr,dc){
+  if(s.over) return {ok:false,reason:'rite ended'};
+  const nr=s.player.row+dr,nc=s.player.col+dc;
+  if(!inBounds(s,nr,nc)) return {ok:false,reason:'edge of the world'};
+  const t=s.cells[nr][nc];
+  if(t==='.') return {ok:false,reason:'the path is gone'};
+  if(HUNTERS.has(t)&&HUNTER_KILLS[t].has(s.player.element)){
+    s.over=true; s.loseReason=`Stepped onto ${nameOf(t)} — death to ${nameOf(s.player.element)}.`;
+    moveAndClear(s,nr,nc); return {ok:true};
+  }
+  if(s.costumed){
+    if(t!==s.player.element){
+      s.over=true; s.loseReason=`Costumed by a hunter, failed to cleanse with ${nameOf(s.player.element)}.`;
+      return {ok:true};
+    }
+    s.corruption=0; s.costumed=false;
+    moveAndClear(s,nr,nc); checkEnd(s);
+    return {ok:true,cleansed:true};
+  }
+  if(HUNTERS.has(t)){
+    s.score-=3; s.costumed=true;
+    moveAndClear(s,nr,nc); checkEnd(s);
+    return {ok:true,hunter:true};
+  }
+  const p=s.player.element;
+  if(t===p){s.score+=10; s.corruption=0;}
+  else if(isSafeTransit(p,t)){}
+  else if(isCurveMismatch(p,t)){s.score+=3; s.corruption+=1;}
+  if(s.corruption>CORRUPTION_MAX[p]){
+    s.over=true; s.loseReason=`Corruption broke the ${nameOf(p)}.`;
+    moveAndClear(s,nr,nc); return {ok:true};
+  }
+  moveAndClear(s,nr,nc); checkEnd(s);
+  return {ok:true};
+}
+
+// ════ PARSER ════
+const VALID_SET = new Set(['S','C','T','H','M','X','P','.']);
+function parseInput(text, expectedSize){
+  const warnings=[];
+  let meta=null;
+  let body=text;
+  const META_RX = /size\s*[:=]\s*(\d+)[\s|│,\-]*player\s*[:=]\s*(\w+)[\s|│,\-]*(?:restore|win)\s*[:=]\s*(\d+)/i;
+  if(/SANCTA\s*FORMA/i.test(text)){
+    const m=text.match(META_RX);
+    if(m) meta={ size: parseInt(m[1],10), playerName: m[2].toLowerCase(), winScore: parseInt(m[3],10) };
+    const b=text.match(/SANCTA\s*FORMA\s*RITE[\s\S]*?─+\s*([\s\S]+?)─+/i);
+    if(b) body=b[1];
+  }
+  const lines=body.split(/\r?\n/).map(l=>l.trim()).filter(l=>l.length>0 && !/^[─\-=]{3,}$/.test(l));
+  if(lines.length===0) return {ok:false,errors:['Nothing to inscribe.'],warnings,grid:null,meta};
+  const errors=[];
+  const rows=[];
+  let playerCount=0;
+  for(let i=0;i<lines.length;i++){
+    if(/(size|player|win|restore)\s*[:=]/i.test(lines[i])) continue;
+    if(/^(✦|◇|►|>)/.test(lines[i])) continue;
+    const tokens=lines[i].split(/\s+/);
+    const row=[];
+    let valid=true;
+    for(const tok of tokens){
+      const T=tok.toUpperCase();
+      if(!VALID_SET.has(T)){valid=false; break;}
+      if(T==='P') playerCount++;
+      row.push(T);
+    }
+    if(!valid) continue;
+    if(row.length===0) continue;
+    rows.push(row);
+  }
+  if(rows.length===0) return {ok:false,errors:['No valid rite rows found.'],warnings,grid:null,meta};
+  const widths=new Set(rows.map(r=>r.length));
+  if(widths.size>1){ errors.push(`Rows have inconsistent widths: ${[...widths].join(', ')}.`); return {ok:false,errors,warnings,grid:null,meta}; }
+  const w=rows[0].length, h=rows.length;
+  if(w!==h) warnings.push(`Grid is ${w}×${h}, not square.`);
+  if(expectedSize && (w!==expectedSize||h!==expectedSize)) warnings.push(`Grid is ${w}×${h} but the chosen sigil is ${expectedSize}×${expectedSize}.`);
+  if(playerCount===0) errors.push('No player start (P) found. Place exactly one.');
+  if(playerCount>1) errors.push(`Found ${playerCount} player starts. There can be only one.`);
+  if(errors.length) return {ok:false,errors,warnings,grid:null,meta};
+  return {ok:true,errors:[],warnings,grid:rows,meta};
+}
+
+// ════ RENDER ════
+function renderGrid(svgEl, grid, playerEl, opts={}){
+  const ns='http://www.w3.org/2000/svg';
+  while(svgEl.firstChild) svgEl.removeChild(svgEl.firstChild);
+  if(!grid) return;
+  const rows=grid.length, cols=grid[0].length;
+  const size=Math.max(rows,cols);
+  const cs=100/size;
+  svgEl.setAttribute('viewBox',`0 0 ${cs*cols} ${cs*rows}`);
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const tok=grid[r][c];
+      const cx=c*cs+cs/2, cy=r*cs+cs/2;
+      const half=cs*0.32;
+      const bg=document.createElementNS(ns,'rect');
+      bg.setAttribute('x',c*cs+0.3); bg.setAttribute('y',r*cs+0.3);
+      bg.setAttribute('width',cs-0.6); bg.setAttribute('height',cs-0.6);
+      bg.setAttribute('fill','rgba(20,12,40,0.25)');
+      bg.setAttribute('stroke','rgba(120,70,220,0.12)');
+      bg.setAttribute('stroke-width',0.15);
+      bg.setAttribute('rx',0.4);
+      svgEl.appendChild(bg);
+      if(opts.hints && opts.hints.some(([hr,hc])=>hr===r&&hc===c)){
+        const hint=document.createElementNS(ns,'rect');
+        hint.setAttribute('x',c*cs+0.8); hint.setAttribute('y',r*cs+0.8);
+        hint.setAttribute('width',cs-1.6); hint.setAttribute('height',cs-1.6);
+        hint.setAttribute('rx',0.4);
+        hint.classList.add('move-hint');
+        svgEl.appendChild(hint);
+      }
+      const isPlayer = opts.playerPos && opts.playerPos.row===r && opts.playerPos.col===c;
+      if(isPlayer){
+        const sh=makeShape(ns,playerEl,cx,cy,half);
+        sh.classList.add(`shape-${playerEl}`,'shape-player');
+        if(opts.costumed) sh.classList.add('costumed');
+        sh.setAttribute('stroke-width','0.8');
+        svgEl.appendChild(sh);
+        const mk=document.createElementNS(ns,'circle');
+        mk.setAttribute('cx',cx); mk.setAttribute('cy',cy-half-1.2);
+        mk.setAttribute('r',0.7); mk.setAttribute('fill','#fff');
+        svgEl.appendChild(mk);
+      } else if(tok==='P'){
+        const sh=makeShape(ns,playerEl,cx,cy,half);
+        sh.classList.add(`shape-${playerEl}`);
+        sh.setAttribute('fill','none');
+        sh.setAttribute('stroke-dasharray','0.6 0.5');
+        sh.setAttribute('stroke-width','0.5');
+        svgEl.appendChild(sh);
+        const mk=document.createElementNS(ns,'circle');
+        mk.setAttribute('cx',cx); mk.setAttribute('cy',cy-half-1.2);
+        mk.setAttribute('r',0.6); mk.setAttribute('fill','#fff'); mk.setAttribute('opacity',0.7);
+        svgEl.appendChild(mk);
+      } else if(tok!=='.'){
+        const sh=makeShape(ns,tok,cx,cy,half);
+        sh.classList.add(`shape-${tok}`);
+        sh.setAttribute('stroke-width','0.4');
+        svgEl.appendChild(sh);
+      }
+    }
+  }
+}
+
+function makeShape(ns,tok,cx,cy,half){
+  let el;
+  if(tok==='S'){
+    el=document.createElementNS(ns,'rect');
+    el.setAttribute('x',cx-half); el.setAttribute('y',cy-half);
+    el.setAttribute('width',half*2); el.setAttribute('height',half*2);
+    el.setAttribute('rx',0.4);
+  } else if(tok==='C'){
+    el=document.createElementNS(ns,'circle');
+    el.setAttribute('cx',cx); el.setAttribute('cy',cy); el.setAttribute('r',half);
+  } else if(tok==='T'){
+    el=document.createElementNS(ns,'polygon');
+    el.setAttribute('points',`${cx},${cy-half} ${cx+half*0.92},${cy+half*0.7} ${cx-half*0.92},${cy+half*0.7}`);
+  } else if(tok==='H'){
+    el=document.createElementNS(ns,'polygon');
+    const pts=[];
+    for(let i=0;i<6;i++){ const a=Math.PI/6+i*Math.PI/3; pts.push([cx+Math.cos(a)*half, cy+Math.sin(a)*half]); }
+    el.setAttribute('points',pts.map(p=>p.join(',')).join(' '));
+  } else if(tok==='M'){
+    el=document.createElementNS(ns,'path');
+    const r1=half, off=half*0.45;
+    const d=`M ${cx-r1+off*0.2} ${cy} A ${r1} ${r1} 0 1 1 ${cx+r1*0.7} ${cy+r1*0.7} A ${r1*0.85} ${r1*0.85} 0 1 0 ${cx-r1+off*0.2} ${cy} Z`;
+    el.setAttribute('d',d);
+  } else if(tok==='X'){
+    el=document.createElementNS(ns,'polygon');
+    const pts=[];
+    for(let i=0;i<10;i++){ const a=-Math.PI/2+i*Math.PI/5; const r=(i%2===0)?half:half*0.45; pts.push([cx+Math.cos(a)*r, cy+Math.sin(a)*r]); }
+    el.setAttribute('points',pts.map(p=>p.join(',')).join(' '));
+  } else {
+    el=document.createElementNS(ns,'circle');
+    el.setAttribute('cx',cx); el.setAttribute('cy',cy); el.setAttribute('r',0.5);
+  }
+  return el;
+}
+
+// ════ UI ════
+const $ = id => document.getElementById(id);
+const MOODS = {
+  pure: ['It walks.','Steady.','The path is true.','It remembers what it is.'],
+  curved: ['A curve creeps in.','It bends.','Something is wrong.'],
+  costumed: ["Wearing the hunter's face.",'It must cleanse — now.','A disguise that kills.'],
+  bound: ['Bound.','The form breaks.','It is over.'],
+  restored: ['Restored.','Whole again.','The balance holds.']
+};
+function moodFor(s){
+  if(s.over && s.won) return MOODS.restored[0];
+  if(s.over) return MOODS.bound[0];
+  if(s.costumed) return MOODS.costumed[Math.floor(Math.random()*MOODS.costumed.length)];
+  if(s.corruption>0) return MOODS.curved[Math.floor(Math.random()*MOODS.curved.length)];
+  return MOODS.pure[Math.floor(Math.random()*MOODS.pure.length)];
+}
+
+const example=`C S H S C\nS T C T S\nH C P C H\nS T C T S\nC S H S C`;
+
+const sizeSelect=$('size-select'), playerSelect=$('player-select'), winInput=$('win-score'), gridInput=$('grid-input'), statusEl=$('status'), previewSvg=$('preview-grid');
+let currentParse=null;
+
+function setStatus(kind, icon, msg){
+  statusEl.className=`status ${kind}`;
+  statusEl.innerHTML=`<span class="icon">${icon}</span><span>${msg}</span>`;
+}
+
+function updatePreview(){
+  const txt=gridInput.value;
+  const size=parseInt(sizeSelect.value,10);
+  if(!txt.trim()){
+    setStatus('ok','◯','Awaiting inscription.');
+    renderGrid(previewSvg,null,'S');
+    currentParse=null;
+    $('test-btn').disabled=true;
+    $('share-btn').disabled=true;
+    return;
+  }
+  const r=parseInput(txt,size);
+  if(r.meta){
+    if(r.meta.size && [5,10,20].includes(r.meta.size)) sizeSelect.value=String(r.meta.size);
+    if(r.meta.playerName){
+      const map={square:'S',circle:'C',triangle:'T',s:'S',c:'C',t:'T'};
+      const m=map[r.meta.playerName];
+      if(m) playerSelect.value=m;
+    }
+    if(r.meta.winScore) winInput.value=String(r.meta.winScore);
+  }
+  if(!r.ok){
+    setStatus('err','⨯',r.errors.join(' '));
+    renderGrid(previewSvg,null,'S');
+    currentParse=null;
+    $('test-btn').disabled=true;
+    $('share-btn').disabled=true;
+    return;
+  }
+  currentParse=r;
+  $('test-btn').disabled=false;
+  $('share-btn').disabled=false;
+  if(r.warnings.length) setStatus('warn','⚠',r.warnings.join(' '));
+  else setStatus('ok','✓',`Rite inscribed — ${r.grid.length}×${r.grid[0].length}, walked by ${nameOf(playerSelect.value)}.`);
+  renderGrid(previewSvg,r.grid,playerSelect.value);
+}
+
+function showToast(msg, danger=false){
+  const t=$('toast');
+  t.textContent=msg;
+  t.classList.toggle('danger',danger);
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>t.classList.remove('show'),1800);
+}
+
+gridInput.addEventListener('input',updatePreview);
+sizeSelect.addEventListener('change',updatePreview);
+playerSelect.addEventListener('change',updatePreview);
+winInput.addEventListener('input',updatePreview);
+
+$('example-btn').addEventListener('click',()=>{ gridInput.value=example; sizeSelect.value='5'; playerSelect.value='S'; winInput.value='50'; updatePreview(); });
+$('clear-btn').addEventListener('click',()=>{ gridInput.value=''; updatePreview(); });
+
+$('share-btn').addEventListener('click',()=>{
+  if(!currentParse) return;
+  const playerName=nameOf(playerSelect.value);
+  const gridText=currentParse.grid.map(row=>row.join(' ')).join('\n');
+  const code=`✦ SANCTA FORMA RITE ✦\nsize: ${currentParse.grid.length} | player: ${playerName} | restore: ${winInput.value||50}\n──────────────────────────\n${gridText}\n──────────────────────────\nPaste into the Forge to walk it.`;
+  $('share-code').value=code;
+  $('share-modal').classList.add('active');
+});
+$('close-share-btn').addEventListener('click',()=>$('share-modal').classList.remove('active'));
+$('share-modal').addEventListener('click',(e)=>{ if(e.target.id==='share-modal') $('share-modal').classList.remove('active'); });
+$('copy-btn').addEventListener('click',async()=>{
+  const code=$('share-code').value;
+  try{ await navigator.clipboard.writeText(code); showToast('✓ Rite copied to the wind'); }
+  catch{ $('share-code').select(); document.execCommand('copy'); showToast('✓ Rite copied'); }
+});
+
+// TEST MODE
+let testState=null;
+function startTest(){
+  if(!currentParse||!currentParse.ok) return;
+  const ws=parseInt(winInput.value,10)||50;
+  testState=makeState(currentParse.grid.map(r=>r.slice()),playerSelect.value,ws);
+  $('test-result').classList.remove('show','win','lose');
+  $('test-mode').classList.add('active');
+  renderTest();
+}
+function exitTest(){ $('test-mode').classList.remove('active'); testState=null; }
+function renderTest(){
+  if(!testState) return;
+  const moves=legalMoves(testState);
+  const hints=moves.map(m=>[testState.player.row+m.dr,testState.player.col+m.dc]);
+  renderGrid($('test-grid'),testState.cells,testState.player.element,{playerPos:testState.player,hints,costumed:testState.costumed});
+  $('hud-player').textContent=nameOf(testState.player.element);
+  $('hud-state').textContent=testState.over?(testState.won?'restored':'bound'):(testState.costumed?'costumed':(testState.corruption>0?'curved':'pure'));
+  $('hud-score').textContent=`${testState.score} / ${testState.winScore}`;
+  const maxC=CORRUPTION_MAX[testState.player.element];
+  const ce=$('hud-corruption');
+  ce.textContent=`${testState.corruption} / ${maxC}`;
+  ce.className='hud-stat-val';
+  if(testState.corruption>=maxC && !testState.over) ce.classList.add('warn');
+  $('hud-mood').textContent=moodFor(testState);
+  if(testState.over){
+    const res=$('test-result');
+    res.classList.add('show');
+    if(testState.won){ res.classList.add('win'); res.innerHTML=`<h3>Restored</h3><p>The form is whole again. ${testState.moves} moves, ${testState.score} points.</p>`; }
+    else { res.classList.add('lose'); res.innerHTML=`<h3>Bound</h3><p>${testState.loseReason||'It ended.'}</p>`; }
+  }
+}
+function move(dir){
+  if(!testState||testState.over) return;
+  const map={up:[-1,0],down:[1,0],left:[0,-1],right:[0,1]};
+  const [dr,dc]=map[dir];
+  const r=attemptMove(testState,dr,dc);
+  if(!r.ok){ showToast(r.reason||'no path',true); return; }
+  renderTest();
+}
+document.querySelectorAll('.dpad-btn').forEach(b=>b.addEventListener('click',()=>move(b.dataset.dir)));
+document.addEventListener('keydown',(e)=>{
+  if(!testState) return;
+  const k=e.key;
+  if(k==='ArrowUp'||k==='w'||k==='W'){ e.preventDefault(); move('up'); }
+  else if(k==='ArrowDown'||k==='s'||k==='S'){ e.preventDefault(); move('down'); }
+  else if(k==='ArrowLeft'||k==='a'||k==='A'){ e.preventDefault(); move('left'); }
+  else if(k==='ArrowRight'||k==='d'||k==='D'){ e.preventDefault(); move('right'); }
+  else if(k==='Escape') exitTest();
+});
+$('test-btn').addEventListener('click',startTest);
+$('exit-btn').addEventListener('click',exitTest);
+$('exit-btn-2').addEventListener('click',exitTest);
+$('restart-btn').addEventListener('click',startTest);
+$('test-grid').addEventListener('click',(e)=>{
+  if(!testState) return;
+  const rect=e.currentTarget.getBoundingClientRect();
+  const cols=testState.cells[0].length, rows=testState.cells.length;
+  const cw=rect.width/cols, ch=rect.height/rows;
+  const c=Math.floor((e.clientX-rect.left)/cw);
+  const r=Math.floor((e.clientY-rect.top)/ch);
+  const dr=r-testState.player.row, dc=c-testState.player.col;
+  if(Math.abs(dr)+Math.abs(dc)!==1) return;
+  const result=attemptMove(testState,dr,dc);
+  if(!result.ok){ showToast(result.reason||'no path',true); return; }
+  renderTest();
+});
+
+updatePreview();
+</script>
+</body>
+</html>
