@@ -62,3 +62,18 @@ All 9 must return results. If any fail — fix before `npm run build && npx verc
 grep "base: '\./'\\|base: \"\\./\"" vite.config.js   # must be ./ not /dev/
 ```
 ⚠️ Merging from dev will pull `base: '/dev/'` — always reset to `'./'` on master before building.
+
+## Realm VIII — The Threshold Rites (Rites 43–48)
+
+Added 2026-05-25. Six 10×10 levels. Requires variable-grid patch.
+
+```bash
+grep "id: 8" src/ui.js                # Realm VIII entry
+grep "The Threshold Rites" src/ui.js  # realm name
+grep "bg_rite48" src/ui.js            # bg map complete through 48
+grep '"id": 43' src/levels.json       # first 10x10 level present
+grep '"id": 48' src/levels.json       # finale present
+grep "Threshold" src/ui.js            # narrative passage
+```
+
+All 6 must return results after any revert touching ui.js or levels.json.
