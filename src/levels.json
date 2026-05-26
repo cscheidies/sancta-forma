@@ -2631,5 +2631,147 @@
       "Triangle, wholly surrounded by Stars.",
       "The form that masters its hunter needs nothing more. Restore the balance."
     ]
+  },
+  {
+    "id": 43,
+    "playerElement": "square",
+    "playerStart": [
+      4,
+      4
+    ],
+    "winScore": 100,
+    "lore": [
+      "The expanse opens.",
+      "What was prologue is past.",
+      "The grid has no edge you have not earned."
+    ],
+    "grid": [
+      [
+        "triangle",
+        "square",
+        "circle",
+        "triangle",
+        "square",
+        "circle",
+        "triangle",
+        "square",
+        "circle",
+        "triangle"
+      ],
+      [
+        "square",
+        "triangle",
+        "square",
+        "circle",
+        "triangle",
+        "square",
+        "circle",
+        "triangle",
+        "square",
+        "circle"
+      ],
+      [
+        "circle",
+        "square",
+        "triangle",
+        "square",
+        "circle",
+        "triangle",
+        "square",
+        "circle",
+        "triangle",
+        "square"
+      ],
+      [
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "square",
+        "circle",
+        "triangle",
+        "square",
+        "circle",
+        "triangle"
+      ],
+      [
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        null,
+        "triangle",
+        "square",
+        "circle",
+        "triangle",
+        "square"
+      ],
+      [
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square"
+      ],
+      [
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        "triangle"
+      ]
+    ],
+    "solverResult": {
+      "solvable": true,
+      "shortestPath": "TBD (10x10)",
+      "distinctPaths": "TBD",
+      "note": "Smoke test \u2014 not solver-verified"
+    }
   }
 ]

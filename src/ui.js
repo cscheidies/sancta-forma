@@ -141,6 +141,7 @@ const REALMS = [
   { id: 5, name: 'Moon Passage',      levelIds: [25,26,27,28,29,30]    },
   { id: 6, name: 'The Star Rites',    levelIds: [31,32,33,34,35,36]    },
   { id: 7, name: 'The Star Journey',  levelIds: [37,38,39,40,41,42]    },
+  { id: 8, name: 'TEST — 10×10 Smoke', levelIds: [43]                  },
 ];
 
 function getRealmForLevel(levelId) {
@@ -659,7 +660,10 @@ export class GameScreen {
     this.hud.querySelector('.hud-back').addEventListener('click', () => this.showLevelSelect());
 
     // Grid SVG
-    this.svg = createGridSVG({ cellFillOpacity: levelCellOpacity(levelId) });
+    this.svg = createGridSVG({
+      cellFillOpacity: levelCellOpacity(levelId),
+      size: this.state.grid.length,
+    });
 
     // Spacer so the grid sits below the fixed global logo
     const logoWrap = document.createElement('div');
@@ -681,9 +685,10 @@ export class GameScreen {
       const clientY = e.touches ? e.touches[0].clientY : e.clientY;
       const svgW = rect.width;
       const svgH = rect.height;
-      // SVG viewBox is (CELL_SIZE*5) x (CELL_SIZE*5), map to logical coords
-      const lx = (clientX - rect.left) / svgW * (CELL_SIZE * 5);
-      const ly = (clientY - rect.top)  / svgH * (CELL_SIZE * 5);
+      const size = this.state.grid.length;
+      // SVG viewBox is (CELL_SIZE*size) x (CELL_SIZE*size), map to logical coords
+      const lx = (clientX - rect.left) / svgW * (CELL_SIZE * size);
+      const ly = (clientY - rect.top)  / svgH * (CELL_SIZE * size);
       const tappedCol = Math.floor(lx / CELL_SIZE);
       const tappedRow = Math.floor(ly / CELL_SIZE);
       const [pr, pc] = this.state.player.position;

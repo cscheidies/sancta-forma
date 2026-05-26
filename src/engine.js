@@ -120,11 +120,12 @@ export function getValidMoves(state) {
   if (state.status !== 'playing') return [];
   const [r, c] = state.player.position;
   const { element, costumed } = state.player;
+  const size = state.grid.length;
 
   return DIR_KEYS.filter(dir => {
     const [dr, dc] = DIRS[dir];
     const nr = r + dr, nc = c + dc;
-    if (nr < 0 || nr >= 5 || nc < 0 || nc >= 5) return false;
+    if (nr < 0 || nr >= size || nc < 0 || nc >= size) return false;
     const cell = state.grid[nr][nc];
     if (!cell) return false;
 
