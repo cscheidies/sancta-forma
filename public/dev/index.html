@@ -818,8 +818,9 @@
       box-shadow: 0 0 40px rgba(100,60,255,0.25), inset 0 0 30px rgba(80,40,200,0.08);
     }
     .overlay-lose .overlay-box  {
-      border-color: #3a2060;
-      background: rgba(6,4,16,0.97);
+      border-color: #4a2880;
+      background: rgba(6,4,18,0.97);
+      box-shadow: 0 0 30px rgba(80,30,160,0.20), inset 0 0 20px rgba(60,20,120,0.10);
     }
     .overlay-death .overlay-box {
       border-color: #880000;
@@ -862,6 +863,85 @@
     @keyframes win-pulse {
       0%,100% { transform: scale(1);    opacity: 1; }
       50%      { transform: scale(1.15); opacity: 0.8; }
+    }
+    /* ── Bound animation ── */
+    .bound-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .bound-anim {
+      width: 130px;
+      height: 130px;
+      overflow: visible;
+    }
+    .bh-ring {
+      fill: none;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    .bh-ring-1 {
+      stroke: rgba(100,50,180,0.80);
+      stroke-width: 1.4;
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: bh-draw 0.9s 0.1s ease-out forwards, bh-spin-cw 18s linear 1.0s infinite;
+    }
+    .bh-ring-2 {
+      stroke: rgba(140,70,220,0.65);
+      stroke-width: 1.0;
+      stroke-dasharray: 230;
+      stroke-dashoffset: 230;
+      animation: bh-draw 0.8s 0.5s ease-out forwards, bh-spin-ccw 13s linear 1.3s infinite;
+    }
+    .bh-ring-3 {
+      stroke: rgba(180,100,255,0.55);
+      stroke-width: 0.7;
+      stroke-dasharray: 160;
+      stroke-dashoffset: 160;
+      animation: bh-draw 0.7s 0.9s ease-out forwards, bh-spin-cw 9s linear 1.6s infinite;
+    }
+    .bh-spoke {
+      stroke: rgba(160,80,240,0.28);
+      stroke-width: 0.6;
+      stroke-dasharray: 50;
+      stroke-dashoffset: 50;
+    }
+    .bh-spoke-1 { animation: bh-draw 0.5s 1.4s ease-out forwards; }
+    .bh-spoke-2 { animation: bh-draw 0.5s 1.5s ease-out forwards; }
+    .bh-spoke-3 { animation: bh-draw 0.5s 1.6s ease-out forwards; }
+    .bh-spoke-4 { animation: bh-draw 0.5s 1.7s ease-out forwards; }
+    .bh-spoke-5 { animation: bh-draw 0.5s 1.8s ease-out forwards; }
+    .bh-spoke-6 { animation: bh-draw 0.5s 1.9s ease-out forwards; }
+    .bh-dot {
+      fill: rgba(180,100,255,0.0);
+      animation: bh-dot-in 0.4s 2.0s ease-out forwards, bh-dot-pulse 2.8s 2.4s ease-in-out infinite;
+    }
+    @keyframes bh-draw    { to { stroke-dashoffset: 0; } }
+    @keyframes bh-spin-cw  { to { transform: rotate(360deg);  } }
+    @keyframes bh-spin-ccw { to { transform: rotate(-360deg); } }
+    @keyframes bh-dot-in {
+      to { fill: rgba(180,100,255,0.65); }
+    }
+    @keyframes bh-dot-pulse {
+      0%,100% { fill: rgba(180,100,255,0.55); filter: drop-shadow(0 0 2px rgba(180,100,255,0.4)); }
+      50%     { fill: rgba(200,130,255,0.85); filter: drop-shadow(0 0 8px rgba(180,100,255,0.9)); }
+    }
+    .bound-title {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      letter-spacing: 0.9em;
+      padding-right: 0.9em; /* keep centered during animation */
+      color: #7030b0;
+      text-shadow: 0 0 14px rgba(120,40,200,0.8), 0 0 32px rgba(100,20,180,0.4);
+      opacity: 0;
+      animation: bound-compress 1.6s 1.0s ease-out forwards;
+    }
+    @keyframes bound-compress {
+      0%   { opacity: 0; letter-spacing: 0.9em; filter: blur(6px); color: #a060e0; }
+      40%  { opacity: 0.8; letter-spacing: 0.35em; filter: blur(1px); }
+      100% { opacity: 1;   letter-spacing: 0.22em; filter: blur(0);   color: #8040c0; }
     }
     .bound-icon {
       color: #5a3080 !important;
@@ -1336,7 +1416,7 @@
          fine in both. */
     }
   </style>
-  <script type="module" crossorigin src="/dev/assets/index-CfbJMD9B.js"></script>
+  <script type="module" crossorigin src="/dev/assets/index--2F_d16y.js"></script>
 </head>
 <div class="bg-layer" id="bg-title" style="background-image:url('./bg_title.jpg');opacity:1"></div>
 <div class="bg-layer" id="bg-a" style="opacity:0"></div>

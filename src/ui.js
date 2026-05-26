@@ -1236,6 +1236,23 @@ export class GameScreen {
       </div>`;
 
     const roman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][id - 1] || id;
+    const boundAnim = `
+      <div class="bound-header">
+        <svg class="bound-anim" viewBox="0 0 100 100">
+          <polygon class="bh-ring bh-ring-1" points="50,4 92,28 92,72 50,96 8,72 8,28"/>
+          <polygon class="bh-ring bh-ring-2" points="50,14 82,33 82,67 50,86 18,67 18,33"/>
+          <polygon class="bh-ring bh-ring-3" points="50,26 70,38 70,62 50,74 30,62 30,38"/>
+          <line class="bh-spoke bh-spoke-1" x1="50" y1="4"  x2="50" y2="50"/>
+          <line class="bh-spoke bh-spoke-2" x1="92" y1="28" x2="50" y2="50"/>
+          <line class="bh-spoke bh-spoke-3" x1="92" y1="72" x2="50" y2="50"/>
+          <line class="bh-spoke bh-spoke-4" x1="50" y1="96" x2="50" y2="50"/>
+          <line class="bh-spoke bh-spoke-5" x1="8"  y1="72" x2="50" y2="50"/>
+          <line class="bh-spoke bh-spoke-6" x1="8"  y1="28" x2="50" y2="50"/>
+          <circle class="bh-dot" cx="50" cy="50" r="5"/>
+        </svg>
+        <h2 class="bound-title">BOUND</h2>
+      </div>`;
+
     const content = isDeath ? `
       <div class="death-header">
         ${deathSkull}
@@ -1246,8 +1263,7 @@ export class GameScreen {
       <button class="btn-danger" id="btn-retry">↺ Perform the Rite Again</button>
       <button class="btn-ghost" id="btn-levels">← Return to the Rites</button>
     ` : `
-      <div class="overlay-icon bound-icon">⬡</div>
-      <h2 class="eerie-h2">BOUND</h2>
+      ${boundAnim}
       <p class="overlay-reason">No path remains — your form is trapped</p>
       <p class="overlay-score">Essence gathered: ${this.state.player.score}</p>
       <button class="btn-primary" id="btn-retry">↺ Perform the Rite Again</button>
