@@ -613,10 +613,13 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 60;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: pointer;
       text-align: center;
       padding-top: clamp(4px, 1vh, 10px);
+      transition: opacity 0.15s;
     }
+    #global-logo:hover { opacity: 0.8; }
     #global-logo .sf-sigil {
       width:   clamp(80px,  20vmin, 160px);
       height:  clamp(73px,  18vmin, 146px);
@@ -1895,6 +1898,11 @@
   }
   window.addEventListener('resize', syncLogoH);
   window.addEventListener('orientationchange', () => setTimeout(syncLogoH, 150));
+
+  // Logo click → home screen from anywhere
+  document.getElementById('global-logo').addEventListener('click', () => {
+    if (window.__sfGame) window.__sfGame.showTitle();
+  });
 })();
 
 
