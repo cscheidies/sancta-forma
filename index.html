@@ -809,13 +809,115 @@
       align-items: center;
       gap: 6px;
     }
-    .death-skull {
-      filter: drop-shadow(0 0 12px rgba(255,30,30,0.8));
-      animation: skull-pulse 1.6s ease-in-out infinite;
+    .death-dissolve {
+      position: relative;
+      width: 220px;
+      height: 260px;
+      margin: 0 auto 8px;
     }
-    @keyframes skull-pulse {
-      0%, 100% { filter: drop-shadow(0 0 10px rgba(255,30,30,0.7)); transform: scale(1); }
-      50%       { filter: drop-shadow(0 0 22px rgba(255,30,30,1.0)); transform: scale(1.04); }
+    /* Flash core — implodes then detonates */
+    .death-dissolve .d-core {
+      position: absolute;
+      left: 50%; top: 55%;
+      width: 80px; height: 80px;
+      margin-left: -40px; margin-top: -40px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff 0%, rgba(255,60,10,1) 30%, rgba(160,0,0,0.8) 65%, transparent 100%);
+      animation: smoke-implode 3s ease-in-out infinite;
+      transform-origin: center;
+      filter: blur(1px);
+    }
+    /* Smoke puffs — rise after detonation */
+    .death-dissolve .d-puff {
+      position: absolute;
+      border-radius: 55% 45% 60% 40% / 50% 60% 40% 55%;
+      background: radial-gradient(ellipse at 40% 40%,
+        rgba(220,30,10,0.70) 0%,
+        rgba(150,0,0,0.40)   45%,
+        rgba(80,0,0,0.10)    75%,
+        transparent          100%);
+      filter: blur(9px);
+      transform-origin: center bottom;
+    }
+    .death-dissolve .d-puff:nth-child(2) {
+      width:110px; height:100px; left:50%; top:42%; margin-left:-55px;
+      animation: smoke-puff 3s ease-out infinite;
+      animation-delay: 0s;
+    }
+    .death-dissolve .d-puff:nth-child(3) {
+      width:80px; height:90px; left:30%; top:35%;
+      border-radius: 60% 40% 50% 55% / 45% 55% 50% 60%;
+      animation: smoke-puff-left 3s ease-out infinite;
+      animation-delay: 0.08s;
+    }
+    .death-dissolve .d-puff:nth-child(4) {
+      width:85px; height:95px; left:45%; top:30%;
+      border-radius: 45% 60% 40% 55% / 60% 40% 55% 45%;
+      animation: smoke-puff-right 3s ease-out infinite;
+      animation-delay: 0.15s;
+    }
+    .death-dissolve .d-puff:nth-child(5) {
+      width:70px; height:80px; left:35%; top:15%;
+      background: radial-gradient(ellipse at 45% 50%,
+        rgba(180,20,5,0.45) 0%,
+        rgba(100,0,0,0.20)  55%,
+        transparent         100%);
+      filter: blur(13px);
+      animation: smoke-puff-top 3s ease-out infinite;
+      animation-delay: 0.22s;
+    }
+
+    @keyframes smoke-implode {
+      0%   { transform: scale(1);    opacity: 0.85; filter: blur(1px);  }
+      /* squeeze in */
+      28%  { transform: scale(0.55); opacity: 1.0;  filter: blur(0px);  }
+      /* implosion — white flash */
+      38%  { transform: scale(0.05); opacity: 1.0;  filter: blur(0px);  }
+      /* DETONATE */
+      40%  { transform: scale(2.2);  opacity: 1.0;  filter: blur(3px);  }
+      /* quickly collapses as smoke takes over */
+      52%  { transform: scale(0.4);  opacity: 0.3;  filter: blur(8px);  }
+      60%  { transform: scale(0);    opacity: 0;    filter: blur(12px); }
+      /* invisible while smoke rises */
+      85%  { transform: scale(0);    opacity: 0;    filter: blur(0);    }
+      /* reform */
+      100% { transform: scale(1);    opacity: 0.85; filter: blur(1px);  }
+    }
+    /* Centre puff — rises straight up */
+    @keyframes smoke-puff {
+      0%,38% { transform: scale(0) translateY(0);       opacity: 0; filter: blur(9px);  }
+      42%    { transform: scale(0.6) translateY(0);      opacity: 0.9; }
+      60%    { transform: scale(1.1) translateY(-30px);  opacity: 0.7; filter: blur(11px); }
+      80%    { transform: scale(1.4) translateY(-70px);  opacity: 0.3; filter: blur(18px); }
+      92%    { transform: scale(1.6) translateY(-110px); opacity: 0;   filter: blur(26px); }
+      100%   { transform: scale(0) translateY(0);        opacity: 0; filter: blur(9px);  }
+    }
+    /* Left puff — drifts up-left */
+    @keyframes smoke-puff-left {
+      0%,38% { transform: scale(0) translate(0,0);          opacity: 0; filter: blur(9px);  }
+      42%    { transform: scale(0.5) translate(0,0);         opacity: 0.8; }
+      60%    { transform: scale(1.0) translate(-18px,-28px); opacity: 0.6; filter: blur(12px); }
+      80%    { transform: scale(1.3) translate(-38px,-65px); opacity: 0.25; filter: blur(20px); }
+      92%    { transform: scale(1.5) translate(-50px,-100px); opacity: 0; filter: blur(28px); }
+      100%   { transform: scale(0) translate(0,0);           opacity: 0; filter: blur(9px);  }
+    }
+    /* Right puff — drifts up-right */
+    @keyframes smoke-puff-right {
+      0%,38% { transform: scale(0) translate(0,0);           opacity: 0; filter: blur(9px);  }
+      42%    { transform: scale(0.5) translate(0,0);          opacity: 0.8; }
+      60%    { transform: scale(1.0) translate(20px,-32px);   opacity: 0.6; filter: blur(12px); }
+      80%    { transform: scale(1.3) translate(40px,-70px);   opacity: 0.25; filter: blur(20px); }
+      92%    { transform: scale(1.5) translate(55px,-105px);  opacity: 0; filter: blur(28px); }
+      100%   { transform: scale(0) translate(0,0);            opacity: 0; filter: blur(9px);  }
+    }
+    /* Top wisp — the highest, thinnest trail */
+    @keyframes smoke-puff-top {
+      0%,42% { transform: scale(0) translateY(0);        opacity: 0; filter: blur(13px); }
+      48%    { transform: scale(0.6) translateY(0);       opacity: 0.6; }
+      65%    { transform: scale(1.1) translateY(-40px);   opacity: 0.4; filter: blur(16px); }
+      82%    { transform: scale(1.4) translateY(-90px);   opacity: 0.15; filter: blur(24px); }
+      94%    { transform: scale(1.6) translateY(-130px);  opacity: 0; filter: blur(32px); }
+      100%   { transform: scale(0) translateY(0);         opacity: 0; filter: blur(13px); }
     }
     .death-title {
       font-family: var(--font-mono);
