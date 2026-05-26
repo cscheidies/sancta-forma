@@ -65,6 +65,12 @@ const LEVEL_BACKGROUNDS = {
   52: './bg_rite52.jpg',
   53: './bg_rite53.jpg',
   54: './bg_rite54.jpg',
+  55: './bg_rite55.jpg',
+  56: './bg_rite56.jpg',
+  57: './bg_rite57.jpg',
+  58: './bg_rite58.jpg',
+  59: './bg_rite59.jpg',
+  60: './bg_rite60.jpg',
 };
 
 // Cell fill opacity per level — higher = darker grid (use when bg is bright/light)
@@ -93,6 +99,12 @@ const LEVEL_CELL_OPACITY = {
   52: 0.38,
   53: 0.28,
   54: 0.46,
+  55: 0.42,  // Realm X — collapsing star, bright accretion regions
+  56: 0.40,  // crystal fracture — heavy contrast
+  57: 0.36,  // eclipse — moon bright accent on dark sky
+  58: 0.38,  // cell dissolution — variable
+  59: 0.30,  // gravitational lens — darkest, mostly void
+  60: 0.44,  // singularity snowflake — bright crystal accents
 };
 function levelCellOpacity(levelId) {
   return LEVEL_CELL_OPACITY[levelId] ?? 0.22;
@@ -166,7 +178,8 @@ const REALMS = [
   { id: 6, name: 'The Star Rites',    levelIds: [31,32,33,34,35,36]    },
   { id: 7, name: 'The Star Journey',    levelIds: [37,38,39,40,41,42]    },
   { id: 8, name: 'The Threshold Rites', levelIds: [43,44,45,46,47,48]    },
-  { id: 9, name: 'The Outer Pattern',    levelIds: [49,50,51,52,53,54]    },
+  { id: 9,  name: 'The Outer Pattern',    levelIds: [49,50,51,52,53,54]    },
+  { id: 10, name: 'The Pattern Speaks',  levelIds: [55,56,57,58,59,60]    },
 ];
 
 function getRealmForLevel(levelId) {
@@ -439,6 +452,17 @@ export class GameScreen {
           'What hunted you in the small field',
           'hunts you here in different bodies.',
           'Learn to see them before they reach you.',
+        ],
+      },
+      {
+        heading: 'Speaks',
+        lines: [
+          'You have walked the pattern long enough.',
+          'Now it walks toward you.',
+          'You begin where the field places you,',
+          'not where you choose.',
+          'The hunters are not waiting.',
+          'They are arriving.',
         ],
       },
     ];

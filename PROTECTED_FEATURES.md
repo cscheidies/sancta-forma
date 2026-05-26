@@ -90,3 +90,18 @@ grep '"id": 49' src/levels.json       # first rite present
 grep '"id": 54' src/levels.json       # finale present
 grep "Wider" src/ui.js                # narrative passage
 ```
+
+## Realm X — The Pattern Speaks (Rites 55–60)
+
+Added 2026-05-25. Six 10×10 medium-difficulty levels. First realm with custom start positions (edge/corner, not [4,4]). Solver-verified (A* solver).
+
+```bash
+grep "id: 10" src/ui.js                # Realm X entry
+grep "The Pattern Speaks" src/ui.js    # realm name
+grep "bg_rite60" src/ui.js             # bg map complete through 60
+grep '"id": 55' src/levels.json        # first rite present
+grep '"id": 60' src/levels.json        # finale present
+grep "Speaks" src/ui.js                # narrative passage
+```
+
+All 6 must return results after any revert touching ui.js or levels.json.
