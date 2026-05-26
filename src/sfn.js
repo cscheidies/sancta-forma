@@ -142,6 +142,6 @@ export class SFNTracker {
     });
 
     this.el.innerHTML = parts.join('');
-    if (autoscroll) this.el.scrollLeft = this.el.scrollWidth;
+    if (autoscroll) this.el.scrollTop = this.el.scrollHeight;
   }
 }

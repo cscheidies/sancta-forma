@@ -552,13 +552,15 @@
       font-size: 0.74rem;
       color: var(--text-dim);
       letter-spacing: 0.03em;
-      overflow-x: auto;
-      white-space: nowrap;
+      overflow-y: auto;
+      white-space: normal;
+      word-break: break-all;
+      max-height: 120px;
       scrollbar-width: thin;
       scrollbar-color: rgba(120, 60, 220, 0.3) transparent;
       padding: 1px 0;
     }
-    .hud-trace-strip::-webkit-scrollbar { height: 3px; }
+    .hud-trace-strip::-webkit-scrollbar { width: 3px; }
     .hud-trace-strip::-webkit-scrollbar-track { background: transparent; }
     .hud-trace-strip::-webkit-scrollbar-thumb {
       background: rgba(120, 60, 220, 0.3);
@@ -1315,7 +1317,7 @@
          fine in both. */
     }
   </style>
-  <script type="module" crossorigin src="/dev/assets/index-CMXv14TW.js"></script>
+  <script type="module" crossorigin src="/dev/assets/index-DiDB3H9F.js"></script>
 </head>
 <div class="bg-layer" id="bg-title" style="background-image:url('./bg_title.jpg');opacity:1"></div>
 <div class="bg-layer" id="bg-a" style="opacity:0"></div>
