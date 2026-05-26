@@ -105,3 +105,19 @@ grep "Speaks" src/ui.js                # narrative passage
 ```
 
 All 6 must return results after any revert touching ui.js or levels.json.
+
+
+## Orientation-aware layout
+
+The game adapts to landscape and portrait via CSS media queries.
+
+In landscape: HUD sits to the right of the grid.
+In portrait: HUD sits below the grid (current behavior).
+
+```bash
+grep "@media (orientation: landscape)" index.html
+grep "isLandscape" src/ui.js
+grep "onOrientationChange" src/ui.js
+```
+
+All 3 must return results after any revert touching index.html or src/ui.js.
