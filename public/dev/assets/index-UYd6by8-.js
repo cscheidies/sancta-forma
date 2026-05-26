@@ -219,6 +219,10 @@
         <div class="d-ember"></div>
         <div class="d-ember"></div>
         <div class="d-ember"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
       </div>
         <h2 class="death-title">DEATH</h2>
         <p class="death-sub">The corruption consumed you</p>

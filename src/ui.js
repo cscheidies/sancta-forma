@@ -1236,6 +1236,10 @@ export class GameScreen {
         <div class="d-ember"></div>
         <div class="d-ember"></div>
         <div class="d-ember"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
       </div>`;
 
     const roman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][id - 1] || id;
