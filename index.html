@@ -1171,36 +1171,42 @@
         flex-direction: row;
         align-items: flex-start;
         justify-content: center;
-        gap: 32px;
+        gap: 24px;
         padding: 16px;
+        /* Push the entire wrapper below the fixed logo overlay. The logo's
+           rendered height is exposed by index.html as --logo-offset (set by
+           syncLogoH()); fallback 180px if unset. */
+        padding-top: calc(var(--logo-offset, 180px) + 8px);
         /* Constrain so wide screens don't sprawl */
         max-width: 1400px;
         margin: 0 auto;
       }
       .game-wrapper > .game-logo-wrap {
-        /* Hide the spacer in landscape — the global logo overlay handles top space.
-           Without this the layout has a phantom column. */
+        /* Keep spacer present but zero-sized — wrapper padding-top handles
+           vertical clearance. display:none avoids a phantom flex column. */
         display: none;
       }
       .game-wrapper > .game-grid {
         order: 1;
-        /* Cap the grid so a 20×20 doesn't overflow narrow phone landscape.
-           The SVG viewBox auto-scales; we just clamp the display size. */
-        max-height: calc(100vh - 32px);
-        max-width: calc(100vh - 32px); /* keep it square */
-        height: auto;
+        /* The grid is square. Cap by both viewport dimensions so it fits in the
+           landscape window without overflow or collision with the HUD.
+           Subtract logo-offset so it never creeps above the logo. */
+        max-height: calc(100vh - var(--logo-offset, 180px) - 32px);
+        max-width: calc(100vh - var(--logo-offset, 180px) - 32px);
         width: auto;
+        height: auto;
       }
       .game-wrapper > .hud {
         order: 2;
         flex-shrink: 0;
-        width: 280px;
+        width: 300px;
         max-width: 35vw;
         /* Stack rows vertically inside the HUD even though the HUD itself is in
            a row layout — preserves readability of identity/score/corruption. */
         display: flex;
         flex-direction: column;
         gap: 12px;
+        margin-top: 0;
       }
 
       /* Tighten HUD internal spacing for landscape so it fits next to grid */
@@ -1214,9 +1220,14 @@
         .game-wrapper {
           gap: 16px;
           padding: 8px;
+          padding-top: calc(var(--logo-offset, 120px) + 4px);
         }
         .game-wrapper > .hud {
-          width: 220px;
+          width: 240px;
+        }
+        .game-wrapper > .game-grid {
+          max-height: calc(100vh - var(--logo-offset, 120px) - 16px);
+          max-width: calc(100vh - var(--logo-offset, 120px) - 16px);
         }
       }
     }
@@ -1798,6 +1809,8 @@
     if (!logo) return;
     const h = logo.getBoundingClientRect().bottom + 16; // 16px breathing gap
     document.documentElement.style.setProperty('--logo-h', `${h}px`);
+    // Also expose as --logo-offset for landscape layout padding-top calculation
+    document.documentElement.style.setProperty('--logo-offset', `${h}px`);
     window.__logoH = h;
   }
   // Run after fonts load (Cinzel Decorative affects height)

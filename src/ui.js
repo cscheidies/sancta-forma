@@ -233,13 +233,32 @@ function isRealmUnlocked(realmId, progress) {
 
 const STORAGE_KEY = 'shape-puzzle-progress';
 
+// Detect dev mode by URL path. Anything matching /dev or /dev/* activates
+// unlock-all behavior. Production at sanctaforma.com (no /dev) keeps the
+// normal unlock chain. /dev-build or /development paths do NOT activate this.
+function isDevMode() {
+  if (typeof window === 'undefined') return false;
+  return /^\/dev(\/|$)/.test(window.location.pathname);
+}
+
 function loadProgress() {
+  // Dev mode: every level unlocked and completed for friction-free testing.
+  if (isDevMode()) {
+    const allLevelIds = REALMS.flatMap(r => r.levelIds);
+    return {
+      unlocked:  allLevelIds.slice(),
+      completed: allLevelIds.slice(),
+      _devModeOverride: true,
+    };
+  }
+  // Production: load from localStorage as before.
   try {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { unlocked: [1], completed: [] };
   } catch { return { unlocked: [1], completed: [] }; }
 }
 
 function saveProgress(progress) {
+  if (isDevMode()) return; // don't clobber real progress with dev sessions
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 }
 
