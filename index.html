@@ -258,6 +258,58 @@
     .howto-rule .danger{ color: #ff4747; }
     .howto-rule .arcane{ color: #c070ff; }
 
+    /* ── Keyboard key badge ── */
+    .kbd {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-style: normal;
+      font-size: 0.72rem;
+      color: #d0b8ff;
+      background: rgba(100,50,200,0.18);
+      border: 1px solid rgba(160,80,255,0.35);
+      border-radius: 4px;
+      padding: 1px 6px;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+    }
+    /* ── Key binding rows ── */
+    .howto-keys {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 5px 14px;
+      margin: 6px 0;
+    }
+    .howto-keys-action {
+      font-family: var(--font-eerie);
+      font-style: italic;
+      font-size: 1.0rem;
+      color: rgba(210,185,255,0.85);
+      line-height: 1.6;
+    }
+    .howto-keys-keys { line-height: 1.6; }
+    /* ── SFN notation token examples ── */
+    .sfn-token {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-style: normal;
+      font-size: 0.80rem;
+      color: #c8a8ff;
+      background: rgba(80,30,160,0.25);
+      border: 1px solid rgba(160,80,255,0.30);
+      border-radius: 3px;
+      padding: 1px 7px;
+      margin: 1px 2px;
+    }
+    .sfn-token.hunter   { color: #ffcc00; border-color: rgba(255,200,0,0.35); }
+    .sfn-token.cleanse  { color: #69ff47; border-color: rgba(105,255,71,0.35); }
+    .sfn-token.fatal    { color: #ff4747; border-color: rgba(255,71,71,0.35); }
+    .sfn-grid-legend {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px 18px;
+      margin: 8px 0 4px;
+    }
+
     /* ── Sancta Forma logo ──────────────────────────────── */
     .sf-logo {
       display: flex;

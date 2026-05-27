@@ -534,6 +534,69 @@ export class GameScreen {
           <p class="howto-rule">Gather enough Essence to complete the rite. The threshold is shown in your panel.</p>
         </div>
 
+        <div class="howto-section">
+          <div class="howto-label">Keyboard Controls</div>
+          <p class="howto-rule" style="margin-bottom:10px">The entire game is playable without touching the screen.</p>
+          <div class="howto-keys">
+            <div class="howto-keys-keys">
+              <span class="kbd">↑</span> <span class="kbd">↓</span> <span class="kbd">←</span> <span class="kbd">→</span>
+            </div>
+            <div class="howto-keys-action">Move — absorb the shape in that direction</div>
+
+            <div class="howto-keys-keys">
+              <span class="kbd">W</span> <span class="kbd">A</span> <span class="kbd">S</span> <span class="kbd">D</span>
+            </div>
+            <div class="howto-keys-action">Move — same as arrow keys</div>
+
+            <div class="howto-keys-keys">
+              <span class="kbd">1</span> – <span class="kbd">6</span>
+            </div>
+            <div class="howto-keys-action">Select rite 1–6 in the current realm</div>
+
+            <div class="howto-keys-keys">
+              <span class="kbd">Enter</span>
+            </div>
+            <div class="howto-keys-action">Launch focused rite · Retry after death or being bound · Advance after victory</div>
+
+            <div class="howto-keys-keys">
+              <span class="kbd">Space</span>
+            </div>
+            <div class="howto-keys-action">Launch focused rite (level select)</div>
+
+            <div class="howto-keys-keys">
+              <span class="kbd">Esc</span>
+            </div>
+            <div class="howto-keys-action">Return to title from any menu screen</div>
+          </div>
+        </div>
+
+        <div class="howto-section">
+          <div class="howto-label">Sancta Forma Notation</div>
+          <p class="howto-rule">The HUD trace strip records your moves in <span class="arcane">SFN</span> — a compact notation for replaying or analysing a rite.</p>
+          <p class="howto-rule" style="margin-top:8px">Each token is <span class="arcane">column · row · glyph · suffix</span>:</p>
+          <p class="howto-rule" style="margin:8px 0 4px">
+            <span class="sfn-token">c2T</span> moved to c2, absorbed a Triangle
+          </p>
+          <p class="howto-rule" style="margin:4px 0">
+            <span class="sfn-token hunter">d3H!</span> absorbed a Hunter (Hexagon)
+          </p>
+          <p class="howto-rule" style="margin:4px 0">
+            <span class="sfn-token cleanse">b1S*</span> cleansing absorption — corruption reset
+          </p>
+          <p class="howto-rule" style="margin:4px 0">
+            <span class="sfn-token fatal">e5C#</span> fatal move — the form dissolved
+          </p>
+          <p class="howto-rule" style="margin-top:10px">Columns run <span class="arcane">a – e</span> left to right on a 5×5 grid, <span class="arcane">a – j</span> (no i) on a 10×10. Rows run <span class="arcane">1</span> (top) to <span class="arcane">5</span> or <span class="arcane">10</span> (bottom). Every fifth move the trace indents — a visual breath between groups.</p>
+          <div class="sfn-grid-legend" style="margin-top:10px">
+            <p class="howto-rule" style="margin:0"><span class="arcane">S</span> — Square</p>
+            <p class="howto-rule" style="margin:0"><span class="arcane">C</span> — Circle</p>
+            <p class="howto-rule" style="margin:0"><span class="arcane">T</span> — Triangle</p>
+            <p class="howto-rule" style="margin:0"><span class="arcane">H</span> — Hexagon</p>
+            <p class="howto-rule" style="margin:0"><span class="arcane">M</span> — Moon</p>
+            <p class="howto-rule" style="margin:0"><span class="arcane">St</span> — Star</p>
+          </div>
+        </div>
+
         <div style="text-align:center; margin-top:32px; padding-bottom:40px">
           <button class="title-btn primary" id="howto-back">← Return</button>
         </div>
