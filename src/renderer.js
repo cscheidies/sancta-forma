@@ -58,9 +58,9 @@ function trianglePath(cx, cy, size, corruption) {
   if (corruption === 0) {
     return `M ${top[0]},${top[1]} L ${botR[0]},${botR[1]} L ${botL[0]},${botL[1]} Z`;
   }
-  // corruption >= 1: fan — two straight edges, bottom edge curves outward
-  const arcRx = size * 0.7;
-  const arcRy = size * 0.3;
+  // corruption >= 1: fan — two straight edges, bottom edge curves outward (pie-slice)
+  const arcRx = size * 0.60;
+  const arcRy = size * 0.55;
   return `M ${top[0]},${top[1]} L ${botR[0]},${botR[1]} A ${arcRx},${arcRy} 0 0 1 ${botL[0]},${botL[1]} Z`;
 }
 
