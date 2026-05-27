@@ -121,6 +121,12 @@ const LEVEL_BACKGROUNDS = {
   76: './bg_rite76.jpg',
   77: './bg_rite77.jpg',
   78: './bg_rite78.jpg',
+  79: './bg_rite79.jpg',
+  80: './bg_rite80.jpg',
+  81: './bg_rite81.jpg',
+  82: './bg_rite82.jpg',
+  83: './bg_rite83.jpg',
+  84: './bg_rite84.jpg',
 };
 
 // Cell fill opacity per level — higher = darker grid (use when bg is bright/light)
@@ -155,6 +161,12 @@ const LEVEL_CELL_OPACITY = {
   58: 0.38,  // cell dissolution — variable
   59: 0.30,  // gravitational lens — darkest, mostly void
   60: 0.44,  // singularity snowflake — bright crystal accents
+  79: 0.30,  // Realm XIV Angustia — edge-blocked moon wall, claustrophobic
+  80: 0.32,
+  81: 0.28,  // star wall — darker edge mass
+  82: 0.30,
+  83: 0.32,
+  84: 0.36,  // finale — slightly brighter for the final crossing
 };
 function levelCellOpacity(levelId) {
   return LEVEL_CELL_OPACITY[levelId] ?? 0.22;
@@ -240,10 +252,32 @@ const REALMS = [
   { id: 11, name: 'In Medias Res',       levelIds: [61,62,63,64,65,66]    },
   { id: 12, name: 'Acies',              levelIds: [67,68,69,70,71,72]    },
   { id: 13, name: 'Ultima Vigilia',     levelIds: [73,74,75,76,77,78]    },
+  { id: 14, name: 'Angustia',           levelIds: [79,80,81,82,83,84]    },
 ];
 
 // Per-form narrative beats shown before the first rite of each form in a realm.
 const PRE_LEVEL_BEATS = {
+  79: {
+    heading: 'The Narrow Place',
+    lines: [
+      'The ground had not given up. The ground had merely contracted.',
+      'The Square contracted with it, and stood.',
+    ],
+  },
+  81: {
+    heading: 'The After',
+    lines: [
+      'The Circle had outlasted what came before this.',
+      'The Circle did not yet know if it would outlast the after.',
+    ],
+  },
+  83: {
+    heading: 'Direction',
+    lines: [
+      'The horizon was closer. The Triangle still pointed.',
+      'Distance was not the test. Direction was.',
+    ],
+  },
   73: {
     heading: 'The Stones Were Whole',
     lines: [
@@ -670,6 +704,28 @@ export class GameScreen {
           'between strength and dissolution.',
           'To restore the universe,',
           'they must outlast the hunters.',
+        ],
+      },
+      {
+        heading: 'Angustia',
+        lines: [
+          'They had thought it was the last watch.',
+          'Ultima vigilia, they had named it, because the word for "end"',
+          'had been the only word that fit what they were feeling.',
+          'The forms had been correct about the feeling',
+          'and wrong about the end.',
+          'The watch had been kept. The end had not come.',
+          'The world that came after the watch',
+          'was not the same world they had been defending,',
+          'but it was also not no world.',
+          'It was a tighter world.',
+          'The Square stood on ground that was smaller than the ground had been.',
+          'The Circle held water in a basin that had been re-walled, narrower.',
+          'The Triangle pointed at a horizon that was closer than it should be.',
+          'They had thought it was the last watch.',
+          'It had been the last watch of one kind.',
+          'They had not understood that other kinds were possible.',
+          'Angustia. The narrow place.',
         ],
       },
     ];

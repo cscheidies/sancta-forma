@@ -91,6 +91,21 @@ grep '"id": 54' src/levels.json       # finale present
 grep "Wider" src/ui.js                # narrative passage
 ```
 
+## Realm XIV — Angustia (Rites 79–84)
+
+Added 2026-05-27. Six 10×10 levels. Edge-block mechanic (outer 2 rings = death walls). All six force ≥1 hunter absorption. Win threshold: 100 points.
+
+```bash
+grep "id: 14" src/ui.js                # Realm XIV entry
+grep "Angustia" src/ui.js              # realm name
+grep "bg_rite84" src/ui.js             # bg map complete through 84
+grep '"id": 79' src/levels.json        # first rite present
+grep '"id": 84' src/levels.json        # finale present
+grep "Angustia" src/ui.js              # narrative passage
+```
+
+All 6 must return results after any revert touching ui.js or levels.json.
+
 ## Realm X — The Pattern Speaks (Rites 55–60)
 
 Added 2026-05-25. Six 10×10 medium-difficulty levels. First realm with custom start positions (edge/corner, not [4,4]). Solver-verified (A* solver).
