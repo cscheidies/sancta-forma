@@ -1012,7 +1012,7 @@ export class GameScreen {
     if (!prevRealm) prevBtn.classList.add('realm-arrow-hidden');
     else prevBtn.addEventListener('click', () => this.showLevelSelect(prevRealm.id));
 
-    if (!nextRealm || !isRealmUnlocked(nextRealm.id, this.progress)) {
+    if (!nextRealm || (!isDevMode() && !isRealmUnlocked(nextRealm.id, this.progress))) {
       nextBtn.classList.add('realm-arrow-hidden');
     } else {
       nextBtn.addEventListener('click', () => this.showLevelSelect(nextRealm.id));
@@ -1044,7 +1044,7 @@ export class GameScreen {
         if (lsFocus === -1) { setFocus(0); return; }
         const next = lsFocus + 1;
         if (next < cards.length) setFocus(next);
-        else if (nextRealm && isRealmUnlocked(nextRealm.id, this.progress)) {
+        else if (nextRealm && (isDevMode() || isRealmUnlocked(nextRealm.id, this.progress))) {
           document.removeEventListener('keydown', lsKey);
           this.showLevelSelect(nextRealm.id);
         }
