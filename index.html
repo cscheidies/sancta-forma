@@ -2120,6 +2120,11 @@
     'Cry for the Wind',
     'Journey is Too Long',
     'Snowy Day at Home',
+    'Chasing Squares',
+    'Let\'s Get the Melody Right',
+    'Under a Metal Atmosphere',
+    'Unsettled',
+    'When I Dream I See Nothing',
   ];
 
   // Start on a random track each page load
@@ -2142,23 +2147,33 @@
     }, 3500);
   }
 
+  function playWhenReady() {
+    if (!playing) return;
+    // If already buffered enough, play immediately; otherwise wait for canplay
+    const go = () => audio.play().catch(() => setTimeout(playWhenReady, 400));
+    if (audio.readyState >= 2) { go(); }
+    else { audio.addEventListener('canplay', go, { once: true }); }
+  }
+
   function loadTrack(trackIdx) {
     if (audio) { audio.pause(); audio.src = ''; }
     audio = new Audio(TRACKS[trackIdx]);
     audio.volume = 0.72;
+    audio.preload = 'auto';
+    audio.load();
     audio.addEventListener('ended', () => {
       idx = (idx + 1) % TRACKS.length;
       loadTrack(idx);
       if (playing) {
-        audio.play().catch(() => {});
         showName(NAMES[idx]);
+        playWhenReady();
       }
     });
     audio.addEventListener('error', () => {
-      // Skip broken track gracefully
+      // Skip broken/missing track gracefully
       idx = (idx + 1) % TRACKS.length;
       loadTrack(idx);
-      if (playing) audio.play().catch(() => {});
+      if (playing) playWhenReady();
     });
   }
 

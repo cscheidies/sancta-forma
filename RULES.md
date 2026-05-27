@@ -21,15 +21,19 @@ The game ships in three grid sizes, each used for a distinct section of the camp
 - **5×5 again** — color-introduction realms (post-XIII, undesigned). The color mechanic enters at 5×5 because it is itself a new grammar that deserves its own teaching size.
 - **20×20** — reserved for late-game realms (undesigned).
 
-Every cell holds a shape except the player's starting cell. When the player moves out of a cell, that cell becomes permanently empty. The player cannot move back into an empty cell.
+Every cell holds a shape, a wormhole, or is the player's starting cell (empty). When the player moves out of a cell, that cell becomes permanently empty. The player cannot move back into an empty cell.
 
 ## 3. Movement
 
 - One cell per turn.
 - Cardinal directions only: up, down, left, right. No diagonals.
-- A move is only legal if the destination cell holds a shape (and isn't a death-hunter for the current form, and isn't violating the costume rule — see §5.2).
+- A move is only legal if the destination cell holds a shape or a wormhole (and isn't a death-hunter for the current form, and isn't violating the costume rule — see §5.2).
 - If no adjacent cell holds a legal target, the player has no valid moves → loss (see §7).
 - The player's starting cell is set per level via the `playerStart` field in level data and may be any cell on the grid — not constrained to center. Used as a difficulty lever in 10×10 medium-difficulty realms (X–XI) and beyond.
+
+## 3.5 Wormholes
+
+Some levels contain wormhole pairs — two linked cells with no shape underneath. Stepping onto a wormhole entrance instantly relocates the player to the wormhole's exit cell. Both cells become empty after a single use. Wormhole travel scores nothing and does not change corruption or costume state. A costumed player stepping onto a wormhole dies — a wormhole step is not a same-element absorption and cannot serve as the mandatory cleanse (per §5.2).
 
 ## 4. Absorption — the core mechanic
 
@@ -239,11 +243,11 @@ Pentagon-Square (Square absorbing Hexagon) and squared-Triangle (Triangle absorb
 
 Approximately 21 short prose fragments (7 realms × 3 forms) needed, delivered the first time the player meets a form in a given realm. Tone: third person, sparse, no dialogue. `level.lore` array exists; content needs writing.
 
-### 11.9 Wormhole mechanic (Realm XVI introduction)
+### 11.9 Wormhole mechanic — shipped in Realm XV (Somnium)
 
 One-way auto-teleport: stepping onto a wormhole cell instantly relocates the player to a designer-specified destination cell. Wormhole disappears after single use (like an absorbed cell). Wormhole itself scores 0 points and does not affect corruption.
 
-**Open:** does the destination cell's shape get absorbed on arrival, or does the player simply appear on an empty cell? Recommended: absorb-on-arrival, treating the teleport as a movement-only displacement. Decision needed before Realm XVI level design begins.
+**Resolved (2026-05-27):** The destination cell is vacated (empty) on arrival — the exit cell is cleared, not absorbed. The player simply appears on an empty cell. Both entrance and exit cells are consumed in a single wormhole use. Full mechanic is defined in §3.5 and shipped in Realm XV (Rites 85–90).
 
 ---
 

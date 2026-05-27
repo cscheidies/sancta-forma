@@ -58,9 +58,9 @@ function trianglePath(cx, cy, size, corruption) {
   if (corruption === 0) {
     return `M ${top[0]},${top[1]} L ${botR[0]},${botR[1]} L ${botL[0]},${botL[1]} Z`;
   }
-  // corruption >= 1: fan — two straight edges, bottom edge curves outward
-  const arcRx = size * 0.7;
-  const arcRy = size * 0.3;
+  // corruption >= 1: fan — two straight edges, bottom edge curves outward (pie-slice)
+  const arcRx = size * 0.60;
+  const arcRy = size * 0.55;
   return `M ${top[0]},${top[1]} L ${botR[0]},${botR[1]} A ${arcRx},${arcRy} 0 0 1 ${botL[0]},${botL[1]} Z`;
 }
 
@@ -107,6 +107,15 @@ function drawGridShape(type, col, row) {
   const w = CELL_SIZE - SHAPE_PAD * 2;
   const h = CELL_SIZE - SHAPE_PAD * 2;
   const r = w / 2;
+
+  if (type === 'wormhole') {
+    const g = svgEl('g', { opacity: '0.90' });
+    g.appendChild(svgEl('circle', { cx, cy, r: String(r * 0.88), fill: 'none', stroke: '#b070ff', 'stroke-width': '1.2', opacity: '0.35', 'stroke-dasharray': '2 3' }));
+    g.appendChild(svgEl('circle', { cx, cy, r: String(r * 0.65), fill: 'rgba(60,20,80,0.45)', stroke: '#c080ff', 'stroke-width': '2.5', filter: 'url(#glow)' }));
+    g.appendChild(svgEl('circle', { cx, cy, r: String(r * 0.35), fill: '#180828', 'fill-opacity': '0.80', stroke: '#a060e0', 'stroke-width': '1.2' }));
+    g.appendChild(svgEl('circle', { cx, cy, r: String(r * 0.10), fill: '#e0b8ff', opacity: '0.75' }));
+    return g;
+  }
 
   const isHunter = ['hexagon','star','moon'].includes(type);
   const opacity  = isHunter ? '0.85' : '0.70';
