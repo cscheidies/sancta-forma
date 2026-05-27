@@ -175,16 +175,23 @@ function setLevelBg(levelId) {
   if (titleBg) titleBg.style.opacity = '0';
 
   if (bg && next && current) {
-    next.style.backgroundImage = `url("${bg}")`;
-    next.style.opacity = '0';
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      next.style.opacity    = '1';
-      current.style.opacity = '0';
-    }));
     _activeBgId = nextId;
-    // Stars/shooting stars still visible over rite bg
     if (starfield) starfield.style.opacity = '0.35';
     window.sfPhotoMode = true;
+
+    // Preload the image before crossfading — prevents black-flash when not cached
+    const doSwap = () => {
+      next.style.backgroundImage = `url("${bg}")`;
+      next.style.opacity = '0';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        next.style.opacity    = '1';
+        current.style.opacity = '0';
+      }));
+    };
+    const preload = new Image();
+    preload.onload  = doSwap;
+    preload.onerror = doSwap; // show regardless on error
+    preload.src = bg;
   } else if (current) {
     current.style.opacity = '0';
     if (starfield) starfield.style.opacity = '1';
