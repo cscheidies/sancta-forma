@@ -90,3 +90,70 @@ grep '"id": 49' src/levels.json       # first rite present
 grep '"id": 54' src/levels.json       # finale present
 grep "Wider" src/ui.js                # narrative passage
 ```
+
+## Realm XIV — Angustia (Rites 79–84)
+
+Added 2026-05-27. Six 10×10 levels. Edge-block mechanic (outer 2 rings = death walls). All six force ≥1 hunter absorption. Win threshold: 100 points.
+
+```bash
+grep "id: 14" src/ui.js                # Realm XIV entry
+grep "Angustia" src/ui.js              # realm name
+grep "bg_rite84" src/ui.js             # bg map complete through 84
+grep '"id": 79' src/levels.json        # first rite present
+grep '"id": 84' src/levels.json        # finale present
+grep "Angustia" src/ui.js              # narrative passage
+```
+
+All 6 must return results after any revert touching ui.js or levels.json.
+
+## Realm X — The Pattern Speaks (Rites 55–60)
+
+Added 2026-05-25. Six 10×10 medium-difficulty levels. First realm with custom start positions (edge/corner, not [4,4]). Solver-verified (A* solver).
+
+```bash
+grep "id: 10" src/ui.js                # Realm X entry
+grep "The Pattern Speaks" src/ui.js    # realm name
+grep "bg_rite60" src/ui.js             # bg map complete through 60
+grep '"id": 55' src/levels.json        # first rite present
+grep '"id": 60' src/levels.json        # finale present
+grep "Speaks" src/ui.js                # narrative passage
+```
+
+All 6 must return results after any revert touching ui.js or levels.json.
+
+
+## Orientation-aware layout
+
+The game adapts to landscape and portrait via CSS media queries.
+
+In landscape: HUD sits to the right of the grid.
+In portrait: HUD sits below the grid (current behavior).
+
+```bash
+grep "@media (orientation: landscape)" index.html
+grep "isLandscape" src/ui.js
+grep "onOrientationChange" src/ui.js
+```
+
+All 3 must return results after any revert touching index.html or src/ui.js.
+
+## Landscape layout — logo clearance
+
+Landscape layout uses `--logo-offset` (set by `syncLogoH()`) as `padding-top` on the
+wrapper so the grid never collides with the fixed-position logo.
+
+```bash
+grep "padding-top: calc(var(--logo-offset" index.html
+grep -- "--logo-offset" index.html
+grep "syncLogoH" index.html
+```
+
+## Dev mode unlock-all
+
+The /dev path unlocks every level and skips localStorage persistence.
+Regex: `^/dev(/|$)` — /dev-build and /development do NOT activate it.
+
+```bash
+grep "isDevMode" src/ui.js
+grep "_devModeOverride" src/ui.js
+```

@@ -139,18 +139,19 @@ The rite is lost when any of the following occurs:
 
 **Realm VII — The Star Journey** (Rites 37–42). Star-only. Finale of the 5×5 prologue.
 
-### 8.2 Realms VIII–XIII (10×10, design-locked, undesigned levels)
+### 8.2 Realms VIII–XIV (10×10)
 
-The 10×10 layer is the actual game — Realms I–VII are designed as prologue. Six 10×10 realms are planned, organized as 2 easy / 2 medium / 2 hard:
+The 10×10 layer is the actual game — Realms I–VII are designed as prologue. Realms VIII–XIV are complete:
 
-- **Realm VIII** — easy 10×10 (Rites 43–48). Any combination of sacred forms and hunters per level.
-- **Realm IX** — easy 10×10 (Rites 49–54).
-- **Realm X** — medium 10×10 (Rites 55–60). Custom start positions introduced — `playerStart` is no longer center-by-default; level designer may place the player at any cell. This is purely a level-design lever; the engine already supports it.
-- **Realm XI** — medium 10×10 (Rites 61–66).
-- **Realm XII** — hard 10×10 (Rites 67–72).
-- **Realm XIII** — hard 10×10 (Rites 73–78).
+- **Realm VIII** — *The Threshold Rites* (Rites 43–48). Easy 10×10. Any combination of sacred forms and hunters per level.
+- **Realm IX** — *The Outer Pattern* (Rites 49–54). Easy 10×10. Death-hunters introduced at 10×10 scale.
+- **Realm X** — *The Pattern Speaks* (Rites 55–60). Medium 10×10. Custom start positions — `playerStart` no longer defaults to center.
+- **Realm XI** — *In Medias Res* (Rites 61–66). Medium 10×10.
+- **Realm XII** — *Acies* (Rites 67–72). Hard 10×10.
+- **Realm XIII** — *Ultima Vigilia* (Rites 73–78). Hard 10×10. Original designed finale.
+- **Realm XIV** — *Angustia* (Rites 79–84). Hard 10×10. Edge-block mechanic: outer two rings are death walls. Player confined to 6×6 interior. Every rite forces at least one hunter absorption. Win threshold: 100 points.
 
-Realm names, themes, visual identity, and per-rite background art for VIII–XIII are TBD. Difficulty grading axes (hunter density, cleanse availability, required path length, death-hunter count) are TBD — see §11.5.
+The original prologue arc spans Realms I–XIII (78 rites). Curated realms continue beyond as the game develops. A community level editor is planned to enable user-generated levels as the long tail.
 
 ### 8.3 Future expansion
 
@@ -237,6 +238,12 @@ Pentagon-Square (Square absorbing Hexagon) and squared-Triangle (Triangle absorb
 ### 11.8 Per-shape per-realm narrative snippets
 
 Approximately 21 short prose fragments (7 realms × 3 forms) needed, delivered the first time the player meets a form in a given realm. Tone: third person, sparse, no dialogue. `level.lore` array exists; content needs writing.
+
+### 11.9 Wormhole mechanic (Realm XVI introduction)
+
+One-way auto-teleport: stepping onto a wormhole cell instantly relocates the player to a designer-specified destination cell. Wormhole disappears after single use (like an absorbed cell). Wormhole itself scores 0 points and does not affect corruption.
+
+**Open:** does the destination cell's shape get absorbed on arrival, or does the player simply appear on an empty cell? Recommended: absorb-on-arrival, treating the teleport as a movement-only displacement. Decision needed before Realm XVI level design begins.
 
 ---
 

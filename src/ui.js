@@ -2,12 +2,44 @@
 
 import { initState, getValidMoves, applyMove, RULES } from './engine.js';
 import * as sfx from './sfx.js';
+import { SFNTracker, buildSFNToken } from './sfn.js';
 
 // Returns the actual rendered logo bottom + gap, falling back to 220px.
 // window.__logoH is set (and kept current) by syncLogoH() in index.html.
 function logoH() {
   return (window.__logoH || 220) + 'px';
 }
+
+// ── Orientation detection (CSS handles layout; JS only exposes the state) ───
+//
+// Per MDN as of 2024, window.orientation and the orientationchange event are
+// deprecated. The Screen Orientation API (screen.orientation) is the modern
+// standard, but matchMedia is simpler and universally supported including
+// older iOS Safari.
+
+const _orientationMQ = window.matchMedia('(orientation: landscape)');
+
+export function isLandscape() {
+  return _orientationMQ.matches;
+}
+
+// Notify any registered callbacks when orientation changes. Used by code that
+// needs to react beyond CSS layout (e.g., recalculating SVG hit-test math if
+// the grid resizes — currently nothing uses this, but it's wired in).
+const _orientationListeners = new Set();
+
+export function onOrientationChange(callback) {
+  _orientationListeners.add(callback);
+  return () => _orientationListeners.delete(callback);
+}
+
+_orientationMQ.addEventListener('change', (e) => {
+  for (const cb of _orientationListeners) {
+    try { cb(e.matches /* isLandscape */); } catch (err) {
+      console.error('Orientation listener error:', err);
+    }
+  }
+});
 
 // Per-rite background images
 const LEVEL_BACKGROUNDS = {
@@ -65,6 +97,36 @@ const LEVEL_BACKGROUNDS = {
   52: './bg_rite52.jpg',
   53: './bg_rite53.jpg',
   54: './bg_rite54.jpg',
+  55: './bg_rite55.jpg',
+  56: './bg_rite56.jpg',
+  57: './bg_rite57.jpg',
+  58: './bg_rite58.jpg',
+  59: './bg_rite59.jpg',
+  60: './bg_rite60.jpg',
+  61: './bg_rite61.jpg',
+  62: './bg_rite62.jpg',
+  63: './bg_rite63.jpg',
+  64: './bg_rite64.jpg',
+  65: './bg_rite65.jpg',
+  66: './bg_rite66.jpg',
+  67: './bg_rite67.jpg',
+  68: './bg_rite68.jpg',
+  69: './bg_rite69.jpg',
+  70: './bg_rite70.jpg',
+  71: './bg_rite71.jpg',
+  72: './bg_rite72.jpg',
+  73: './bg_rite73.jpg',
+  74: './bg_rite74.jpg',
+  75: './bg_rite75.jpg',
+  76: './bg_rite76.jpg',
+  77: './bg_rite77.jpg',
+  78: './bg_rite78.jpg',
+  79: './bg_rite79.jpg',
+  80: './bg_rite80.jpg',
+  81: './bg_rite81.jpg',
+  82: './bg_rite82.jpg',
+  83: './bg_rite83.jpg',
+  84: './bg_rite84.jpg',
 };
 
 // Cell fill opacity per level — higher = darker grid (use when bg is bright/light)
@@ -93,6 +155,18 @@ const LEVEL_CELL_OPACITY = {
   52: 0.38,
   53: 0.28,
   54: 0.46,
+  55: 0.42,  // Realm X — collapsing star, bright accretion regions
+  56: 0.40,  // crystal fracture — heavy contrast
+  57: 0.36,  // eclipse — moon bright accent on dark sky
+  58: 0.38,  // cell dissolution — variable
+  59: 0.30,  // gravitational lens — darkest, mostly void
+  60: 0.44,  // singularity snowflake — bright crystal accents
+  79: 0.30,  // Realm XIV Angustia — edge-blocked moon wall, claustrophobic
+  80: 0.32,
+  81: 0.28,  // star wall — darker edge mass
+  82: 0.30,
+  83: 0.32,
+  84: 0.36,  // finale — slightly brighter for the final crossing
 };
 function levelCellOpacity(levelId) {
   return LEVEL_CELL_OPACITY[levelId] ?? 0.22;
@@ -113,16 +187,23 @@ function setLevelBg(levelId) {
   if (titleBg) titleBg.style.opacity = '0';
 
   if (bg && next && current) {
-    next.style.backgroundImage = `url("${bg}")`;
-    next.style.opacity = '0';
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      next.style.opacity    = '1';
-      current.style.opacity = '0';
-    }));
     _activeBgId = nextId;
-    // Stars/shooting stars still visible over rite bg
     if (starfield) starfield.style.opacity = '0.35';
     window.sfPhotoMode = true;
+
+    // Preload the image before crossfading — prevents black-flash when not cached
+    const doSwap = () => {
+      next.style.backgroundImage = `url("${bg}")`;
+      next.style.opacity = '0';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        next.style.opacity    = '1';
+        current.style.opacity = '0';
+      }));
+    };
+    const preload = new Image();
+    preload.onload  = doSwap;
+    preload.onerror = doSwap; // show regardless on error
+    preload.src = bg;
   } else if (current) {
     current.style.opacity = '0';
     if (starfield) starfield.style.opacity = '1';
@@ -166,8 +247,108 @@ const REALMS = [
   { id: 6, name: 'The Star Rites',    levelIds: [31,32,33,34,35,36]    },
   { id: 7, name: 'The Star Journey',    levelIds: [37,38,39,40,41,42]    },
   { id: 8, name: 'The Threshold Rites', levelIds: [43,44,45,46,47,48]    },
-  { id: 9, name: 'The Outer Pattern',    levelIds: [49,50,51,52,53,54]    },
+  { id: 9,  name: 'The Outer Pattern',    levelIds: [49,50,51,52,53,54]    },
+  { id: 10, name: 'The Pattern Speaks',  levelIds: [55,56,57,58,59,60]    },
+  { id: 11, name: 'In Medias Res',       levelIds: [61,62,63,64,65,66]    },
+  { id: 12, name: 'Acies',              levelIds: [67,68,69,70,71,72]    },
+  { id: 13, name: 'Ultima Vigilia',     levelIds: [73,74,75,76,77,78]    },
+  { id: 14, name: 'Angustia',           levelIds: [79,80,81,82,83,84]    },
 ];
+
+// Per-form narrative beats shown before the first rite of each form in a realm.
+const PRE_LEVEL_BEATS = {
+  79: {
+    heading: 'The Narrow Place',
+    lines: [
+      'The ground had not given up. The ground had merely contracted.',
+      'The Square contracted with it, and stood.',
+    ],
+  },
+  81: {
+    heading: 'The After',
+    lines: [
+      'The Circle had outlasted what came before this.',
+      'The Circle did not yet know if it would outlast the after.',
+    ],
+  },
+  83: {
+    heading: 'Direction',
+    lines: [
+      'The horizon was closer. The Triangle still pointed.',
+      'Distance was not the test. Direction was.',
+    ],
+  },
+  73: {
+    heading: 'The Stones Were Whole',
+    lines: [
+      'The Square remembered when the stones had been whole.',
+      'The Square remembered when remembering was easy.',
+    ],
+  },
+  75: {
+    heading: 'Every Watch Before',
+    lines: [
+      'The Circle had outlasted every watch before this one.',
+      'The Circle did not assume it would outlast this one.',
+    ],
+  },
+  77: {
+    heading: 'No Words',
+    lines: [
+      'The Triangle pointed at what was coming.',
+      'There were no words for what was coming.',
+    ],
+  },
+  67: {
+    heading: 'The Ground',
+    lines: [
+      'The ground beneath the Square did not move.',
+      'This was the whole point of being the Square.',
+    ],
+  },
+  69: {
+    heading: 'The Lines',
+    lines: [
+      'The Circle had seen many lines.',
+      'The Circle had outlasted some of them.',
+      'Not all.',
+    ],
+  },
+  71: {
+    heading: 'The Point',
+    lines: [
+      'A point does not flinch.',
+      'The Triangle was not made for flinching.',
+    ],
+  },
+  61: {
+    heading: 'The Stones',
+    lines: [
+      'The stones had been here longer than the Square',
+      'remembered being the Square.',
+      'They had not asked to hold the line.',
+      'Holding was what they were.',
+    ],
+  },
+  63: {
+    heading: 'The Pool',
+    lines: [
+      'The pool had not been still in a long time.',
+      'Whatever passed across the moon\'s face',
+      'passed also across the pool,',
+      'and the Circle saw both without choosing.',
+    ],
+  },
+  65: {
+    heading: 'The Peaks',
+    lines: [
+      'The peaks were sharper than the Triangle.',
+      'They always had been.',
+      'The Triangle did not envy them.',
+      'The Triangle pointed.',
+    ],
+  },
+};
 
 function getRealmForLevel(levelId) {
   return REALMS.find(r => r.levelIds.includes(levelId)) || REALMS[0];
@@ -187,15 +368,47 @@ function isRealmUnlocked(realmId, progress) {
   return prev.levelIds.every(id => progress.completed.includes(id));
 }
 
+// Return the first unlocked-but-incomplete level id, in realm order.
+// Falls back to the last unlocked level if everything is done.
+function getLatestRiteId(progress) {
+  const ordered = REALMS.flatMap(r => r.levelIds);
+  const frontier = ordered.find(id =>
+    progress.unlocked.includes(id) && !progress.completed.includes(id)
+  );
+  if (frontier) return frontier;
+  // All done — return last unlocked
+  const unlocked = ordered.filter(id => progress.unlocked.includes(id));
+  return unlocked[unlocked.length - 1] ?? 1;
+}
+
 const STORAGE_KEY = 'shape-puzzle-progress';
 
+// Detect dev mode by URL path. Anything matching /dev or /dev/* activates
+// unlock-all behavior. Production at sanctaforma.com (no /dev) keeps the
+// normal unlock chain. /dev-build or /development paths do NOT activate this.
+function isDevMode() {
+  if (typeof window === 'undefined') return false;
+  return /^\/dev(\/|$)/.test(window.location.pathname);
+}
+
 function loadProgress() {
+  // Dev mode: every level unlocked and completed for friction-free testing.
+  if (isDevMode()) {
+    const allLevelIds = REALMS.flatMap(r => r.levelIds);
+    return {
+      unlocked:  allLevelIds.slice(),
+      completed: allLevelIds.slice(),
+      _devModeOverride: true,
+    };
+  }
+  // Production: load from localStorage as before.
   try {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { unlocked: [1], completed: [] };
   } catch { return { unlocked: [1], completed: [] }; }
 }
 
 function saveProgress(progress) {
+  if (isDevMode()) return; // don't clobber real progress with dev sessions
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 }
 
@@ -298,6 +511,7 @@ export class GameScreen {
     this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
     if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
+    if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
 
     const screen = document.createElement('div');
     screen.className = 'screen title-screen';
@@ -309,6 +523,9 @@ export class GameScreen {
         <button class="title-btn primary" id="title-begin">ENTER THE RITES</button>
         <button class="title-btn" id="title-why">WHY</button>
       </div>
+      <div class="title-btn-row" style="margin-top:14px">
+        <button class="title-btn" id="title-forge">◇ THE FORGE</button>
+      </div>
     `;
 
     this.container.appendChild(screen);
@@ -317,11 +534,15 @@ export class GameScreen {
     screen.querySelector('#title-how').addEventListener('click', () => this.showHowToPlay());
     screen.querySelector('#title-begin').addEventListener('click', () => this.showLevelSelect());
     screen.querySelector('#title-why').addEventListener('click', () => this.showNarrative());
+    screen.querySelector('#title-forge').addEventListener('click', () => {
+      window.location.href = window.location.pathname.startsWith('/dev') ? '/forge.html' : '/forge.html';
+    });
   }
 
   showHowToPlay() {
     clearLevelBg();
     this.container.innerHTML = '';
+    if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
 
     const screen = document.createElement('div');
     screen.className = 'screen';
@@ -360,6 +581,69 @@ export class GameScreen {
           <p class="howto-rule">Gather enough Essence to complete the rite. The threshold is shown in your panel.</p>
         </div>
 
+        <div class="howto-section">
+          <div class="howto-label">Keyboard Controls</div>
+          <p class="howto-rule" style="margin-bottom:10px">The entire game is playable without touching the screen.</p>
+          <div class="howto-keys">
+            <div class="howto-keys-keys">
+              <span class="kbd">↑</span> <span class="kbd">↓</span> <span class="kbd">←</span> <span class="kbd">→</span>
+            </div>
+            <div class="howto-keys-action">Move — absorb the shape in that direction</div>
+
+            <div class="howto-keys-keys">
+              <span class="kbd">W</span> <span class="kbd">A</span> <span class="kbd">S</span> <span class="kbd">D</span>
+            </div>
+            <div class="howto-keys-action">Move — same as arrow keys</div>
+
+            <div class="howto-keys-keys">
+              <span class="kbd">1</span> – <span class="kbd">6</span>
+            </div>
+            <div class="howto-keys-action">Select rite 1–6 in the current realm</div>
+
+            <div class="howto-keys-keys">
+              <span class="kbd">Enter</span>
+            </div>
+            <div class="howto-keys-action">Launch focused rite · Retry after death or being bound · Advance after victory</div>
+
+            <div class="howto-keys-keys">
+              <span class="kbd">Space</span>
+            </div>
+            <div class="howto-keys-action">Launch focused rite (level select)</div>
+
+            <div class="howto-keys-keys">
+              <span class="kbd">Esc</span>
+            </div>
+            <div class="howto-keys-action">Return to title from any menu screen</div>
+          </div>
+        </div>
+
+        <div class="howto-section">
+          <div class="howto-label">Sancta Forma Notation</div>
+          <p class="howto-rule">The HUD trace strip records your moves in <span class="arcane">SFN</span> — a compact notation for replaying or analysing a rite.</p>
+          <p class="howto-rule" style="margin-top:8px">Each token is <span class="arcane">column · row · glyph · suffix</span>:</p>
+          <p class="howto-rule" style="margin:8px 0 4px">
+            <span class="sfn-token">c2T</span> moved to c2, absorbed a Triangle
+          </p>
+          <p class="howto-rule" style="margin:4px 0">
+            <span class="sfn-token hunter">d3H!</span> absorbed a Hunter (Hexagon)
+          </p>
+          <p class="howto-rule" style="margin:4px 0">
+            <span class="sfn-token cleanse">b1S*</span> cleansing absorption — corruption reset
+          </p>
+          <p class="howto-rule" style="margin:4px 0">
+            <span class="sfn-token fatal">e5C#</span> fatal move — the form dissolved
+          </p>
+          <p class="howto-rule" style="margin-top:10px">Columns run <span class="arcane">a – e</span> left to right on a 5×5 grid, <span class="arcane">a – j</span> (no i) on a 10×10. Rows run <span class="arcane">1</span> (top) to <span class="arcane">5</span> or <span class="arcane">10</span> (bottom). Every fifth move the trace indents — a visual breath between groups.</p>
+          <div class="sfn-grid-legend" style="margin-top:10px">
+            <p class="howto-rule" style="margin:0"><span class="arcane">S</span> — Square</p>
+            <p class="howto-rule" style="margin:0"><span class="arcane">C</span> — Circle</p>
+            <p class="howto-rule" style="margin:0"><span class="arcane">T</span> — Triangle</p>
+            <p class="howto-rule" style="margin:0"><span class="arcane">H</span> — Hexagon</p>
+            <p class="howto-rule" style="margin:0"><span class="arcane">M</span> — Moon</p>
+            <p class="howto-rule" style="margin:0"><span class="arcane">St</span> — Star</p>
+          </div>
+        </div>
+
         <div style="text-align:center; margin-top:32px; padding-bottom:40px">
           <button class="title-btn primary" id="howto-back">← Return</button>
         </div>
@@ -376,7 +660,10 @@ export class GameScreen {
     this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
     if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
+    if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
 
+    // Intro-only passages — shown when player taps WHY or on first play.
+    // Realm-milestone passages live in PRE_LEVEL_BEATS; do not add them here.
     const passages = [
       {
         heading: 'Before',
@@ -420,25 +707,25 @@ export class GameScreen {
         ],
       },
       {
-        heading: 'Threshold',
+        heading: 'Angustia',
         lines: [
-          'The small field is behind you.',
-          'What you learned there',
-          'you will need now.',
-          'The world is larger than you remember.',
-          'All three hunters walk it together.',
-          'Past is prologue.',
-        ],
-      },
-      {
-        heading: 'Wider',
-        lines: [
-          'The pattern is older than the field.',
-          'It rises in the stars.',
-          'It hides in the cells beneath your foot.',
-          'What hunted you in the small field',
-          'hunts you here in different bodies.',
-          'Learn to see them before they reach you.',
+          'They had thought it was the last watch.',
+          'Ultima vigilia, they had named it, because the word for "end"',
+          'had been the only word that fit what they were feeling.',
+          'The forms had been correct about the feeling',
+          'and wrong about the end.',
+          'The watch had been kept. The end had not come.',
+          'The world that came after the watch',
+          'was not the same world they had been defending,',
+          'but it was also not no world.',
+          'It was a tighter world.',
+          'The Square stood on ground that was smaller than the ground had been.',
+          'The Circle held water in a basin that had been re-walled, narrower.',
+          'The Triangle pointed at a horizon that was closer than it should be.',
+          'They had thought it was the last watch.',
+          'It had been the last watch of one kind.',
+          'They had not understood that other kinds were possible.',
+          'Angustia. The narrow place.',
         ],
       },
     ];
@@ -460,12 +747,13 @@ export class GameScreen {
     const renderPassage = (idx) => {
       const p = passages[idx];
       const stagger = 0.18;
+      const btnDelay = (0.2 + p.lines.length * stagger).toFixed(2);
       inner.innerHTML = `
         <div class="narr-heading">${p.heading}</div>
-        <div class="narr-lines" style="margin-top:10px">
-          ${p.lines.map((l,i) => `<p class="narr-line" style="animation-delay:${0.2 + i*stagger}s">${l}</p>`).join('')}
+        <div class="narr-lines" style="margin-top:14px">
+          ${p.lines.map((l,i) => `<p class="narr-line" style="animation-delay:${(0.2 + i*stagger).toFixed(2)}s">${l}</p>`).join('')}
         </div>
-        <div class="narr-actions" style="animation-delay:0.35s">
+        <div class="narr-actions" style="animation-delay:${btnDelay}s">
           ${idx < passages.length - 1
             ? `<button class="btn-primary" id="narr-next">Continue →</button>`
             : `<button class="btn-primary" id="narr-begin">✦ Begin the Rites</button>`
@@ -499,12 +787,36 @@ export class GameScreen {
     renderPassage(passageIdx);
   }
 
+  _showPreLevelBeat(beat, onContinue) {
+    if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
+    this.container.innerHTML = '';
+    const screen = document.createElement('div');
+    screen.className = 'screen narrative-screen';
+    screen.innerHTML = `
+      <div class="narrative-wrap">
+        <div class="narr-wrap-inner narr-entered">
+          <div class="narr-heading">${beat.heading}</div>
+          <div class="narr-lines">
+            ${beat.lines.map(l => `<p class="narr-line">${l}</p>`).join('')}
+          </div>
+          <div class="narr-actions" style="margin-top:40px">
+            <button class="btn-primary" id="beat-continue">Continue</button>
+          </div>
+        </div>
+      </div>
+    `;
+    this.container.appendChild(screen);
+    screen.querySelector('#beat-continue').addEventListener('click', onContinue);
+  }
+
   showLevelSelect(realmId) {
     if (realmId !== undefined) this.currentRealm = realmId;
     const realm = REALMS.find(r => r.id === this.currentRealm) || REALMS[0];
     clearLevelBg();
     this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
+    if (this._lsKeyCleanup) { this._lsKeyCleanup(); this._lsKeyCleanup = null; }
+    if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
     if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
 
     const screen = document.createElement('div');
@@ -598,6 +910,7 @@ export class GameScreen {
 
       <div class="title-btn-row" style="margin-top:20px; padding-bottom:8px">
         <button class="title-btn" id="ls-how">HOW</button>
+        <button class="title-btn primary" id="ls-latest">LATEST RITE</button>
         <button class="title-btn" id="ls-why">WHY</button>
       </div>
     `;
@@ -651,6 +964,74 @@ export class GameScreen {
 
     screen.querySelector('#ls-how').addEventListener('click', () => this.showHowToPlay());
     screen.querySelector('#ls-why').addEventListener('click', () => this.showNarrative());
+    screen.querySelector('#ls-latest').addEventListener('click', () => {
+      this.startLevel(getLatestRiteId(this.progress));
+    });
+
+    // ── Keyboard navigation for level select ──────────────────────────────
+    // Cards are laid out in a 3×2 grid (3 cols). Arrow keys move focus;
+    // Enter/Space starts the focused unlocked rite.
+    const cards = Array.from(grid.querySelectorAll('.level-card'));
+    const COLS = 3;
+    let lsFocus = -1; // -1 = no keyboard focus yet
+
+    const setFocus = (idx) => {
+      cards.forEach(c => c.classList.remove('ls-focused'));
+      lsFocus = Math.max(0, Math.min(cards.length - 1, idx));
+      cards[lsFocus].classList.add('ls-focused');
+      cards[lsFocus].scrollIntoView({ block: 'nearest' });
+    };
+
+    const lsKey = (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        e.preventDefault();
+        if (lsFocus === -1) { setFocus(0); return; }
+        const next = lsFocus + 1;
+        if (next < cards.length) setFocus(next);
+        else if (nextRealm && isRealmUnlocked(nextRealm.id, this.progress)) {
+          document.removeEventListener('keydown', lsKey);
+          this.showLevelSelect(nextRealm.id);
+        }
+      } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        e.preventDefault();
+        if (lsFocus === -1) { setFocus(cards.length - 1); return; }
+        const prev = lsFocus - 1;
+        if (prev >= 0) setFocus(prev);
+        else if (prevRealm) {
+          document.removeEventListener('keydown', lsKey);
+          this.showLevelSelect(prevRealm.id);
+        }
+      } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+        e.preventDefault();
+        if (lsFocus === -1) { setFocus(0); return; }
+        const down = lsFocus + COLS;
+        if (down < cards.length) setFocus(down);
+      } else if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+        e.preventDefault();
+        if (lsFocus === -1) { setFocus(0); return; }
+        const up = lsFocus - COLS;
+        if (up >= 0) setFocus(up);
+      } else if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (lsFocus === -1) { setFocus(0); return; }
+        const card = cards[lsFocus];
+        if (!card.classList.contains('locked')) card.click();
+      } else if (e.key >= '1' && e.key <= '6') {
+        e.preventDefault();
+        const idx = parseInt(e.key, 10) - 1;
+        if (idx < cards.length) {
+          setFocus(idx);
+          if (!cards[idx].classList.contains('locked')) cards[idx].click();
+        }
+      } else if (e.key === 'Escape') {
+        document.removeEventListener('keydown', lsKey);
+        this.showTitle();
+      }
+    };
+    document.addEventListener('keydown', lsKey);
+    // Clean up when navigating away
+    this._lsKeyCleanup = () => document.removeEventListener('keydown', lsKey);
+
     this.container.appendChild(screen);
   }
 
@@ -658,6 +1039,17 @@ export class GameScreen {
     const level = this.levels.find(l => l.id === levelId);
     if (!level) return;
 
+    // Show a brief narrative beat before certain levels (first rite of each form in a realm).
+    // The beat is shown once per session per level — tracked in _beatsShown set.
+    if (!this._beatsShown) this._beatsShown = new Set();
+    const beat = PRE_LEVEL_BEATS[levelId];
+    if (beat && !this._beatsShown.has(levelId)) {
+      this._beatsShown.add(levelId);
+      this._showPreLevelBeat(beat, () => this.startLevel(levelId));
+      return;
+    }
+
+    if (this._lsKeyCleanup) { this._lsKeyCleanup(); this._lsKeyCleanup = null; }
     setLevelBg(levelId);
     this.container.innerHTML = '';
     this.state = initState(level);
@@ -665,6 +1057,14 @@ export class GameScreen {
     // Build layout
     const wrapper = document.createElement('div');
     wrapper.className = 'game-wrapper';
+    if (isLandscape()) wrapper.classList.add('orientation-landscape');
+    else wrapper.classList.add('orientation-portrait');
+
+    // Keep the class hint in sync if user rotates mid-game
+    this._orientationUnsub = onOrientationChange((landscape) => {
+      wrapper.classList.toggle('orientation-landscape', landscape);
+      wrapper.classList.toggle('orientation-portrait', !landscape);
+    });
 
     // HUD
     this.hud = document.createElement('div');
@@ -703,8 +1103,17 @@ export class GameScreen {
           <span class="hud-score"></span>
         </div>
       </div>
+      <div class="hud-trace">
+        <span class="hud-trace-label">Trace</span>
+        <div class="hud-trace-strip" id="hud-trace-strip"></div>
+      </div>
     `;
     this.hud.querySelector('.hud-back').addEventListener('click', () => this.showLevelSelect());
+
+    // SFN trace strip — pass the element directly (hud isn't in the DOM yet,
+    // so getElementById would return null; querySelector on hud works immediately)
+    this.tracker = new SFNTracker(this.hud.querySelector('#hud-trace-strip'));
+    this._sfnMoveCount = 0;
 
     // Grid SVG
     this.svg = createGridSVG({
@@ -832,6 +1241,14 @@ export class GameScreen {
     const prevScore = this.state.player.score;
     this.state = applyMove(this.state, dir);
 
+    // SFN trace — record move immediately after state update
+    if (this.tracker && this.state.lastEvent) {
+      const token = buildSFNToken(targetCol, targetRow, this.state.lastEvent, this.state.status);
+      this.tracker.add(token);
+      this._sfnMoveCount++;
+      if (this._sfnMoveCount % 5 === 0) this.tracker.shift();
+    }
+
     // Sound effects
     const event = this.state.lastEvent;
     if (event) {
@@ -868,12 +1285,16 @@ export class GameScreen {
     // End conditions
     if (this.state.status === 'win') {
       sfx.win();
+      this.tracker?.win();
       setTimeout(() => this._showWin(), 400);
     } else if (this.state.status === 'lose-death') {
       sfx.death();
+      this.tracker?.loss('corruption');
       setTimeout(() => this._showLose(this.state.status), 400);
     } else if (this.state.status === 'lose-stuck') {
       sfx.stuck();
+      // costumed + no cleanse available → LOSS:costume; plain dead-end → LOSS:stuck
+      this.tracker?.loss(this.state.player.costumed ? 'costume' : 'stuck');
       setTimeout(() => this._showLose(this.state.status), 400);
     }
   }
@@ -933,6 +1354,19 @@ export class GameScreen {
       document.getElementById('btn-next')?.addEventListener('click', () => this.startLevel(nextId));
       document.getElementById('btn-next-realm')?.addEventListener('click', () => this.showLevelSelect(nextRealm?.id));
       document.getElementById('btn-levels')?.addEventListener('click', () => this.showLevelSelect());
+
+      // Enter key fires the primary next button from the win screen
+      const winKey = (e) => {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        document.removeEventListener('keydown', winKey);
+        const btnNext = document.getElementById('btn-next');
+        const btnRealm = document.getElementById('btn-next-realm');
+        if (btnNext) btnNext.click();
+        else if (btnRealm) btnRealm.click();
+        else this.showLevelSelect();
+      };
+      document.addEventListener('keydown', winKey);
     });
   }
 
@@ -944,14 +1378,38 @@ export class GameScreen {
 
     const deathSkull = `
       <div class="death-dissolve">
+        <div class="d-base"></div>
         <div class="d-puff"></div>
         <div class="d-puff"></div>
         <div class="d-puff"></div>
         <div class="d-puff"></div>
-        <div class="d-core"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
+        <div class="d-ember"></div>
       </div>`;
 
     const roman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][id - 1] || id;
+    const boundAnim = `
+      <div class="bound-header">
+        <svg class="bound-anim" viewBox="0 0 100 100">
+          <polygon class="bh-ring bh-ring-1" points="50,4 92,28 92,72 50,96 8,72 8,28"/>
+          <polygon class="bh-ring bh-ring-2" points="50,14 82,33 82,67 50,86 18,67 18,33"/>
+          <polygon class="bh-ring bh-ring-3" points="50,26 70,38 70,62 50,74 30,62 30,38"/>
+          <line class="bh-spoke bh-spoke-1" x1="50" y1="4"  x2="50" y2="50"/>
+          <line class="bh-spoke bh-spoke-2" x1="92" y1="28" x2="50" y2="50"/>
+          <line class="bh-spoke bh-spoke-3" x1="92" y1="72" x2="50" y2="50"/>
+          <line class="bh-spoke bh-spoke-4" x1="50" y1="96" x2="50" y2="50"/>
+          <line class="bh-spoke bh-spoke-5" x1="8"  y1="72" x2="50" y2="50"/>
+          <line class="bh-spoke bh-spoke-6" x1="8"  y1="28" x2="50" y2="50"/>
+          <circle class="bh-dot" cx="50" cy="50" r="5"/>
+        </svg>
+        <h2 class="bound-title">BOUND</h2>
+      </div>`;
+
     const content = isDeath ? `
       <div class="death-header">
         ${deathSkull}
@@ -962,8 +1420,7 @@ export class GameScreen {
       <button class="btn-danger" id="btn-retry">↺ Perform the Rite Again</button>
       <button class="btn-ghost" id="btn-levels">← Return to the Rites</button>
     ` : `
-      <div class="overlay-icon bound-icon">⬡</div>
-      <h2 class="eerie-h2">BOUND</h2>
+      ${boundAnim}
       <p class="overlay-reason">No path remains — your form is trapped</p>
       <p class="overlay-score">Essence gathered: ${this.state.player.score}</p>
       <button class="btn-primary" id="btn-retry">↺ Perform the Rite Again</button>
@@ -971,8 +1428,22 @@ export class GameScreen {
     `;
 
     this._showOverlay(isDeath ? 'death' : 'lose', content, () => {
-      document.getElementById('btn-retry')?.addEventListener('click', () => this.startLevel(id));
-      document.getElementById('btn-levels')?.addEventListener('click', () => this.showLevelSelect());
+      const retryKey = (e) => {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        document.removeEventListener('keydown', retryKey);
+        this.startLevel(id);
+      };
+      document.addEventListener('keydown', retryKey);
+
+      document.getElementById('btn-retry')?.addEventListener('click', () => {
+        document.removeEventListener('keydown', retryKey);
+        this.startLevel(id);
+      });
+      document.getElementById('btn-levels')?.addEventListener('click', () => {
+        document.removeEventListener('keydown', retryKey);
+        this.showLevelSelect();
+      });
     });
   }
 
