@@ -233,7 +233,7 @@ import {
 } from './renderer.js';
 
 // ── Realm definitions ─────────────────────────────────────────────────────
-const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
+const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV'];
 function realmLabel(realm) {
   return `Realm ${ROMAN[realm.id - 1] || realm.id} — ${realm.name}`;
 }
@@ -1322,7 +1322,7 @@ export class GameScreen {
     }
     saveProgress(this.progress);
 
-    const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+    const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV'];
     const winRoman  = ROMAN[id - 1]     || id;
     const nextRoman = ROMAN[nextId - 1] || nextId;
 
