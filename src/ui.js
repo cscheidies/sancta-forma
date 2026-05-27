@@ -873,6 +873,13 @@ export class GameScreen {
         if (lsFocus === -1) { setFocus(0); return; }
         const card = cards[lsFocus];
         if (!card.classList.contains('locked')) card.click();
+      } else if (e.key >= '1' && e.key <= '6') {
+        e.preventDefault();
+        const idx = parseInt(e.key, 10) - 1;
+        if (idx < cards.length) {
+          setFocus(idx);
+          if (!cards[idx].classList.contains('locked')) cards[idx].click();
+        }
       } else if (e.key === 'Escape') {
         document.removeEventListener('keydown', lsKey);
         this.showTitle();
@@ -1278,8 +1285,22 @@ export class GameScreen {
     `;
 
     this._showOverlay(isDeath ? 'death' : 'lose', content, () => {
-      document.getElementById('btn-retry')?.addEventListener('click', () => this.startLevel(id));
-      document.getElementById('btn-levels')?.addEventListener('click', () => this.showLevelSelect());
+      const retryKey = (e) => {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        document.removeEventListener('keydown', retryKey);
+        this.startLevel(id);
+      };
+      document.addEventListener('keydown', retryKey);
+
+      document.getElementById('btn-retry')?.addEventListener('click', () => {
+        document.removeEventListener('keydown', retryKey);
+        this.startLevel(id);
+      });
+      document.getElementById('btn-levels')?.addEventListener('click', () => {
+        document.removeEventListener('keydown', retryKey);
+        this.showLevelSelect();
+      });
     });
   }
 
