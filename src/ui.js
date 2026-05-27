@@ -334,6 +334,19 @@ function isRealmUnlocked(realmId, progress) {
   return prev.levelIds.every(id => progress.completed.includes(id));
 }
 
+// Return the first unlocked-but-incomplete level id, in realm order.
+// Falls back to the last unlocked level if everything is done.
+function getLatestRiteId(progress) {
+  const ordered = REALMS.flatMap(r => r.levelIds);
+  const frontier = ordered.find(id =>
+    progress.unlocked.includes(id) && !progress.completed.includes(id)
+  );
+  if (frontier) return frontier;
+  // All done — return last unlocked
+  const unlocked = ordered.filter(id => progress.unlocked.includes(id));
+  return unlocked[unlocked.length - 1] ?? 1;
+}
+
 const STORAGE_KEY = 'shape-puzzle-progress';
 
 // Detect dev mode by URL path. Anything matching /dev or /dev/* activates
@@ -841,6 +854,7 @@ export class GameScreen {
 
       <div class="title-btn-row" style="margin-top:20px; padding-bottom:8px">
         <button class="title-btn" id="ls-how">HOW</button>
+        <button class="title-btn primary" id="ls-latest">LATEST RITE</button>
         <button class="title-btn" id="ls-why">WHY</button>
       </div>
     `;
@@ -894,6 +908,9 @@ export class GameScreen {
 
     screen.querySelector('#ls-how').addEventListener('click', () => this.showHowToPlay());
     screen.querySelector('#ls-why').addEventListener('click', () => this.showNarrative());
+    screen.querySelector('#ls-latest').addEventListener('click', () => {
+      this.startLevel(getLatestRiteId(this.progress));
+    });
 
     // ── Keyboard navigation for level select ──────────────────────────────
     // Cards are laid out in a 3×2 grid (3 cols). Arrow keys move focus;
