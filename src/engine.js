@@ -99,6 +99,12 @@ export function initState(level) {
     row.map(cell => (cell ? { type: cell } : null))
   );
   grid[level.playerStart[0]][level.playerStart[1]] = null;
+  const wormholes = new Map();
+  if (level.wormholes) {
+    for (const wh of level.wormholes) {
+      wormholes.set(`${wh.from[0]},${wh.from[1]}`, [wh.to[0], wh.to[1]]);
+    }
+  }
   return {
     player: {
       element:         level.playerElement,
@@ -109,6 +115,7 @@ export function initState(level) {
       costumed:        false,  // true after absorbing a survivable hunter
     },
     grid,
+    wormholes,
     winScore:  level.winScore ?? 50,
     status:    'playing',
     lastEvent: null,
@@ -131,8 +138,8 @@ export function getValidMoves(state) {
 
     const t = cell.type;
 
-    // Costumed: ONLY the player's base element is legal
-    if (costumed) return t === element;
+    // Costumed: ONLY the player's base element is legal (wormhole also allowed — kills)
+    if (costumed) return t === element || t === 'wormhole';
 
     // Hunters: check death vs costume
     if (HUNTERS.has(t)) {
@@ -155,6 +162,31 @@ export function applyMove(state, dir) {
 
   const absorbedType = state.grid[nr][nc].type;
   const { element, originalElement, corruption, score, costumed } = state.player;
+
+  // ── 0. WORMHOLE TELEPORT ─────────────────────────────────────────────────
+  if (absorbedType === 'wormhole') {
+    const newGrid = state.grid.map(row => row.map(cell => cell ? { type: cell.type } : null));
+    newGrid[nr][nc] = null; // vacate entrance
+
+    if (costumed) {
+      // Costumed player on wormhole = death (§5.2 — not a cleanse)
+      const event = { dir, absorbed: 'wormhole', type: 'wormhole-death', scoreDelta: 0, corruptionDelta: 0, newScore: score, newCorruption: corruption, costumed: true };
+      return { ...state, grid: newGrid, player: { ...state.player, position: [nr, nc] }, lastEvent: event, status: 'lose-death' };
+    }
+
+    // Normal teleport
+    const exit = state.wormholes?.get(`${nr},${nc}`);
+    if (!exit) return state; // malformed level — no-op
+    newGrid[exit[0]][exit[1]] = null; // vacate exit cell too
+
+    const newPlayer = { ...state.player, position: [exit[0], exit[1]] };
+    const event = { dir, absorbed: 'wormhole', type: 'wormhole', scoreDelta: 0, corruptionDelta: 0, newScore: score, newCorruption: corruption, costumed: false, wormholeFrom: [nr, nc], wormholeTo: exit };
+    const newState = { ...state, player: newPlayer, grid: newGrid, wormholes: state.wormholes, lastEvent: event };
+
+    if (score >= newState.winScore) return { ...newState, status: 'win' };
+    if (getValidMoves(newState).length === 0) return { ...newState, status: 'lose-stuck' };
+    return newState;
+  }
 
   const newGrid = state.grid.map(row => row.map(cell => cell ? { type: cell.type } : null));
   newGrid[nr][nc] = null;
@@ -219,6 +251,7 @@ export function cloneState(state) {
     player:    { ...state.player, position: [...state.player.position] },
     grid:      state.grid.map(row => row.map(cell => cell ? { type: cell.type } : null)),
     lastEvent: state.lastEvent ? { ...state.lastEvent } : null,
+    wormholes: state.wormholes ? new Map(state.wormholes) : new Map(),
   };
 }
 

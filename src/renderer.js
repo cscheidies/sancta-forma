@@ -108,6 +108,15 @@ function drawGridShape(type, col, row) {
   const h = CELL_SIZE - SHAPE_PAD * 2;
   const r = w / 2;
 
+  if (type === 'wormhole') {
+    const g = svgEl('g', { opacity: '0.90' });
+    g.appendChild(svgEl('circle', { cx, cy, r: String(r * 0.88), fill: 'none', stroke: '#b070ff', 'stroke-width': '1.2', opacity: '0.35', 'stroke-dasharray': '2 3' }));
+    g.appendChild(svgEl('circle', { cx, cy, r: String(r * 0.65), fill: 'rgba(60,20,80,0.45)', stroke: '#c080ff', 'stroke-width': '2.5', filter: 'url(#glow)' }));
+    g.appendChild(svgEl('circle', { cx, cy, r: String(r * 0.35), fill: '#180828', 'fill-opacity': '0.80', stroke: '#a060e0', 'stroke-width': '1.2' }));
+    g.appendChild(svgEl('circle', { cx, cy, r: String(r * 0.10), fill: '#e0b8ff', opacity: '0.75' }));
+    return g;
+  }
+
   const isHunter = ['hexagon','star','moon'].includes(type);
   const opacity  = isHunter ? '0.85' : '0.70';
   const sw       = isHunter ? '1.8'  : '1.8';

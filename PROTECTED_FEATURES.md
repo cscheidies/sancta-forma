@@ -91,6 +91,21 @@ grep '"id": 54' src/levels.json       # finale present
 grep "Wider" src/ui.js                # narrative passage
 ```
 
+## Realm XV — Somnium (Rites 85–90)
+
+Added 2026-05-27. Six 10×10 levels. First realm with wormhole mechanic. Moderate difficulty (recovery/teaching realm). Sumi-e visual theme.
+
+```bash
+grep "id: 15" src/ui.js                # Realm XV entry
+grep "Somnium" src/ui.js               # realm name
+grep "bg_rite90" src/ui.js             # bg map complete through 90
+grep '"id": 85' src/levels.json        # first rite present
+grep '"id": 90' src/levels.json        # finale present
+grep "wormholes" src/engine.js         # wormhole mechanic in engine
+```
+
+All 6 must return results after any revert.
+
 ## Realm XIV — Angustia (Rites 79–84)
 
 Added 2026-05-27. Six 10×10 levels. Edge-block mechanic (outer 2 rings = death walls). All six force ≥1 hunter absorption. Win threshold: 100 points.

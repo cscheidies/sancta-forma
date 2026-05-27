@@ -127,6 +127,12 @@ const LEVEL_BACKGROUNDS = {
   82: './bg_rite82.jpg',
   83: './bg_rite83.jpg',
   84: './bg_rite84.jpg',
+  85: './bg_rite85.jpg',
+  86: './bg_rite86.jpg',
+  87: './bg_rite87.jpg',
+  88: './bg_rite88.jpg',
+  89: './bg_rite89.jpg',
+  90: './bg_rite90.jpg',
 };
 
 // Cell fill opacity per level — higher = darker grid (use when bg is bright/light)
@@ -167,6 +173,12 @@ const LEVEL_CELL_OPACITY = {
   82: 0.30,
   83: 0.32,
   84: 0.36,  // finale — slightly brighter for the final crossing
+  85: 0.28,  // Realm XV Somnium — sumi-e, open space feel
+  86: 0.30,
+  87: 0.26,
+  88: 0.28,
+  89: 0.30,
+  90: 0.32,  // finale
 };
 function levelCellOpacity(levelId) {
   return LEVEL_CELL_OPACITY[levelId] ?? 0.22;
@@ -253,6 +265,7 @@ const REALMS = [
   { id: 12, name: 'Acies',              levelIds: [67,68,69,70,71,72]    },
   { id: 13, name: 'Ultima Vigilia',     levelIds: [73,74,75,76,77,78]    },
   { id: 14, name: 'Angustia',           levelIds: [79,80,81,82,83,84]    },
+  { id: 15, name: 'Somnium',            levelIds: [85,86,87,88,89,90]    },
 ];
 
 // Per-form narrative beats shown before the first rite of each form in a realm.
@@ -346,6 +359,29 @@ const PRE_LEVEL_BEATS = {
       'They always had been.',
       'The Triangle did not envy them.',
       'The Triangle pointed.',
+    ],
+  },
+  85: {
+    heading: 'The Ground That Folds',
+    lines: [
+      'The ground was still ground. The Square was relieved.',
+      'But the ground sometimes folded, and the Square had not been',
+      'built for ground that folded.',
+    ],
+  },
+  87: {
+    heading: 'The Pool',
+    lines: [
+      'The pool reflected something it had not been built to reflect.',
+      'The Circle accepted this without comment.',
+      'The Circle had outlasted stranger things.',
+    ],
+  },
+  89: {
+    heading: 'The Reachable Horizon',
+    lines: [
+      'The horizon could be reached by pointing at it directly.',
+      'The Triangle did not know how to feel about this.',
     ],
   },
 };
@@ -726,6 +762,26 @@ export class GameScreen {
           'It had been the last watch of one kind.',
           'They had not understood that other kinds were possible.',
           'Angustia. The narrow place.',
+        ],
+      },
+      {
+        heading: 'Somnium',
+        lines: [
+          'The narrow place opened.',
+          'It did not open by widening. It opened by folding.',
+          'The forms walked one moment in a moor that had been moor since',
+          'before any of them remembered, and the next moment they were',
+          'standing somewhere else — somewhere that had not been adjacent',
+          'to the moor, somewhere that may not have been anywhere',
+          'in the sense the word had previously meant.',
+          'The world they had defended had been a continuous world.',
+          'They had taken its continuity for granted.',
+          'The world that came after the defense was not continuous.',
+          'It folded. It opened sideways.',
+          'Two places could become one passage. A step could be a journey.',
+          'Somnium. The dream-world. The world after the defense.',
+          'And the forms, who had survived everything continuous,',
+          'found themselves having to learn to walk again.',
         ],
       },
     ];
@@ -1261,6 +1317,10 @@ export class GameScreen {
       }
       else if (event.type === 'cleanse') {
         sfx.cleanse?.();
+      }
+      else if (event.type === 'wormhole') {
+        // Flash exit cell in addition to the entrance flash below
+        if (event.wormholeTo) flashCell(this.svg, event.wormholeTo[0], event.wormholeTo[1], '#e0b8ff', this.state.player.originalElement);
       }
 
       // Near-death warning: fire when corruption first reaches deathAt-1
