@@ -1013,7 +1013,10 @@ export class GameScreen {
         <div class="card-elem">${level.playerElement.toUpperCase()}</div>
         <div class="card-status">${shapeIcon}</div>
       `;
-      if (isUnlocked) card.addEventListener('click', () => this.startLevel(level.id));
+      if (isUnlocked) card.addEventListener('click', () => {
+        sfx.riteSelect?.(riteIndex(level.id), level.playerElement);
+        this.startLevel(level.id);
+      });
       grid.appendChild(card);
     }
 
@@ -1024,12 +1027,12 @@ export class GameScreen {
     const nextRealm = REALMS.find(r => r.id === this.currentRealm + 1);
 
     if (!prevRealm) prevBtn.classList.add('realm-arrow-hidden');
-    else prevBtn.addEventListener('click', () => this.showLevelSelect(prevRealm.id));
+    else prevBtn.addEventListener('click', () => { sfx.realmNav?.('prev'); this.showLevelSelect(prevRealm.id); });
 
     if (!nextRealm || (!isDevMode() && !isRealmUnlocked(nextRealm.id, this.progress))) {
       nextBtn.classList.add('realm-arrow-hidden');
     } else {
-      nextBtn.addEventListener('click', () => this.showLevelSelect(nextRealm.id));
+      nextBtn.addEventListener('click', () => { sfx.realmNav?.('next'); this.showLevelSelect(nextRealm.id); });
     }
 
     screen.querySelector('#ls-how').addEventListener('click', () => this.showHowToPlay());

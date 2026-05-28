@@ -389,6 +389,124 @@ export function blocked() {
   osc.start(now); osc.stop(now + 0.10);
 }
 
+// ── Rite card select — unique per rite position (0–5) × element ────────────
+// Minimal, eerie, organic, short, otherworldly.
+export function riteSelect(riteIndex, element) {
+  const c = ctx();
+  const now = c.currentTime;
+
+  // Base frequency varies per element
+  const elemBase = { square: 0.9, circle: 1.0, triangle: 1.18 }[element] || 1.0;
+
+  // Each of the 6 rites has a distinct timbral character
+  const rites = [
+    // Rite I — low cave breath: filtered noise + slow sine swell
+    () => {
+      noise(0.06, 280, 0.35, now);
+      const o = c.createOscillator(); o.type = 'sine';
+      o.frequency.setValueAtTime(68 * elemBase, now);
+      o.frequency.linearRampToValueAtTime(82 * elemBase, now + 0.22);
+      const g = c.createGain();
+      g.gain.setValueAtTime(0, now); g.gain.linearRampToValueAtTime(0.09, now + 0.08);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.40);
+      o.connect(g); g.connect(c.destination); o.start(now); o.stop(now + 0.45);
+    },
+    // Rite II — glass tap: sharp sine ping with long tail
+    () => {
+      const f = 520 * elemBase;
+      tone(f, 'sine', 0.12, 0.004, 0.55, now);
+      tone(f * 1.5, 'sine', 0.05, 0.004, 0.40, now + 0.008);
+    },
+    // Rite III — hollow bone: triangle + resonant bandpass noise
+    () => {
+      const f = 180 * elemBase;
+      tone(f, 'triangle', 0.13, 0.01, 0.30, now);
+      const len = Math.ceil(c.sampleRate * 0.20);
+      const buf = c.createBuffer(1, len, c.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      const src = c.createBufferSource(); src.buffer = buf;
+      const bpf = c.createBiquadFilter(); bpf.type = 'bandpass';
+      bpf.frequency.value = f * 2.8; bpf.Q.value = 12;
+      const g = c.createGain();
+      g.gain.setValueAtTime(0.09, now); g.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+      src.connect(bpf); bpf.connect(g); g.connect(c.destination); src.start(now);
+    },
+    // Rite IV — deep bell shimmer: FM synthesis, two detuned sines
+    () => {
+      const f = 310 * elemBase;
+      [0, 7, -5].forEach((detune, i) => {
+        const o = c.createOscillator(); o.type = 'sine';
+        o.frequency.value = f; o.detune.value = detune;
+        const g = c.createGain();
+        g.gain.setValueAtTime(0, now + i * 0.015);
+        g.gain.linearRampToValueAtTime(0.10 - i * 0.025, now + i * 0.015 + 0.012);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.55 - i * 0.08);
+        o.connect(g); g.connect(c.destination); o.start(now + i * 0.015); o.stop(now + 0.65);
+      });
+    },
+    // Rite V — high crystal whisper: fast attack sine + shimmer + air
+    () => {
+      const f = 740 * elemBase;
+      tone(f, 'sine', 0.10, 0.003, 0.28, now);
+      tone(f * 1.26, 'sine', 0.04, 0.003, 0.20, now + 0.005);
+      noise(0.03, 4200, 0.12, now);
+    },
+    // Rite VI — the final rite: eerie descending cluster + breath
+    () => {
+      const f = 420 * elemBase;
+      [[1.0, 0.09], [1.122, 0.06], [0.891, 0.05]].forEach(([mult, gain], i) => {
+        const o = c.createOscillator(); o.type = 'sine';
+        o.frequency.setValueAtTime(f * mult, now);
+        o.frequency.exponentialRampToValueAtTime(f * mult * 0.88, now + 0.40);
+        const g = c.createGain();
+        g.gain.setValueAtTime(0, now + i * 0.02);
+        g.gain.linearRampToValueAtTime(gain, now + i * 0.02 + 0.025);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.50);
+        o.connect(g); g.connect(c.destination); o.start(now + i * 0.02); o.stop(now + 0.55);
+      });
+      noise(0.04, 600, 0.30, now + 0.05);
+    },
+  ];
+
+  (rites[Math.max(0, Math.min(5, riteIndex))] || rites[0])();
+}
+
+// ── Realm navigation ────────────────────────────────────────────────────────
+// dir: 'next' | 'prev'  — ascending shimmer vs descending shadow
+export function realmNav(dir) {
+  const c = ctx();
+  const now = c.currentTime;
+
+  if (dir === 'next') {
+    // Ascending soft shimmer — stepping into the unknown
+    [220, 330, 495].forEach((f, i) => {
+      const o = c.createOscillator(); o.type = 'sine';
+      o.frequency.setValueAtTime(f, now + i * 0.055);
+      o.frequency.linearRampToValueAtTime(f * 1.12, now + i * 0.055 + 0.18);
+      const g = c.createGain();
+      g.gain.setValueAtTime(0, now + i * 0.055);
+      g.gain.linearRampToValueAtTime(0.07 - i * 0.015, now + i * 0.055 + 0.03);
+      g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.055 + 0.28);
+      o.connect(g); g.connect(c.destination); o.start(now + i * 0.055); o.stop(now + i * 0.055 + 0.32);
+    });
+    noise(0.025, 3500, 0.18, now + 0.04);
+  } else {
+    // Descending shadow — retreating, pulling back
+    [440, 293, 196].forEach((f, i) => {
+      const o = c.createOscillator(); o.type = 'sine';
+      o.frequency.setValueAtTime(f, now + i * 0.05);
+      o.frequency.linearRampToValueAtTime(f * 0.88, now + i * 0.05 + 0.20);
+      const g = c.createGain();
+      g.gain.setValueAtTime(0, now + i * 0.05);
+      g.gain.linearRampToValueAtTime(0.065 - i * 0.012, now + i * 0.05 + 0.03);
+      g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.05 + 0.28);
+      o.connect(g); g.connect(c.destination); o.start(now + i * 0.05); o.stop(now + i * 0.05 + 0.32);
+    });
+    noise(0.02, 800, 0.20, now);
+  }
+}
+
 export function nearDeath(element) {
   const c = ctx();
   const now = c.currentTime;
