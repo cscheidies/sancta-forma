@@ -544,7 +544,7 @@ export class GameScreen {
 
   showTitle() {
     clearLevelBg();
-    this.container.innerHTML = '';
+    this._removeOverlay(); this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
     if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
     if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
@@ -577,7 +577,7 @@ export class GameScreen {
 
   showHowToPlay() {
     clearLevelBg();
-    this.container.innerHTML = '';
+    this._removeOverlay(); this.container.innerHTML = '';
     if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
 
     const screen = document.createElement('div');
@@ -693,7 +693,7 @@ export class GameScreen {
 
   showNarrative() {
     clearLevelBg();
-    this.container.innerHTML = '';
+    this._removeOverlay(); this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
     if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
     if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
@@ -845,7 +845,7 @@ export class GameScreen {
 
   _showPreLevelBeat(beat, onContinue) {
     if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
-    this.container.innerHTML = '';
+    this._removeOverlay(); this.container.innerHTML = '';
     const screen = document.createElement('div');
     screen.className = 'screen narrative-screen';
     screen.innerHTML = `
@@ -869,7 +869,7 @@ export class GameScreen {
     if (realmId !== undefined) this.currentRealm = realmId;
     const realm = REALMS.find(r => r.id === this.currentRealm) || REALMS[0];
     clearLevelBg();
-    this.container.innerHTML = '';
+    this._removeOverlay(); this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
     if (this._lsKeyCleanup) { this._lsKeyCleanup(); this._lsKeyCleanup = null; }
     if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
@@ -1174,7 +1174,7 @@ export class GameScreen {
 
     if (this._lsKeyCleanup) { this._lsKeyCleanup(); this._lsKeyCleanup = null; }
     setLevelBg(levelId);
-    this.container.innerHTML = '';
+    this._removeOverlay(); this.container.innerHTML = '';
     this.state = initState(level);
 
     // Build layout
@@ -1583,9 +1583,14 @@ export class GameScreen {
     });
   }
 
+  _removeOverlay() {
+    if (this._activeOverlay) { this._activeOverlay.remove(); this._activeOverlay = null; }
+    // also clean up any stray overlays in container (legacy)
+    this.container.querySelector('.overlay')?.remove();
+  }
+
   _showOverlay(type, html, setup) {
-    const existing = this.container.querySelector('.overlay');
-    if (existing) existing.remove();
+    this._removeOverlay();
 
     // On win: hide game board so card floats over the rite background
     // On death/lose: keep board visible so player sees where they ended up
@@ -1597,7 +1602,9 @@ export class GameScreen {
     const overlay = document.createElement('div');
     overlay.className = `overlay overlay-${type}`;
     overlay.innerHTML = `<div class="overlay-box">${html}</div>`;
-    this.container.appendChild(overlay);
+    // Append to body so it's in the root stacking context (above fog-layer z-index:20)
+    document.body.appendChild(overlay);
+    this._activeOverlay = overlay;
     if (setup) setup();
   }
 }
