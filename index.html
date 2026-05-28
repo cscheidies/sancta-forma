@@ -776,8 +776,8 @@
 
     /* ── Realm Quick-Nav Strip (title screen) ── */
     .realm-qnav {
-      width: 100%;
-      max-width: 420px;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
       margin-top: 28px;
       overflow: visible;
     }
@@ -788,7 +788,7 @@
       overflow-x: auto;
       overflow-y: visible;
       scrollbar-width: none;
-      padding: 2px 4px 40px;
+      padding: 2px 16px 40px;
       margin-bottom: -40px;
     }
     .realm-qnav-inner::-webkit-scrollbar { display: none; }
