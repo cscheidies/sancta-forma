@@ -1246,23 +1246,24 @@
     /* Idle lore — realm narrative lines that fade in below level select buttons */
     .ls-idle-lore {
       position: absolute;
-      bottom: 18%;
+      bottom: 26%;
       left: 50%;
       transform: translateX(-50%);
       width: min(420px, 86vw);
       text-align: center;
-      font-family: var(--font-mono);
-      font-size: clamp(0.78rem, 2.2vw, 0.95rem);
-      letter-spacing: 0.10em;
-      color: rgba(200, 180, 255, 0.0);
+      font-family: var(--font-eerie);
+      font-size: clamp(1.05rem, 3.5vw, 1.35rem);
+      font-style: italic;
+      letter-spacing: 0.04em;
+      line-height: 1.65;
+      color: rgba(212, 170, 255, 0.0);
       text-shadow: 0 0 18px rgba(160, 120, 255, 0.5);
       transition: color 1.4s ease, text-shadow 1.4s ease;
       pointer-events: none;
       white-space: normal;
-      line-height: 1.5;
     }
     .ls-idle-lore.visible {
-      color: rgba(200, 180, 255, 0.75);
+      color: rgba(212, 170, 255, 0.82);
       text-shadow: 0 0 22px rgba(160, 120, 255, 0.6);
     }
     .death-title {
