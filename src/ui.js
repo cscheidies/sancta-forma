@@ -1589,7 +1589,7 @@ export class GameScreen {
 
     // Hide game board so the card floats cleanly over the rite background
     const wrapper = this.container.querySelector('.game-wrapper');
-    if (wrapper) wrapper.style.visibility = 'hidden';
+    if (wrapper) wrapper.style.display = 'none';
 
     const overlay = document.createElement('div');
     overlay.className = `overlay overlay-${type}`;
