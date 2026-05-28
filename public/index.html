@@ -623,6 +623,59 @@
     }
     #transform-hint.visible { opacity: 1; }
 
+    /* ── Realm Quick-Nav Strip (title screen) ── */
+    .realm-qnav {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 5px;
+      z-index: 15;
+      max-width: 92vw;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 2px 4px 4px;
+    }
+    .realm-qnav::-webkit-scrollbar { display: none; }
+    .realm-qnav-thumb {
+      flex-shrink: 0;
+      width: 52px;
+      height: 38px;
+      border-radius: 4px;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.38;
+      border: 1px solid rgba(255,255,255,0.10);
+      cursor: pointer;
+      transition: opacity 0.2s, border-color 0.2s, transform 0.18s;
+      position: relative;
+    }
+    .realm-qnav-thumb:hover {
+      opacity: 0.82;
+      border-color: rgba(150,100,255,0.55);
+      transform: translateY(-3px);
+    }
+    .realm-qnav-label {
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(6,3,18,0.93);
+      border: 1px solid rgba(100,60,200,0.35);
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-size: 0.62rem;
+      color: rgba(195,170,255,0.88);
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      letter-spacing: 0.09em;
+      font-family: var(--font-eerie);
+    }
+    .realm-qnav-thumb:hover .realm-qnav-label { opacity: 1; }
+
     /* ── Lore overlay — narrative fades over the background ── */
     #lore-overlay {
       position: fixed;

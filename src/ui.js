@@ -544,7 +544,7 @@ export class GameScreen {
 
   showTitle() {
     clearLevelBg();
-    this._removeOverlay(); this.container.innerHTML = '';
+    this._removeOverlay(); this._removeRealmNav(); this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
     if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
     if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
@@ -566,6 +566,7 @@ export class GameScreen {
 
     this.container.appendChild(screen);
     requestAnimationFrame(() => screen.classList.add('visible'));
+    this._buildRealmNav();
 
     screen.querySelector('#title-how').addEventListener('click', () => this.showHowToPlay());
     screen.querySelector('#title-begin').addEventListener('click', () => this.showLevelSelect());
@@ -577,7 +578,7 @@ export class GameScreen {
 
   showHowToPlay() {
     clearLevelBg();
-    this._removeOverlay(); this.container.innerHTML = '';
+    this._removeOverlay(); this._removeRealmNav(); this.container.innerHTML = '';
     if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
 
     const screen = document.createElement('div');
@@ -693,7 +694,7 @@ export class GameScreen {
 
   showNarrative() {
     clearLevelBg();
-    this._removeOverlay(); this.container.innerHTML = '';
+    this._removeOverlay(); this._removeRealmNav(); this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
     if (this.svg && this._tapHandler) this.svg.removeEventListener('pointerdown', this._tapHandler);
     if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
@@ -845,7 +846,7 @@ export class GameScreen {
 
   _showPreLevelBeat(beat, onContinue) {
     if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
-    this._removeOverlay(); this.container.innerHTML = '';
+    this._removeOverlay(); this._removeRealmNav(); this.container.innerHTML = '';
     const screen = document.createElement('div');
     screen.className = 'screen narrative-screen';
     screen.innerHTML = `
@@ -869,7 +870,7 @@ export class GameScreen {
     if (realmId !== undefined) this.currentRealm = realmId;
     const realm = REALMS.find(r => r.id === this.currentRealm) || REALMS[0];
     clearLevelBg();
-    this._removeOverlay(); this.container.innerHTML = '';
+    this._removeOverlay(); this._removeRealmNav(); this.container.innerHTML = '';
     document.removeEventListener('keydown', this._keyHandler);
     if (this._lsKeyCleanup) { this._lsKeyCleanup(); this._lsKeyCleanup = null; }
     if (this._orientationUnsub) { this._orientationUnsub(); this._orientationUnsub = null; }
@@ -1174,7 +1175,7 @@ export class GameScreen {
 
     if (this._lsKeyCleanup) { this._lsKeyCleanup(); this._lsKeyCleanup = null; }
     setLevelBg(levelId);
-    this._removeOverlay(); this.container.innerHTML = '';
+    this._removeOverlay(); this._removeRealmNav(); this.container.innerHTML = '';
     this.state = initState(level);
 
     // Build layout
@@ -1587,6 +1588,37 @@ export class GameScreen {
     if (this._activeOverlay) { this._activeOverlay.remove(); this._activeOverlay = null; }
     // also clean up any stray overlays in container (legacy)
     this.container.querySelector('.overlay')?.remove();
+  }
+
+  _buildRealmNav() {
+    this._removeRealmNav();
+    const strip = document.createElement('div');
+    strip.className = 'realm-qnav';
+
+    for (const realm of REALMS) {
+      if (!isRealmUnlocked(realm.id, this.progress)) continue;
+      const firstRiteId = realm.levelIds[0];
+      const bgUrl = LEVEL_BACKGROUNDS[firstRiteId] || '';
+
+      const thumb = document.createElement('div');
+      thumb.className = 'realm-qnav-thumb';
+      thumb.style.backgroundImage = `url('${bgUrl}')`;
+      thumb.innerHTML = `<span class="realm-qnav-label">Realm ${realm.id} — ${realm.name}</span>`;
+      thumb.addEventListener('click', () => {
+        this._removeRealmNav();
+        this.showLevelSelect(realm.id);
+      });
+      strip.appendChild(thumb);
+    }
+
+    if (strip.children.length > 0) {
+      document.body.appendChild(strip);
+      this._realmNavEl = strip;
+    }
+  }
+
+  _removeRealmNav() {
+    if (this._realmNavEl) { this._realmNavEl.remove(); this._realmNavEl = null; }
   }
 
   _showOverlay(type, html, setup) {
