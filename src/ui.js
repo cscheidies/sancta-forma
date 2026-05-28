@@ -1594,6 +1594,9 @@ export class GameScreen {
     this._removeRealmNav();
     const strip = document.createElement('div');
     strip.className = 'realm-qnav';
+    const inner = document.createElement('div');
+    inner.className = 'realm-qnav-inner';
+    strip.appendChild(inner);
 
     for (const realm of REALMS) {
       if (!isRealmUnlocked(realm.id, this.progress)) continue;
@@ -1608,10 +1611,10 @@ export class GameScreen {
         this._removeRealmNav();
         this.showLevelSelect(realm.id);
       });
-      strip.appendChild(thumb);
+      inner.appendChild(thumb);
     }
 
-    if (strip.children.length > 0) {
+    if (inner.children.length > 0) {
       document.body.appendChild(strip);
       this._realmNavEl = strip;
     }

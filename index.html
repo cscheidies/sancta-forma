@@ -777,18 +777,23 @@
     /* ── Realm Quick-Nav Strip (title screen) ── */
     .realm-qnav {
       position: fixed;
-      bottom: 14px;
+      bottom: 32px;
       left: 50%;
       transform: translateX(-50%);
-      display: flex;
-      gap: 5px;
       z-index: 15;
       max-width: 92vw;
-      overflow-x: auto;
-      scrollbar-width: none;
-      padding: 2px 4px 4px;
+      overflow: visible;
     }
-    .realm-qnav::-webkit-scrollbar { display: none; }
+    .realm-qnav-inner {
+      display: flex;
+      gap: 5px;
+      overflow-x: auto;
+      overflow-y: visible;
+      scrollbar-width: none;
+      padding: 2px 4px 40px;
+      margin-bottom: -40px;
+    }
+    .realm-qnav-inner::-webkit-scrollbar { display: none; }
     .realm-qnav-thumb {
       flex-shrink: 0;
       width: 52px;
