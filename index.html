@@ -439,7 +439,14 @@
     .level-card:not(.locked):hover::before { opacity: 0.5; }
     .level-card:not(.locked):hover { transform: translateY(-2px); background: #1c2330; }
     .level-card.locked { opacity: 0.4; cursor: default; }
-    .level-card.completed { border-color: var(--green); }
+    .level-card.completed {
+      border-color: #39ff6a;
+      box-shadow: 0 0 10px rgba(57,255,106,0.45), 0 0 28px rgba(57,255,106,0.20);
+    }
+    .level-card.unlocked-unplayed {
+      border-color: rgba(40, 80, 200, 0.7);
+      box-shadow: 0 0 10px rgba(30,60,220,0.50), 0 0 30px rgba(20,40,180,0.28), inset 0 0 12px rgba(20,40,180,0.12);
+    }
     .level-card.ls-focused:not(.locked) {
       transform: translateY(-2px);
       background: #1c2330;
@@ -468,7 +475,8 @@
       letter-spacing: 0.14em;
       color: var(--text-dim);
     }
-    .card-status { font-size: 1rem; }
+    .card-status { font-size: 1rem; line-height: 1; }
+    .card-status svg { display: block; }
 
     /* ── Game Layout ──────────────────────────────────── */
     .game-wrapper {

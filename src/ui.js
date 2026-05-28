@@ -991,14 +991,27 @@ export class GameScreen {
       const isCompleted = this.progress.completed.includes(level.id);
       if (!isUnlocked) card.classList.add('locked');
       if (isCompleted) card.classList.add('completed');
+      if (isUnlocked && !isCompleted) card.classList.add('unlocked-unplayed');
       card.style.setProperty('--elem-color', ELEMENT_COLORS[level.playerElement]);
 
       const roman = ['I','II','III','IV','V','VI'][riteIndex(level.id)] ?? level.id;
+      const col = ELEMENT_COLORS[level.playerElement];
+      const shapeIcon = (() => {
+        const e = level.playerElement;
+        const s = isCompleted ? col : isUnlocked ? 'rgba(80,120,255,0.7)' : 'rgba(120,120,140,0.4)';
+        if (e === 'square')
+          return `<svg width="14" height="14" viewBox="0 0 14 14"><rect x="1" y="1" width="12" height="12" rx="1.5" fill="${s}" fill-opacity="0.25" stroke="${s}" stroke-width="1.5"/></svg>`;
+        if (e === 'circle')
+          return `<svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5.5" fill="${s}" fill-opacity="0.25" stroke="${s}" stroke-width="1.5"/></svg>`;
+        if (e === 'triangle')
+          return `<svg width="14" height="14" viewBox="0 0 14 14"><polygon points="7,1.5 13,12.5 1,12.5" fill="${s}" fill-opacity="0.25" stroke="${s}" stroke-width="1.5" stroke-linejoin="round"/></svg>`;
+        return `<svg width="14" height="14" viewBox="0 0 14 14"><polygon points="7,1 13,7 7,13 1,7" fill="${s}" fill-opacity="0.25" stroke="${s}" stroke-width="1.5"/></svg>`;
+      })();
       card.innerHTML = `
         <div class="card-rite">Rite</div>
         <div class="card-num">${roman}</div>
         <div class="card-elem">${level.playerElement.toUpperCase()}</div>
-        <div class="card-status">${isCompleted ? '✦' : isUnlocked ? '◈' : '⬡'}</div>
+        <div class="card-status">${shapeIcon}</div>
       `;
       if (isUnlocked) card.addEventListener('click', () => this.startLevel(level.id));
       grid.appendChild(card);
