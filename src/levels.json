@@ -5240,6 +5240,11 @@
         "circle",
         null
       ]
+    ],
+    "lore": [
+      "No introduction.",
+      "The field is already armed.",
+      "You are already in it."
     ]
   },
   {
@@ -5371,6 +5376,10 @@
         "triangle",
         "square"
       ]
+    ],
+    "lore": [
+      "What you learned in small rooms applies here.",
+      "The scale changes. The grammar does not."
     ]
   },
   {
@@ -5502,6 +5511,11 @@
         "square",
         "circle"
       ]
+    ],
+    "lore": [
+      "Three threats at once.",
+      "Name them as you move.",
+      "Naming keeps the path clear."
     ]
   },
   {
@@ -5633,6 +5647,10 @@
         "triangle",
         "circle"
       ]
+    ],
+    "lore": [
+      "The field has no corners left.",
+      "Move through it anyway."
     ]
   },
   {
@@ -5764,6 +5782,10 @@
         "triangle",
         "circle"
       ]
+    ],
+    "lore": [
+      "What waits is what you know.",
+      "What you know is enough."
     ]
   },
   {
@@ -5895,6 +5917,11 @@
         "triangle",
         "triangle"
       ]
+    ],
+    "lore": [
+      "In the middle of things,",
+      "you found the line.",
+      "Hold it."
     ]
   },
   {
@@ -6026,6 +6053,11 @@
         "circle",
         "square"
       ]
+    ],
+    "lore": [
+      "The stars have multiplied.",
+      "The line between survival and dissolution narrows.",
+      "Walk it exactly."
     ]
   },
   {
@@ -6157,6 +6189,10 @@
         "triangle",
         "moon"
       ]
+    ],
+    "lore": [
+      "Precision above all.",
+      "One wrong step arms the hunter."
     ]
   },
   {
@@ -6288,6 +6324,11 @@
         "triangle",
         "circle"
       ]
+    ],
+    "lore": [
+      "The edge is not a wall.",
+      "The edge is where the game sharpens.",
+      "Step there."
     ]
   },
   {
@@ -6419,6 +6460,10 @@
         "triangle",
         "circle"
       ]
+    ],
+    "lore": [
+      "What was irregular is now the rule.",
+      "Adapt or dissolve."
     ]
   },
   {
@@ -6550,6 +6595,10 @@
         "square",
         null
       ]
+    ],
+    "lore": [
+      "The sharpness is a tool.",
+      "Cut through to the line."
     ]
   },
   {
@@ -6681,6 +6730,11 @@
         "square",
         "triangle"
       ]
+    ],
+    "lore": [
+      "This is the edge.",
+      "Everything before was preparation.",
+      "Hold the line."
     ]
   },
   {
@@ -6812,6 +6866,11 @@
         "triangle",
         "square"
       ]
+    ],
+    "lore": [
+      "The moons have taken the field.",
+      "What watches in the dark watches everything.",
+      "Do not look directly at them."
     ]
   },
   {
@@ -6943,6 +7002,10 @@
         "star",
         "square"
       ]
+    ],
+    "lore": [
+      "The pale light is patient.",
+      "Square must be faster than patient."
     ]
   },
   {
@@ -7074,6 +7137,10 @@
         "triangle",
         "circle"
       ]
+    ],
+    "lore": [
+      "The vigil has been long.",
+      "What it guards, you must take."
     ]
   },
   {
@@ -7205,6 +7272,10 @@
         "triangle",
         "circle"
       ]
+    ],
+    "lore": [
+      "Pale faces in every direction.",
+      "Navigate the dark between them."
     ]
   },
   {
@@ -7336,6 +7407,11 @@
         "square",
         null
       ]
+    ],
+    "lore": [
+      "The last watch is the hardest.",
+      "What holds the eye cannot be avoided.",
+      "Move through it."
     ]
   },
   {
@@ -7467,6 +7543,11 @@
         "triangle",
         "triangle"
       ]
+    ],
+    "lore": [
+      "The final vigil ends.",
+      "What comes after was not expected.",
+      "Step through anyway."
     ]
   },
   {
@@ -7598,6 +7679,11 @@
         "moon",
         "moon"
       ]
+    ],
+    "lore": [
+      "The field is almost entirely moon.",
+      "Seventy pale deaths wait here.",
+      "Find the narrow passage."
     ]
   },
   {
@@ -7729,6 +7815,11 @@
         "moon",
         "moon"
       ]
+    ],
+    "lore": [
+      "The anguish is not fear.",
+      "The anguish is the narrowness.",
+      "One path. Take it."
     ]
   },
   {
@@ -7860,6 +7951,11 @@
         "star",
         "star"
       ]
+    ],
+    "lore": [
+      "Edge-blocks appear.",
+      "The grid contracts.",
+      "Move before it closes."
     ]
   },
   {
@@ -7991,6 +8087,10 @@
         "star",
         "star"
       ]
+    ],
+    "lore": [
+      "What constrained you was also protecting you.",
+      "The constraint is gone."
     ]
   },
   {
@@ -8122,6 +8222,10 @@
         "moon",
         "moon"
       ]
+    ],
+    "lore": [
+      "The narrow way is not comfortable.",
+      "It is the only way."
     ]
   },
   {
@@ -8253,6 +8357,11 @@
         "moon",
         "moon"
       ]
+    ],
+    "lore": [
+      "You walked through the anguish.",
+      "What was narrow held you.",
+      "Now the dream begins."
     ]
   },
   {
@@ -8396,6 +8505,11 @@
           9
         ]
       }
+    ],
+    "lore": [
+      "The grid has changed.",
+      "Two points that are also one.",
+      "Step into the first. Emerge from the second."
     ]
   },
   {
@@ -8539,6 +8653,11 @@
           7
         ]
       }
+    ],
+    "lore": [
+      "The wormhole does not ask permission.",
+      "It opens when you touch it.",
+      "Trust the other side."
     ]
   },
   {
@@ -8682,6 +8801,11 @@
           0
         ]
       }
+    ],
+    "lore": [
+      "Distance means nothing here.",
+      "What you enter, you leave elsewhere.",
+      "The dream is consistent."
     ]
   },
   {
@@ -8835,6 +8959,11 @@
           0
         ]
       }
+    ],
+    "lore": [
+      "You have walked the geometry of death.",
+      "This is the geometry of passage.",
+      "Different."
     ]
   },
   {
@@ -8978,6 +9107,11 @@
           9
         ]
       }
+    ],
+    "lore": [
+      "The painter left space in the composition.",
+      "The space is not empty.",
+      "Move through it."
     ]
   },
   {
@@ -9121,6 +9255,11 @@
           9
         ]
       }
+    ],
+    "lore": [
+      "The dream was always the last room.",
+      "You are in it.",
+      "There is no room after this."
     ]
   }
 ]
