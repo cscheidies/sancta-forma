@@ -1174,6 +1174,75 @@
       60%  { transform: translate(10px,-75px)   scaleY(2);   opacity: 0.55; }
       100% { transform: translate(18px,-145px)  scaleY(1);   opacity: 0; }
     }
+    /* Shape shards — tiny squares, circles, triangles fragmenting outward */
+    .d-shard {
+      position: absolute;
+      left: 50%; bottom: 30px;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .d-shard.sq {
+      width: 7px; height: 7px;
+      margin-left: -3px;
+      background: #00e5ff;
+      box-shadow: 0 0 6px rgba(0,229,255,0.9);
+    }
+    .d-shard.ci {
+      width: 7px; height: 7px;
+      margin-left: -3px;
+      border-radius: 50%;
+      background: #e040fb;
+      box-shadow: 0 0 6px rgba(224,64,251,0.9);
+    }
+    .d-shard.tr {
+      width: 0; height: 0;
+      margin-left: -4px;
+      background: none;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-bottom: 8px solid #69ff47;
+      filter: drop-shadow(0 0 4px rgba(105,255,71,0.9));
+    }
+    /* 9 shards flying in different directions */
+    .d-shard:nth-child(13) { animation: d-shard-a 1.6s ease-out infinite 0.1s; }
+    .d-shard:nth-child(14) { animation: d-shard-b 1.8s ease-out infinite 0.5s; }
+    .d-shard:nth-child(15) { animation: d-shard-c 1.5s ease-out infinite 0.9s; }
+    .d-shard:nth-child(16) { animation: d-shard-d 1.9s ease-out infinite 0.2s; }
+    .d-shard:nth-child(17) { animation: d-shard-e 1.4s ease-out infinite 0.7s; }
+    .d-shard:nth-child(18) { animation: d-shard-f 1.7s ease-out infinite 1.1s; }
+    .d-shard:nth-child(19) { animation: d-shard-a 1.6s ease-out infinite 1.4s; }
+    .d-shard:nth-child(20) { animation: d-shard-d 1.5s ease-out infinite 0.3s; }
+    .d-shard:nth-child(21) { animation: d-shard-c 1.8s ease-out infinite 0.8s; }
+    @keyframes d-shard-a {
+      0%   { transform: translate(0,0) rotate(0deg);          opacity: 0; }
+      8%   { opacity: 1; }
+      100% { transform: translate(-55px,-90px) rotate(-180deg); opacity: 0; }
+    }
+    @keyframes d-shard-b {
+      0%   { transform: translate(0,0) rotate(0deg);          opacity: 0; }
+      8%   { opacity: 1; }
+      100% { transform: translate(60px,-85px) rotate(220deg);  opacity: 0; }
+    }
+    @keyframes d-shard-c {
+      0%   { transform: translate(0,0) rotate(0deg);          opacity: 0; }
+      8%   { opacity: 1; }
+      100% { transform: translate(-30px,-110px) rotate(150deg); opacity: 0; }
+    }
+    @keyframes d-shard-d {
+      0%   { transform: translate(0,0) rotate(0deg);           opacity: 0; }
+      8%   { opacity: 1; }
+      100% { transform: translate(40px,-100px) rotate(-240deg); opacity: 0; }
+    }
+    @keyframes d-shard-e {
+      0%   { transform: translate(0,0) rotate(0deg);           opacity: 0; }
+      8%   { opacity: 1; }
+      100% { transform: translate(-70px,-60px) rotate(300deg);  opacity: 0; }
+    }
+    @keyframes d-shard-f {
+      0%   { transform: translate(0,0) rotate(0deg);          opacity: 0; }
+      8%   { opacity: 1; }
+      100% { transform: translate(65px,-70px) rotate(-130deg); opacity: 0; }
+    }
     .death-title {
       font-family: var(--font-mono);
       font-size: 2rem !important;
@@ -1510,7 +1579,7 @@
          fine in both. */
     }
   </style>
-  <script type="module" crossorigin src="/dev/assets/index-Du7HcsWS.js"></script>
+  <script type="module" crossorigin src="/dev/assets/index-BdyQTHKQ.js"></script>
 </head>
 <div class="bg-layer" id="bg-title" style="background-image:url('./bg_title.jpg');opacity:1"></div>
 <div class="bg-layer" id="bg-a" style="opacity:0"></div>
