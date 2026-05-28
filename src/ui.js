@@ -173,12 +173,12 @@ const LEVEL_CELL_OPACITY = {
   82: 0.30,
   83: 0.32,
   84: 0.36,  // finale — slightly brighter for the final crossing
-  85: 0.28,  // Realm XV Somnium — sumi-e, open space feel
-  86: 0.30,
-  87: 0.26,
-  88: 0.28,
-  89: 0.30,
-  90: 0.32,  // finale
+  85: 0.55,  // Realm XV Somnium — light sumi-e bgs need darker grid
+  86: 0.55,
+  87: 0.55,
+  88: 0.55,
+  89: 0.55,
+  90: 0.58,  // finale
 };
 function levelCellOpacity(levelId) {
   return LEVEL_CELL_OPACITY[levelId] ?? 0.22;
