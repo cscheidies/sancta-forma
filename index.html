@@ -1257,14 +1257,57 @@
       letter-spacing: 0.04em;
       line-height: 1.65;
       color: rgba(212, 170, 255, 0.0);
-      text-shadow: 0 0 18px rgba(160, 120, 255, 0.5);
+      text-shadow:
+        0 0 8px  rgba(180, 120, 255, 0.0),
+        0 0 24px rgba(160,  80, 255, 0.0),
+        0 0 55px rgba(140,  50, 240, 0.0);
       transition: color 1.4s ease, text-shadow 1.4s ease;
       pointer-events: none;
       white-space: normal;
     }
     .ls-idle-lore.visible {
-      color: rgba(212, 170, 255, 0.82);
-      text-shadow: 0 0 22px rgba(160, 120, 255, 0.6);
+      color: rgba(220, 185, 255, 0.88);
+      text-shadow:
+        0 0 8px  rgba(200, 140, 255, 0.95),
+        0 0 24px rgba(170,  90, 255, 0.75),
+        0 0 55px rgba(140,  50, 240, 0.50),
+        0 0 90px rgba(120,  30, 220, 0.30);
+    }
+    /* Fog layers in front of the text */
+    .ls-idle-lore::before,
+    .ls-idle-lore::after {
+      content: '';
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.6s ease;
+    }
+    /* Wide soft fog halo behind/around text */
+    .ls-idle-lore::before {
+      width: 160%; height: 220%;
+      background: radial-gradient(ellipse,
+        rgba(80, 20, 140, 0.28) 0%,
+        rgba(60, 10, 120, 0.14) 45%,
+        transparent 75%);
+      filter: blur(18px);
+      z-index: -1;
+    }
+    /* Closer wispy fog that partially occludes the edges */
+    .ls-idle-lore::after {
+      width: 130%; height: 170%;
+      background: radial-gradient(ellipse,
+        transparent 30%,
+        rgba(30, 5, 80, 0.22) 60%,
+        rgba(20, 0, 60, 0.38) 100%);
+      filter: blur(12px);
+      z-index: 1;
+    }
+    .ls-idle-lore.visible::before,
+    .ls-idle-lore.visible::after {
+      opacity: 1;
     }
     .death-title {
       font-family: var(--font-mono);
