@@ -969,6 +969,7 @@ export class GameScreen {
         <button class="title-btn primary" id="ls-latest">LATEST RITE</button>
         <button class="title-btn" id="ls-why">WHY</button>
       </div>
+      <div class="ls-idle-lore" id="ls-idle-lore"></div>
     `;
 
     // Populate grid with this realm's levels
@@ -1087,6 +1088,56 @@ export class GameScreen {
     document.addEventListener('keydown', lsKey);
     // Clean up when navigating away
     this._lsKeyCleanup = () => document.removeEventListener('keydown', lsKey);
+
+    // ── Idle lore — after 30s, fade realm narrative lines in/out ──────────
+    const loreLine  = screen.querySelector('#ls-idle-lore');
+    const firstLevel = this.levels.find(l => l.id === realm.levelIds[0]);
+    const loreLines  = firstLevel?.lore ?? [];
+    let idleTimer = null, loreTimeout = null, loreIdx = 0, loreRunning = false;
+
+    const stopLore = () => {
+      loreRunning = false;
+      clearTimeout(loreTimeout);
+      loreLine.classList.remove('visible');
+    };
+
+    const showNextLine = () => {
+      if (!loreRunning || !loreLines.length) return;
+      loreLine.classList.remove('visible');
+      loreTimeout = setTimeout(() => {
+        loreLine.textContent = loreLines[loreIdx % loreLines.length];
+        loreLine.classList.add('visible');
+        loreIdx++;
+        loreTimeout = setTimeout(showNextLine, 4200);
+      }, 700);
+    };
+
+    const startIdle = () => {
+      if (loreRunning || !loreLines.length) return;
+      loreRunning = true;
+      loreIdx = 0;
+      showNextLine();
+    };
+
+    const resetIdle = () => {
+      clearTimeout(idleTimer);
+      stopLore();
+      idleTimer = setTimeout(startIdle, 30000);
+    };
+
+    ['pointermove','pointerdown','keydown','touchstart'].forEach(evt =>
+      screen.addEventListener(evt, resetIdle, { passive: true })
+    );
+
+    idleTimer = setTimeout(startIdle, 30000);
+
+    this._lsIdleCleanup = () => {
+      clearTimeout(idleTimer);
+      clearTimeout(loreTimeout);
+      loreRunning = false;
+    };
+    const origCleanup = this._lsKeyCleanup;
+    this._lsKeyCleanup = () => { origCleanup(); this._lsIdleCleanup?.(); };
 
     this.container.appendChild(screen);
   }

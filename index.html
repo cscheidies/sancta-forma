@@ -1243,6 +1243,28 @@
       8%   { opacity: 1; }
       100% { transform: translate(65px,-70px) rotate(-130deg); opacity: 0; }
     }
+    /* Idle lore — realm narrative lines that fade in below level select buttons */
+    .ls-idle-lore {
+      position: absolute;
+      bottom: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(420px, 86vw);
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: clamp(0.78rem, 2.2vw, 0.95rem);
+      letter-spacing: 0.10em;
+      color: rgba(200, 180, 255, 0.0);
+      text-shadow: 0 0 18px rgba(160, 120, 255, 0.5);
+      transition: color 1.4s ease, text-shadow 1.4s ease;
+      pointer-events: none;
+      white-space: normal;
+      line-height: 1.5;
+    }
+    .ls-idle-lore.visible {
+      color: rgba(200, 180, 255, 0.75);
+      text-shadow: 0 0 22px rgba(160, 120, 255, 0.6);
+    }
     .death-title {
       font-family: var(--font-mono);
       font-size: 2rem !important;
