@@ -1587,9 +1587,12 @@ export class GameScreen {
     const existing = this.container.querySelector('.overlay');
     if (existing) existing.remove();
 
-    // Hide game board so the card floats cleanly over the rite background
-    const wrapper = this.container.querySelector('.game-wrapper');
-    if (wrapper) wrapper.style.display = 'none';
+    // On win: hide game board so card floats over the rite background
+    // On death/lose: keep board visible so player sees where they ended up
+    if (type === 'win') {
+      const wrapper = this.container.querySelector('.game-wrapper');
+      if (wrapper) wrapper.style.display = 'none';
+    }
 
     const overlay = document.createElement('div');
     overlay.className = `overlay overlay-${type}`;
