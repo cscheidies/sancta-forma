@@ -1592,11 +1592,8 @@ export class GameScreen {
 
   _buildRealmNav() {
     this._removeRealmNav();
-    const strip = document.createElement('div');
-    strip.className = 'realm-qnav';
     const inner = document.createElement('div');
     inner.className = 'realm-qnav-inner';
-    strip.appendChild(inner);
 
     for (const realm of REALMS) {
       if (!isRealmUnlocked(realm.id, this.progress)) continue;
@@ -1615,7 +1612,12 @@ export class GameScreen {
     }
 
     if (inner.children.length > 0) {
-      document.body.appendChild(strip);
+      const strip = document.createElement('div');
+      strip.className = 'realm-qnav';
+      strip.appendChild(inner);
+      // Insert into title screen below the forge button
+      const titleScreen = this.container.querySelector('.title-screen');
+      if (titleScreen) titleScreen.appendChild(strip);
       this._realmNavEl = strip;
     }
   }
