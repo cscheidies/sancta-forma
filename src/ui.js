@@ -133,6 +133,12 @@ const LEVEL_BACKGROUNDS = {
   88: './bg_rite88.jpg',
   89: './bg_rite89.jpg',
   90: './bg_rite90.jpg',
+  97:  './bg_rite97.jpg',
+  98:  './bg_rite98.jpg',
+  99:  './bg_rite99.jpg',
+  100: './bg_rite100.jpg',
+  101: './bg_rite101.jpg',
+  102: './bg_rite102.jpg',
 };
 
 // Cell fill opacity per level — higher = darker grid (use when bg is bright/light)
