@@ -10176,130 +10176,126 @@
       0
     ],
     "winScore": 100,
-    "lore": [
-      "The Square counted the stones and got a smaller number than it had counted the last time.",
-      "This was new."
-    ],
     "grid": [
       [
         null,
         "square",
+        "circle",
         "triangle",
         "square",
+        "circle",
         "triangle",
         "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square"
+        "circle",
+        "triangle"
       ],
       [
         "triangle",
+        "circle",
         "square",
         "triangle",
+        "circle",
         "square",
         "triangle",
+        "moon",
         "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square"
+        "circle"
       ],
       [
         "square",
         "triangle",
+        "circle",
         "square",
         "triangle",
-        "square",
-        "triangle",
-        "square",
+        "moon",
+        "circle",
         "triangle",
         "square",
         "triangle"
       ],
       [
-        "triangle",
+        "circle",
         "square",
         "triangle",
+        "circle",
         "square",
         "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square"
-      ],
-      [
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle"
-      ],
-      [
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle"
-      ],
-      [
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle"
-      ],
-      [
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
+        "circle",
         "square",
         "triangle",
         "square"
       ],
       [
-        "square",
+        "circle",
         "triangle",
         "square",
         "triangle",
+        "circle",
         "square",
         "triangle",
-        "square",
-        "triangle",
+        "moon",
         "square",
         "triangle"
       ],
       [
-        "triangle",
+        "circle",
         "square",
         "triangle",
         "square",
         "triangle",
+        "circle",
         "square",
         "triangle",
-        "square",
-        "triangle",
+        "circle",
         "square"
+      ],
+      [
+        "triangle",
+        "circle",
+        "square",
+        "circle",
+        "square",
+        "triangle",
+        "moon",
+        "square",
+        "triangle",
+        "circle"
+      ],
+      [
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "moon",
+        "square",
+        "triangle",
+        "square",
+        "triangle",
+        "moon",
+        "square",
+        "triangle",
+        "circle",
+        "square"
+      ],
+      [
+        "triangle",
+        "circle",
+        "square",
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "moon"
       ]
     ],
     "decayOrder": [
@@ -10308,43 +10304,43 @@
         9
       ],
       [
-        8,
+        0,
         9
       ],
       [
         9,
+        0
+      ],
+      [
+        8,
         8
       ],
       [
-        9,
+        1,
+        8
+      ],
+      [
+        2,
         7
       ],
       [
-        8,
-        7
+        7,
+        2
       ],
       [
-        9,
-        5
+        3,
+        6
       ],
       [
-        8,
-        5
-      ],
-      [
-        9,
+        6,
         3
-      ],
-      [
-        8,
-        3
-      ],
-      [
-        9,
-        1
       ]
     ],
-    "decayInterval": 1
+    "decayInterval": 1,
+    "lore": [
+      "The Square counted the stones and got a smaller number than it had counted the last time.",
+      "This was new."
+    ]
   },
   {
     "id": 98,
@@ -10354,195 +10350,179 @@
       0
     ],
     "winScore": 100,
-    "lore": [
-      "The world behind the Square was no longer there.",
-      "This was information."
-    ],
     "grid": [
       [
         null,
         "square",
-        "triangle",
+        "circle",
+        "circle",
         "square",
         "triangle",
+        "moon",
         "square",
+        "circle",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "star",
+        "circle",
         "triangle",
         "square",
+        "circle",
         "triangle",
+        "moon",
         "square"
       ],
       [
         "square",
+        "circle",
         "triangle",
+        "moon",
         "square",
+        "circle",
         "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
+        "circle",
         "square",
         "triangle"
       ],
       [
         "triangle",
         "square",
-        "triangle",
+        "circle",
         "square",
         "triangle",
+        "star",
+        "circle",
         "square",
         "triangle",
-        "square",
-        "triangle",
-        "square"
-      ],
-      [
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle"
-      ],
-      [
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
         "moon"
       ],
       [
+        "circle",
         "triangle",
+        "square",
+        "circle",
+        "star",
         "triangle",
+        "square",
         "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle"
+        "circle",
+        "square"
       ],
       [
         "square",
+        "circle",
+        "triangle",
         "square",
+        "circle",
+        "triangle",
+        "star",
+        "circle",
         "square",
+        "triangle"
+      ],
+      [
+        "triangle",
         "square",
+        "moon",
+        "triangle",
         "square",
+        "circle",
+        "triangle",
         "square",
+        "moon",
+        "circle"
+      ],
+      [
+        "circle",
+        "triangle",
         "square",
+        "circle",
+        "triangle",
         "square",
+        "circle",
+        "triangle",
         "square",
+        "star"
+      ],
+      [
+        "square",
+        "moon",
+        "circle",
+        "square",
+        "circle",
+        "triangle",
+        "square",
+        "circle",
+        "triangle",
         "square"
       ],
       [
         "triangle",
+        "square",
         "triangle",
+        "circle",
+        "square",
+        "moon",
+        "circle",
+        "square",
         "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle"
-      ],
-      [
-        "square",
-        "square",
-        "square",
-        "square",
-        "square",
-        "square",
-        "square",
-        "square",
-        "square",
         "square"
-      ],
-      [
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle"
       ]
     ],
     "decayOrder": [
       [
-        3,
+        9,
         9
       ],
       [
-        3,
-        7
-      ],
-      [
-        3,
-        5
-      ],
-      [
-        3,
-        3
-      ],
-      [
-        3,
-        1
-      ],
-      [
-        2,
+        8,
         9
       ],
       [
-        2,
-        7
+        0,
+        9
       ],
       [
-        2,
-        5
+        9,
+        0
       ],
       [
-        2,
-        3
-      ],
-      [
-        2,
-        1
+        7,
+        8
       ],
       [
         1,
         8
       ],
       [
-        1,
-        6
+        2,
+        8
       ],
       [
-        1,
-        4
+        6,
+        9
       ],
       [
-        1,
-        2
+        5,
+        9
       ],
       [
-        1,
-        0
+        4,
+        9
+      ],
+      [
+        3,
+        9
       ]
     ],
-    "decayInterval": 1
+    "decayInterval": 1,
+    "lore": [
+      "The world behind the Square was no longer there.",
+      "This was information."
+    ]
   },
   {
     "id": 99,
@@ -10552,11 +10532,6 @@
       0
     ],
     "winScore": 100,
-    "lore": [
-      "The pool was smaller than it had been.",
-      "Not much smaller. But smaller.",
-      "The Circle did not have words for this feeling."
-    ],
     "grid": [
       [
         null,
@@ -10578,6 +10553,30 @@
         "triangle",
         "circle",
         "triangle",
+        "star",
+        "triangle",
+        "circle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "circle",
+        "triangle",
+        "star",
+        "triangle",
+        "circle",
+        "triangle",
         "circle",
         "triangle",
         "circle"
@@ -10600,7 +10599,7 @@
         "triangle",
         "circle",
         "triangle",
-        "circle",
+        "star",
         "triangle",
         "circle",
         "triangle",
@@ -10620,31 +10619,7 @@
       ],
       [
         "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle"
-      ],
-      [
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle"
-      ],
-      [
-        "triangle",
-        "circle",
+        "star",
         "triangle",
         "circle",
         "triangle",
@@ -10697,10 +10672,6 @@
         3
       ],
       [
-        9,
-        1
-      ],
-      [
         8,
         8
       ],
@@ -10717,11 +10688,20 @@
         2
       ],
       [
-        8,
-        0
+        7,
+        9
+      ],
+      [
+        6,
+        8
       ]
     ],
-    "decayInterval": 1
+    "decayInterval": 1,
+    "lore": [
+      "The pool was smaller than it had been.",
+      "Not much smaller. But smaller.",
+      "The Circle did not have words for this feeling."
+    ]
   },
   {
     "id": 100,
@@ -10731,11 +10711,6 @@
       0
     ],
     "winScore": 100,
-    "lore": [
-      "The passage folded.",
-      "The world dissolved behind it.",
-      "The Circle had not expected both at once."
-    ],
     "grid": [
       [
         null,
@@ -10751,27 +10726,51 @@
       ],
       [
         "triangle",
+        "circle",
         "triangle",
+        "star",
         "triangle",
+        "circle",
         "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
-        "triangle",
+        "circle",
+        "star",
         "triangle"
       ],
       [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "circle",
         "star",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
         "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star"
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle"
       ],
       [
         "triangle",
@@ -10781,7 +10780,7 @@
         "triangle",
         "circle",
         "triangle",
-        "circle",
+        "star",
         "triangle",
         "circle"
       ],
@@ -10799,7 +10798,7 @@
       ],
       [
         "triangle",
-        "circle",
+        "star",
         "triangle",
         "circle",
         "triangle",
@@ -10815,39 +10814,14 @@
         "circle",
         "triangle",
         "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle"
-      ],
-      [
-        "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle",
+        "star",
         "triangle",
         "circle",
         "triangle",
         "circle"
-      ],
-      [
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle"
       ],
       [
         "wormhole",
-        "triangle",
         "circle",
         "triangle",
         "circle",
@@ -10855,6 +10829,7 @@
         "circle",
         "triangle",
         "circle",
+        "triangle",
         "circle"
       ]
     ],
@@ -10872,59 +10847,52 @@
     ],
     "decayOrder": [
       [
-        3,
-        9
-      ],
-      [
-        3,
-        7
-      ],
-      [
-        3,
-        5
-      ],
-      [
-        3,
-        3
-      ],
-      [
-        3,
-        1
-      ],
-      [
-        4,
-        0
-      ],
-      [
-        4,
-        2
-      ],
-      [
-        4,
-        4
-      ],
-      [
-        4,
-        6
-      ],
-      [
         4,
         8
       ],
       [
         5,
-        9
+        8
       ],
       [
-        5,
+        6,
+        8
+      ],
+      [
+        3,
+        8
+      ],
+      [
+        2,
+        8
+      ],
+      [
+        7,
+        8
+      ],
+      [
+        8,
+        8
+      ],
+      [
+        8,
         7
       ],
       [
-        5,
+        8,
+        6
+      ],
+      [
+        8,
         5
       ]
     ],
-    "decayInterval": 1
+    "decayInterval": 1,
+    "lore": [
+      "The passage folded.",
+      "The world dissolved behind it.",
+      "The Circle had not expected both at once."
+    ]
   },
   {
     "id": 101,
@@ -10934,33 +10902,27 @@
       0
     ],
     "winScore": 100,
-    "lore": [
-      "The Triangle pointed at a peak that was no longer there.",
-      "The Triangle pointed anyway.",
-      "The Triangle had always pointed at what was no longer there.",
-      "This was just the first time it noticed."
-    ],
     "grid": [
       [
         null,
         "triangle",
         "square",
         "triangle",
-        "square",
+        "circle",
         "triangle",
         "square",
         "triangle",
-        "square",
+        "circle",
         "triangle"
       ],
       [
         "square",
         "triangle",
-        "square",
+        "circle",
         "triangle",
         "square",
         "triangle",
-        "square",
+        "circle",
         "triangle",
         "square",
         "triangle"
@@ -10969,58 +10931,46 @@
         "triangle",
         "square",
         "triangle",
-        "square",
+        "moon",
         "triangle",
         "square",
         "triangle",
-        "square",
+        "circle",
         "triangle",
         "square"
       ],
       [
-        "square",
+        "circle",
         "triangle",
         "square",
         "triangle",
-        "square",
+        "circle",
         "triangle",
         "square",
         "triangle",
-        "square",
+        "moon",
         "triangle"
       ],
       [
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "hexagon",
-        "moon"
-      ],
-      [
+        "triangle",
+        "circle",
         "triangle",
         "square",
         "triangle",
-        "square",
+        "moon",
         "triangle",
         "square",
         "triangle",
-        "square",
-        "triangle",
-        "triangle"
+        "circle"
       ],
       [
         "square",
         "triangle",
-        "square",
+        "moon",
         "triangle",
         "square",
         "triangle",
-        "square",
+        "circle",
         "triangle",
         "square",
         "triangle"
@@ -11029,22 +10979,22 @@
         "triangle",
         "square",
         "triangle",
-        "square",
+        "circle",
         "triangle",
         "square",
         "triangle",
-        "square",
+        "moon",
         "triangle",
         "square"
       ],
       [
-        "square",
+        "moon",
+        "triangle",
+        "circle",
         "triangle",
         "square",
         "triangle",
-        "square",
-        "triangle",
-        "square",
+        "circle",
         "triangle",
         "square",
         "triangle"
@@ -11053,70 +11003,64 @@
         "triangle",
         "square",
         "triangle",
-        "square",
+        "moon",
+        "triangle",
+        "circle",
         "triangle",
         "square",
         "triangle",
+        "circle"
+      ],
+      [
+        "circle",
+        "triangle",
         "square",
         "triangle",
-        "square"
+        "circle",
+        "triangle",
+        "square",
+        "triangle",
+        "circle",
+        "triangle"
       ]
     ],
     "decayOrder": [
       [
-        0,
-        1
-      ],
-      [
-        0,
-        3
-      ],
-      [
-        0,
-        5
-      ],
-      [
-        0,
-        7
-      ],
-      [
-        0,
+        9,
         9
       ],
       [
-        1,
-        1
-      ],
-      [
-        1,
-        3
-      ],
-      [
-        1,
-        5
-      ],
-      [
-        1,
+        9,
         7
       ],
       [
-        1,
-        9
+        9,
+        5
       ],
       [
-        2,
-        0
+        9,
+        3
       ],
       [
-        2,
-        2
+        8,
+        8
       ],
       [
-        2,
+        8,
+        6
+      ],
+      [
+        8,
         4
       ]
     ],
-    "decayInterval": 1
+    "decayInterval": 1,
+    "lore": [
+      "The Triangle pointed at a peak that was no longer there.",
+      "The Triangle pointed anyway.",
+      "The Triangle had always pointed at what was no longer there.",
+      "This was just the first time it noticed."
+    ]
   },
   {
     "id": 102,
@@ -11126,130 +11070,125 @@
       0
     ],
     "winScore": 100,
-    "lore": [
-      "The Triangle must move efficiently.",
-      "Every move eats another cell it might have needed.",
-      "Tempus edax rerum."
-    ],
     "grid": [
       [
         null,
         "triangle",
         "square",
         "triangle",
-        "square",
+        "circle",
         "triangle",
         "square",
         "triangle",
-        "square",
+        "circle",
         "wormhole"
       ],
       [
+        "square",
+        "triangle",
+        "circle",
         "triangle",
         "square",
         "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "triangle"
-      ],
-      [
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
+        "moon",
         "triangle",
         "square",
         "triangle"
       ],
       [
+        "triangle",
+        "square",
+        "triangle",
         "moon",
+        "triangle",
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "square"
+      ],
+      [
+        "circle",
+        "triangle",
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "square",
+        "triangle",
         "moon",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "circle",
+        "triangle",
         "moon",
-        "moon",
-        "hexagon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon"
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle",
+        "circle"
+      ],
+      [
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "square",
+        "triangle"
       ],
       [
         "triangle",
         "square",
         "triangle",
-        "square",
+        "circle",
         "triangle",
-        "square",
+        "moon",
         "triangle",
         "square",
         "triangle",
         "square"
       ],
       [
-        "square",
+        "moon",
+        "triangle",
+        "circle",
         "triangle",
         "square",
         "triangle",
-        "square",
+        "circle",
         "triangle",
-        "square",
-        "triangle",
-        "square",
+        "moon",
         "triangle"
       ],
       [
         "triangle",
         "square",
         "triangle",
-        "square",
+        "moon",
+        "triangle",
+        "circle",
         "triangle",
         "square",
         "triangle",
-        "square",
-        "triangle",
-        "square"
-      ],
-      [
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle"
-      ],
-      [
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square"
+        "circle"
       ],
       [
         "wormhole",
         "triangle",
         "square",
         "triangle",
-        "square",
+        "circle",
         "triangle",
         "square",
         "triangle",
-        "square",
+        "circle",
         "triangle"
       ]
     ],
@@ -11267,67 +11206,48 @@
     ],
     "decayOrder": [
       [
-        0,
-        1
-      ],
-      [
-        0,
-        3
-      ],
-      [
-        0,
-        5
-      ],
-      [
-        0,
-        7
-      ],
-      [
-        1,
-        0
-      ],
-      [
-        1,
-        2
-      ],
-      [
-        1,
-        4
-      ],
-      [
-        1,
-        6
-      ],
-      [
-        1,
+        4,
         8
       ],
       [
-        1,
-        9
+        5,
+        8
+      ],
+      [
+        6,
+        8
+      ],
+      [
+        3,
+        8
       ],
       [
         2,
-        1
+        8
       ],
       [
-        2,
-        3
-      ],
-      [
-        2,
-        5
-      ],
-      [
-        2,
+        7,
         7
       ],
       [
-        2,
-        9
+        8,
+        7
+      ],
+      [
+        8,
+        5
+      ],
+      [
+        8,
+        3
       ]
     ],
-    "decayInterval": 1
+    "decayInterval": 1,
+    "lore": [
+      "The Triangle must move efficiently.",
+      "Every move eats another cell it might have needed.",
+      "Tempus edax rerum."
+    ]
   },
   {
     "id": 103,
@@ -11337,131 +11257,131 @@
       0
     ],
     "winScore": 100,
-    "lore": [
-      "The Square walked forward and there was only one way to walk forward.",
-      "This was clarifying."
-    ],
     "grid": [
       [
         null,
         "square",
+        "circle",
+        "circle",
+        "square",
+        "moon",
+        "triangle",
+        "square",
+        "circle",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "circle",
+        "moon",
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square"
+      ],
+      [
+        "square",
+        "triangle",
+        "circle",
         "triangle",
         "square",
         "triangle",
+        "moon",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "circle",
         "square",
         "triangle",
+        "moon",
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "square"
+      ],
+      [
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "square",
+        "triangle",
+        "circle",
+        "triangle"
+      ],
+      [
+        "square",
+        "triangle",
+        "star",
+        "circle",
+        "triangle",
+        "square",
+        "circle",
         "square",
         "triangle",
         "square"
       ],
       [
+        "circle",
+        "square",
+        "triangle",
+        "circle",
         "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
+        "triangle",
+        "circle",
+        "triangle",
+        "square",
+        "circle"
+      ],
+      [
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "star",
+        "circle",
         "triangle"
       ],
       [
         "square",
         "triangle",
+        "circle",
+        "square",
+        "triangle",
+        "moon",
+        "circle",
+        "square",
+        "triangle",
+        "square"
+      ],
+      [
+        "circle",
+        "square",
+        "triangle",
+        "circle",
         "square",
         "triangle",
         "square",
         "triangle",
-        "square",
-        "triangle",
-        "square",
+        "circle",
         "triangle"
-      ],
-      [
-        "triangle",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon"
-      ],
-      [
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle"
-      ],
-      [
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "triangle"
-      ],
-      [
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle"
-      ],
-      [
-        "triangle",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon"
-      ],
-      [
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle"
-      ],
-      [
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon"
       ]
+    ],
+    "lore": [
+      "The Square walked forward and there was only one way to walk forward.",
+      "This was clarifying."
     ]
   },
   {
@@ -11472,132 +11392,132 @@
       0
     ],
     "winScore": 100,
-    "lore": [
-      "Each step meaningful.",
-      "Wrong steps had real cost.",
-      "The Square moved carefully."
-    ],
     "grid": [
       [
         null,
         "square",
+        "circle",
+        "square",
+        "circle",
+        "star",
         "triangle",
         "square",
+        "circle",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "star",
+        "circle",
+        "triangle",
+        "square",
+        "circle",
+        "triangle",
+        "moon",
+        "square"
+      ],
+      [
+        "square",
+        "circle",
+        "triangle",
+        "moon",
+        "square",
+        "circle",
+        "triangle",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
         "triangle",
         "square",
         "circle",
         "square",
+        "triangle",
+        "star",
+        "circle",
+        "square",
+        "triangle",
+        "moon"
+      ],
+      [
+        "circle",
+        "triangle",
+        "square",
+        "circle",
+        "star",
+        "triangle",
+        "square",
+        "triangle",
+        "circle",
+        "square"
+      ],
+      [
+        "square",
+        "circle",
+        "triangle",
+        "square",
+        "circle",
+        "triangle",
+        "star",
+        "circle",
+        "square",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "square",
+        "moon",
+        "triangle",
+        "square",
+        "circle",
+        "triangle",
+        "square",
+        "moon",
+        "circle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "square",
+        "circle",
+        "triangle",
+        "square",
+        "circle",
+        "triangle",
+        "square",
+        "star"
+      ],
+      [
+        "square",
+        "moon",
+        "circle",
+        "square",
+        "circle",
+        "triangle",
+        "square",
+        "circle",
         "triangle",
         "square"
       ],
       [
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "triangle"
-      ],
-      [
-        "square",
-        "triangle",
-        "circle",
-        "triangle",
-        "square",
         "triangle",
         "square",
         "triangle",
         "circle",
-        "triangle"
-      ],
-      [
-        "triangle",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon"
-      ],
-      [
         "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
+        "moon",
         "circle",
         "square",
         "triangle",
-        "square",
-        "triangle"
-      ],
-      [
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "triangle"
-      ],
-      [
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "circle",
-        "triangle",
-        "square",
-        "triangle"
-      ],
-      [
-        "triangle",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon"
-      ],
-      [
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle"
-      ],
-      [
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon"
+        "square"
       ]
+    ],
+    "lore": [
+      "Each step meaningful.",
+      "Wrong steps had real cost.",
+      "The Square moved carefully."
     ]
   },
   {
@@ -11608,11 +11528,6 @@
       0
     ],
     "winScore": 100,
-    "lore": [
-      "The pool was small.",
-      "The stars pressed in.",
-      "The Circle held the thread."
-    ],
     "grid": [
       [
         null,
@@ -11620,29 +11535,17 @@
         "triangle",
         "circle",
         "triangle",
-        "circle",
+        "star",
         "triangle",
         "circle",
         "triangle",
         "circle"
       ],
       [
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "circle"
-      ],
-      [
         "triangle",
         "circle",
         "triangle",
-        "circle",
+        "star",
         "triangle",
         "circle",
         "triangle",
@@ -11652,43 +11555,19 @@
       ],
       [
         "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
         "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star"
+        "circle",
+        "triangle"
       ],
       [
         "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle",
-        "circle"
-      ],
-      [
         "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "circle"
-      ],
-      [
-        "triangle",
-        "circle",
         "triangle",
         "circle",
         "triangle",
@@ -11700,15 +11579,63 @@
       ],
       [
         "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
         "star",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
         "star",
+        "triangle"
+      ],
+      [
+        "circle",
+        "triangle",
         "star",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
         "star",
+        "triangle",
+        "circle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
         "star",
-        "star",
-        "star",
-        "star",
-        "star"
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
       ],
       [
         "triangle",
@@ -11721,19 +11648,12 @@
         "circle",
         "triangle",
         "circle"
-      ],
-      [
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star"
       ]
+    ],
+    "lore": [
+      "The pool was small.",
+      "The stars pressed in.",
+      "The Circle held the thread."
     ]
   },
   {
@@ -11744,42 +11664,25 @@
       0
     ],
     "winScore": 100,
-    "lore": [
-      "Two paths. They converged in a fold of space.",
-      "The Circle chose.",
-      "Both choices were the thread."
-    ],
     "grid": [
       [
         null,
         "circle",
         "triangle",
-        "circle",
+        "star",
         "triangle",
         "circle",
         "triangle",
         "circle",
-        "triangle",
-        "wormhole"
+        "star",
+        "circle"
       ],
       [
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "triangle"
-      ],
-      [
-        "circle",
         "triangle",
         "circle",
         "triangle",
         "circle",
+        "star",
         "triangle",
         "circle",
         "triangle",
@@ -11787,16 +11690,28 @@
         "triangle"
       ],
       [
+        "circle",
+        "star",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "star",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "triangle",
+        "circle",
         "triangle",
         "star",
+        "triangle",
+        "circle",
+        "triangle",
         "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star"
+        "triangle",
+        "circle"
       ],
       [
         "circle",
@@ -11804,6 +11719,30 @@
         "circle",
         "triangle",
         "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "star",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "star",
+        "triangle",
+        "circle",
+        "triangle",
+        "star",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "star",
         "triangle",
         "circle",
         "triangle",
@@ -11811,16 +11750,16 @@
         "triangle"
       ],
       [
+        "triangle",
+        "circle",
         "star",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
         "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "triangle"
+        "triangle",
+        "circle"
       ],
       [
         "circle",
@@ -11829,59 +11768,28 @@
         "triangle",
         "circle",
         "triangle",
+        "star",
         "circle",
         "triangle",
-        "circle",
-        "triangle"
+        "circle"
       ],
       [
         "triangle",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star"
-      ],
-      [
         "circle",
+        "triangle",
+        "star",
         "triangle",
         "circle",
         "triangle",
         "circle",
         "triangle",
-        "circle",
-        "triangle",
-        "circle",
-        "triangle"
-      ],
-      [
-        "wormhole",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star",
-        "star"
+        "circle"
       ]
     ],
-    "wormholes": [
-      {
-        "from": [
-          0,
-          9
-        ],
-        "to": [
-          9,
-          0
-        ]
-      }
+    "lore": [
+      "Two paths. They converged in a fold of space.",
+      "The Circle chose.",
+      "Both choices were the thread."
     ]
   },
   {
@@ -11892,91 +11800,86 @@
       0
     ],
     "winScore": 100,
-    "lore": [
-      "The Triangle had always pointed at what was ahead.",
-      "Now ahead was the only direction that existed.",
-      "This required a different kind of pointing."
-    ],
     "grid": [
       [
         null,
         "triangle",
         "square",
         "triangle",
-        "square",
+        "circle",
         "triangle",
         "square",
+        "triangle",
+        "circle",
+        "triangle"
+      ],
+      [
+        "square",
+        "triangle",
+        "moon",
+        "triangle",
+        "square",
+        "triangle",
+        "circle",
         "triangle",
         "square",
         "triangle"
       ],
       [
+        "triangle",
+        "circle",
+        "triangle",
+        "square",
+        "triangle",
         "moon",
+        "triangle",
+        "square",
+        "triangle",
+        "circle"
+      ],
+      [
+        "square",
+        "triangle",
+        "square",
+        "triangle",
         "moon",
+        "triangle",
+        "circle",
+        "triangle",
+        "square",
+        "triangle"
+      ],
+      [
+        "triangle",
         "moon",
+        "triangle",
+        "circle",
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle",
+        "circle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle",
         "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "square"
+        "triangle"
       ],
       [
         "triangle",
         "square",
         "triangle",
-        "square",
+        "moon",
         "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square"
-      ],
-      [
-        "square",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon"
-      ],
-      [
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square"
-      ],
-      [
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "square"
-      ],
-      [
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
+        "circle",
         "triangle",
         "square",
         "triangle",
@@ -11984,40 +11887,45 @@
       ],
       [
         "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "square",
+        "triangle",
         "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon"
+        "triangle",
+        "circle",
+        "triangle"
       ],
       [
         "triangle",
-        "square",
+        "circle",
         "triangle",
         "square",
         "triangle",
-        "square",
+        "moon",
         "triangle",
         "square",
         "triangle",
-        "square"
+        "circle"
       ],
       [
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon"
+        "square",
+        "triangle",
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "square",
+        "triangle",
+        "circle",
+        "triangle"
       ]
+    ],
+    "lore": [
+      "The Triangle had always pointed at what was ahead.",
+      "Now ahead was the only direction that existed.",
+      "This required a different kind of pointing."
     ]
   },
   {
@@ -12028,83 +11936,102 @@
       0
     ],
     "winScore": 100,
-    "lore": [
-      "The last thread.",
-      "Difficulty and beauty in the single found path.",
-      "Filum."
-    ],
     "grid": [
       [
         null,
         "triangle",
         "square",
+        "moon",
         "triangle",
         "square",
+        "circle",
         "triangle",
-        "square",
-        "triangle",
-        "square",
-        "wormhole"
-      ],
-      [
         "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "square"
-      ],
-      [
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square"
+        "triangle"
       ],
       [
         "square",
+        "triangle",
+        "circle",
+        "triangle",
         "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon"
+        "triangle",
+        "square",
+        "triangle",
+        "circle",
+        "triangle"
       ],
       [
         "triangle",
-        "square",
+        "circle",
         "triangle",
         "square",
         "triangle",
         "square",
         "triangle",
-        "square",
+        "moon",
         "triangle",
         "square"
       ],
       [
         "moon",
+        "triangle",
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "square",
+        "triangle"
+      ],
+      [
+        "triangle",
+        "square",
+        "triangle",
         "moon",
+        "triangle",
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle"
+      ],
+      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "square",
+        "triangle",
+        "square",
+        "triangle",
         "moon",
+        "triangle"
+      ],
+      [
+        "triangle",
         "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
+        "triangle",
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
         "square"
+      ],
+      [
+        "square",
+        "triangle",
+        "circle",
+        "triangle",
+        "moon",
+        "triangle",
+        "square",
+        "triangle",
+        "circle",
+        "triangle"
       ],
       [
         "triangle",
@@ -12112,60 +12039,29 @@
         "triangle",
         "square",
         "triangle",
-        "square",
+        "moon",
         "triangle",
         "square",
         "triangle",
         "square"
       ],
       [
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "square"
-      ],
-      [
+        "circle",
+        "triangle",
+        "circle",
+        "triangle",
+        "circle",
         "triangle",
         "square",
         "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square",
-        "triangle",
-        "square"
-      ],
-      [
-        "wormhole",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon",
-        "moon"
+        "circle",
+        "triangle"
       ]
     ],
-    "wormholes": [
-      {
-        "from": [
-          0,
-          9
-        ],
-        "to": [
-          9,
-          0
-        ]
-      }
+    "lore": [
+      "The last thread.",
+      "Difficulty and beauty in the single found path.",
+      "Filum."
     ]
   }
 ]
