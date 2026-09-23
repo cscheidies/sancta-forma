@@ -272,6 +272,7 @@ const REALMS = [
   { id: 13, name: 'Ultima Vigilia',     levelIds: [73,74,75,76,77,78]    },
   { id: 14, name: 'Angustia',           levelIds: [79,80,81,82,83,84]    },
   { id: 15, name: 'Somnium',            levelIds: [85,86,87,88,89,90]    },
+  { id: 16, name: 'Verum Initium',      levelIds: [91,92,93,94,95,96]    },
   { id: 17, name: 'Tempus Edax',        levelIds: [97,98,99,100,101,102] },
 ];
 
@@ -389,6 +390,28 @@ const PRE_LEVEL_BEATS = {
     lines: [
       'The horizon could be reached by pointing at it directly.',
       'The Triangle did not know how to feel about this.',
+    ],
+  },
+  91: {
+    heading: 'Ordinary',
+    lines: [
+      'The moor was a moor again.',
+      'The Square had forgotten how ordinary that felt.',
+    ],
+  },
+  93: {
+    heading: 'The Pool',
+    lines: [
+      'The pool held water. It was cold. It was normal.',
+      'The Circle wept with something that was not gratitude.',
+    ],
+  },
+  95: {
+    heading: 'Belonging',
+    lines: [
+      'The horizon was where the horizon belonged.',
+      'The Triangle pointed. It was easy.',
+      'It should have been.',
     ],
   },
   97: {
@@ -815,6 +838,26 @@ export class GameScreen {
           'Somnium. The dream-world. The world after the defense.',
           'And the forms, who had survived everything continuous,',
           'found themselves having to learn to walk again.',
+        ],
+      },
+      {
+        heading: 'Verum Initium',
+        lines: [
+          'The dream had shown them wormholes and they had thought that was the point.',
+          'It had not been the point. The point had only been to teach them the shape',
+          'of what was coming.',
+          'The narrow place had ended. The dream-place had ended.',
+          'What came now was not the same as what had come before,',
+          'but it was not new either — it was the ordinary work of the forms,',
+          'resumed, with a new tool in their hands',
+          'and the memory of every prior watch behind them.',
+          'The Square remembered the moor and stood on it.',
+          'The Circle remembered the pool and reflected it.',
+          'The Triangle remembered the peaks and pointed.',
+          'And now, sometimes, they folded.',
+          'Verum initium. The true beginning.',
+          'Everything before this had been the arriving.',
+          'Now the work began.',
         ],
       },
       {
