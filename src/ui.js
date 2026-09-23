@@ -257,7 +257,7 @@ import {
 } from './renderer.js';
 
 // ── Realm definitions ─────────────────────────────────────────────────────
-const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII'];
+const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII'];
 function realmLabel(realm) {
   return `Realm ${ROMAN[realm.id - 1] || realm.id} — ${realm.name}`;
 }
@@ -279,7 +279,8 @@ const REALMS = [
   { id: 14, name: 'Angustia',           levelIds: [79,80,81,82,83,84]    },
   { id: 15, name: 'Somnium',            levelIds: [85,86,87,88,89,90]    },
   { id: 16, name: 'Verum Initium',      levelIds: [91,92,93,94,95,96]    },
-  { id: 17, name: 'Tempus Edax',        levelIds: [97,98,99,100,101,102] },
+  { id: 17, name: 'Tempus Edax',        levelIds: [97,98,99,100,101,102]  },
+  { id: 18, name: 'Filum',              levelIds: [103,104,105,106,107,108] },
 ];
 
 // Per-form narrative beats shown before the first rite of each form in a realm.
@@ -396,6 +397,28 @@ const PRE_LEVEL_BEATS = {
     lines: [
       'The horizon could be reached by pointing at it directly.',
       'The Triangle did not know how to feel about this.',
+    ],
+  },
+  103: {
+    heading: 'One Way',
+    lines: [
+      'The Square walked forward and there was only one way to walk forward.',
+      'This was clarifying.',
+    ],
+  },
+  105: {
+    heading: 'One Thing',
+    lines: [
+      'The Circle had spent long ages learning to see many things at once.',
+      'Now the Circle was being asked to see only one thing at a time.',
+      'This required a different kind of attention.',
+    ],
+  },
+  107: {
+    heading: 'Only Forward',
+    lines: [
+      'The Triangle had always pointed at what was ahead.',
+      'Now, for the first time, ahead was the only direction that existed.',
     ],
   },
   91: {
@@ -844,6 +867,26 @@ export class GameScreen {
           'Somnium. The dream-world. The world after the defense.',
           'And the forms, who had survived everything continuous,',
           'found themselves having to learn to walk again.',
+        ],
+      },
+      {
+        heading: 'Filum',
+        lines: [
+          'The world had learned to have very few possibilities.',
+          'Where once a form could reach a stone by any of several routes, now',
+          'most of the routes were closed — walls of shadow-hunter had grown up',
+          'in the spaces between, sealing off all but a narrow thread.',
+          'The forms had thought their freedom was the freedom to choose among',
+          'many ways. They had been wrong. Their freedom had always been the',
+          'freedom to find the thread when the thread was there — to see,',
+          'among the many wrong options, the one or two options that were not wrong.',
+          'Filum. The thread.',
+          'A game where you cannot lose because of skill is not a game.',
+          'A game where you cannot win because of skill is not a game either.',
+          'A game where there is one right way and it is very hard to see —',
+          'that is a game.',
+          'The forms saw the thread. Or they did not.',
+          'There was no third condition.',
         ],
       },
       {
@@ -1557,7 +1600,7 @@ export class GameScreen {
     }
     saveProgress(this.progress);
 
-    const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII'];
+    const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII'];
     const winRoman  = ROMAN[id - 1]     || id;
     const nextRoman = ROMAN[nextId - 1] || nextId;
 
