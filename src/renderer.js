@@ -118,12 +118,12 @@ function drawGridShape(type, col, row) {
   }
 
   const isHunter = ['hexagon','star','moon'].includes(type);
-  const opacity  = isHunter ? '0.85' : '0.70';
-  const sw       = isHunter ? '1.8'  : '1.8';
+  const opacity  = isHunter ? '0.92' : '0.88';
+  const sw       = isHunter ? '2.2'  : '2.2';
 
-  // Hunter shapes also get a faint ominous fill
-  const fill       = isHunter ? color : 'none';
-  const fillOpacity= isHunter ? '0.08' : '0';
+  // Hunter shapes get a faint ominous fill; sacred shapes get a subtle dark fill for legibility on light bgs
+  const fill       = color;
+  const fillOpacity= isHunter ? '0.12' : '0.06';
 
   let pathD;
   if      (type === 'square')  return svgEl('rect', { x, y, width:w, height:h, fill, 'fill-opacity':fillOpacity, stroke:color, 'stroke-width':sw, opacity });

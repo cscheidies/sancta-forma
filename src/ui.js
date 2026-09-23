@@ -193,7 +193,7 @@ const LEVEL_CELL_OPACITY = {
   90: 0.85,  // finale
 };
 function levelCellOpacity(levelId) {
-  return LEVEL_CELL_OPACITY[levelId] ?? 0.22;
+  return LEVEL_CELL_OPACITY[levelId] ?? 0.42;
 }
 
 // Active bg layer tracker (crossfade: swap between bg-a and bg-b)
