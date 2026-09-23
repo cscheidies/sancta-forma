@@ -119,6 +119,35 @@ export function initState(level) {
     winScore:  level.winScore ?? 50,
     status:    'playing',
     lastEvent: null,
+    // ── Decay (§3.6) ────────────────────────────────────────────────────────
+    decayOrder:    level.decayOrder    ? level.decayOrder.map(c => [...c]) : [],
+    decayIndex:    0,
+    decayInterval: level.decayInterval ?? 1,
+  };
+}
+
+// ── Decay mechanic (§3.6) ─────────────────────────────────────────────────────
+// Called after every successful player move. Advances decayIndex and nulls the
+// next scheduled cell IF it still holds a sacred form. Hunters and wormholes
+// are immune to decay. If the cell is already empty (or a hunter/wormhole),
+// the pointer still advances — designer's discretion per spec.
+function applyDecay(state) {
+  if (!state.decayOrder || state.decayOrder.length === 0) return state;
+  if (state.decayIndex >= state.decayOrder.length) return state;
+
+  const [r, c] = state.decayOrder[state.decayIndex];
+  const cell    = state.grid[r][c];
+  const newGrid = state.grid.map(row => row.map(cell => cell ? { type: cell.type } : null));
+
+  // Only decay sacred forms; leave hunters/wormholes/null untouched
+  if (cell && SACRED.has(cell.type)) {
+    newGrid[r][c] = null;
+  }
+
+  return {
+    ...state,
+    grid:       newGrid,
+    decayIndex: state.decayIndex + 1,
   };
 }
 
@@ -181,7 +210,10 @@ export function applyMove(state, dir) {
 
     const newPlayer = { ...state.player, position: [exit[0], exit[1]] };
     const event = { dir, absorbed: 'wormhole', type: 'wormhole', scoreDelta: 0, corruptionDelta: 0, newScore: score, newCorruption: corruption, costumed: false, wormholeFrom: [nr, nc], wormholeTo: exit };
-    const newState = { ...state, player: newPlayer, grid: newGrid, wormholes: state.wormholes, lastEvent: event };
+    let newState = { ...state, player: newPlayer, grid: newGrid, wormholes: state.wormholes, lastEvent: event };
+
+    // Decay ticks on wormhole teleport (counts as a move)
+    newState = applyDecay(newState);
 
     if (score >= newState.winScore) return { ...newState, status: 'win' };
     if (getValidMoves(newState).length === 0) return { ...newState, status: 'lose-stuck' };
@@ -236,7 +268,10 @@ export function applyMove(state, dir) {
     newScore, newCorruption, costumed: newCostumed,
   };
 
-  const newState = { ...state, player: newPlayer, grid: newGrid, lastEvent: event };
+  let newState = { ...state, player: newPlayer, grid: newGrid, lastEvent: event };
+
+  // Decay ticks after every successful move (§3.6)
+  newState = applyDecay(newState);
 
   if (newScore >= newState.winScore && !newCostumed)    return { ...newState, status: 'win' };
   if (newCorruption >= RULES[element].deathAt)          return { ...newState, status: 'lose-death' };
@@ -248,10 +283,13 @@ export function applyMove(state, dir) {
 export function cloneState(state) {
   return {
     ...state,
-    player:    { ...state.player, position: [...state.player.position] },
-    grid:      state.grid.map(row => row.map(cell => cell ? { type: cell.type } : null)),
-    lastEvent: state.lastEvent ? { ...state.lastEvent } : null,
-    wormholes: state.wormholes ? new Map(state.wormholes) : new Map(),
+    player:      { ...state.player, position: [...state.player.position] },
+    grid:        state.grid.map(row => row.map(cell => cell ? { type: cell.type } : null)),
+    lastEvent:   state.lastEvent ? { ...state.lastEvent } : null,
+    wormholes:   state.wormholes ? new Map(state.wormholes) : new Map(),
+    decayOrder:  state.decayOrder  ? state.decayOrder.map(c => [...c]) : [],
+    decayIndex:  state.decayIndex  ?? 0,
+    decayInterval: state.decayInterval ?? 1,
   };
 }
 

@@ -301,6 +301,22 @@ export function renderState(svg, state) {
   const size = grid.length;
   const deathHunters = new Set(getDeathHunters(player.element));
 
+  // ── Decay telegraph: identify next 2 cells scheduled to vanish ────────────
+  const decayTelegraph = new Map(); // "r,c" → 1 (next) or 2 (soon)
+  if (state.decayOrder && state.decayOrder.length > 0) {
+    const idx = state.decayIndex ?? 0;
+    for (let ahead = 0; ahead < 2; ahead++) {
+      const entry = state.decayOrder[idx + ahead];
+      if (!entry) break;
+      const [dr, dc] = entry;
+      const cell = grid[dr][dc];
+      // Only telegraph if the cell still holds a sacred form (will actually decay)
+      if (cell && ['square', 'circle', 'triangle'].includes(cell.type)) {
+        decayTelegraph.set(`${dr},${dc}`, ahead + 1); // 1 = next, 2 = soon
+      }
+    }
+  }
+
   // Draw all grid shapes + danger overlays
   for (let r = 0; r < size; r++) {
     for (let c = 0; c < size; c++) {
@@ -316,6 +332,32 @@ export function renderState(svg, state) {
           fill: 'rgba(220,30,30,0.08)', stroke: 'rgba(220,30,30,0.50)',
           'stroke-width': '1.5', rx: '4', 'pointer-events': 'none',
         }));
+      }
+
+      // Decay telegraph — grey dissolve overlay for next 2 scheduled decays
+      const telegraphRank = decayTelegraph.get(`${r},${c}`);
+      if (telegraphRank) {
+        // Rank 1 (next to decay): stronger overlay. Rank 2 (one after): subtler.
+        const fillOpacity   = telegraphRank === 1 ? '0.38' : '0.18';
+        const strokeOpacity = telegraphRank === 1 ? '0.70' : '0.40';
+        shapesLayer.appendChild(svgEl('rect', {
+          x: c * CELL_SIZE + 1, y: r * CELL_SIZE + 1,
+          width: CELL_SIZE - 2, height: CELL_SIZE - 2,
+          fill: `rgba(180,170,160,${fillOpacity})`,
+          stroke: `rgba(200,190,180,${strokeOpacity})`,
+          'stroke-width': '1.5', rx: '3', 'pointer-events': 'none',
+        }));
+        // Hourglass symbol (⧗) for rank 1 only — small, centred
+        if (telegraphRank === 1) {
+          const cx = c * CELL_SIZE + CELL_SIZE / 2;
+          const cy = r * CELL_SIZE + CELL_SIZE / 2;
+          shapesLayer.appendChild(svgEl('text', {
+            x: String(cx), y: String(cy + 4),
+            'text-anchor': 'middle', 'font-size': '12',
+            fill: 'rgba(255,245,235,0.75)', 'pointer-events': 'none',
+            style: 'font-family:serif;user-select:none',
+          })).textContent = '⧗';
+        }
       }
     }
   }

@@ -35,6 +35,19 @@ Every cell holds a shape, a wormhole, or is the player's starting cell (empty). 
 
 Some levels contain wormhole pairs — two linked cells with no shape underneath. Stepping onto a wormhole entrance instantly relocates the player to the wormhole's exit cell. Both cells become empty after a single use. Wormhole travel scores nothing and does not change corruption or costume state. A costumed player stepping onto a wormhole dies — a wormhole step is not a same-element absorption and cannot serve as the mandatory cleanse (per §5.2).
 
+## 3.6 Decay
+
+Some levels contain a decay schedule — an ordered list of cells that vanish over time. After each player move, the next cell in the schedule vanishes if it currently holds a sacred form (Square, Circle, or Triangle), becoming empty and unwalkable. Hunters and wormholes are never decayed — they remain as permanent presences while score sources disappear around them.
+
+Decay is deterministic — the schedule is the same every attempt. Players see a 2-move visual telegraph of upcoming decays (a greyed overlay on the next two scheduled cells, with an hourglass marker on the immediately next cell). The level JSON format adds two fields:
+
+- `decayOrder`: `[[row, col], [row, col], ...]` — ordered sequence of cells to vanish
+- `decayInterval`: `1` (cells vanishing per move — currently always 1)
+
+A vanished cell scores nothing and imposes no corruption cost. Moving onto a vanished (empty) cell is illegal. A wormhole teleport counts as a move for decay purposes — one cell vanishes per wormhole use, same as a regular step.
+
+Decay introduced in Realm XVII — Tempus Edax (Rites 97–102).
+
 ## 4. Absorption — the core mechanic
 
 Moving onto a shape absorbs it. Absorption affects score and corruption simultaneously.

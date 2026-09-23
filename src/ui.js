@@ -245,7 +245,7 @@ import {
 } from './renderer.js';
 
 // ── Realm definitions ─────────────────────────────────────────────────────
-const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV'];
+const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII'];
 function realmLabel(realm) {
   return `Realm ${ROMAN[realm.id - 1] || realm.id} — ${realm.name}`;
 }
@@ -266,6 +266,7 @@ const REALMS = [
   { id: 13, name: 'Ultima Vigilia',     levelIds: [73,74,75,76,77,78]    },
   { id: 14, name: 'Angustia',           levelIds: [79,80,81,82,83,84]    },
   { id: 15, name: 'Somnium',            levelIds: [85,86,87,88,89,90]    },
+  { id: 17, name: 'Tempus Edax',        levelIds: [97,98,99,100,101,102] },
 ];
 
 // Per-form narrative beats shown before the first rite of each form in a realm.
@@ -382,6 +383,31 @@ const PRE_LEVEL_BEATS = {
     lines: [
       'The horizon could be reached by pointing at it directly.',
       'The Triangle did not know how to feel about this.',
+    ],
+  },
+  97: {
+    heading: 'Smaller',
+    lines: [
+      'The Square counted the stones and got a smaller number',
+      'than it had counted the last time.',
+      'This was new.',
+    ],
+  },
+  99: {
+    heading: 'The Pool',
+    lines: [
+      'The pool was smaller than it had been.',
+      'Not much smaller. But smaller.',
+      'The Circle did not have words for this feeling.',
+    ],
+  },
+  101: {
+    heading: 'Pointing Anyway',
+    lines: [
+      'The Triangle pointed at a peak that was no longer there.',
+      'The Triangle pointed anyway.',
+      'The Triangle had always pointed at what was no longer there.',
+      'This was just the first time it noticed.',
     ],
   },
 };
@@ -783,6 +809,32 @@ export class GameScreen {
           'Somnium. The dream-world. The world after the defense.',
           'And the forms, who had survived everything continuous,',
           'found themselves having to learn to walk again.',
+        ],
+      },
+      {
+        heading: 'Tempus Edax',
+        lines: [
+          'Something had begun to happen to the ground.',
+          'A stone that had been standing was suddenly not standing.',
+          'The Square looked at where it had been. There was only air.',
+          'The forms had lived through many strangenesses, but this was new:',
+          'the world was forgetting itself, faster and faster,',
+          'and forgetting in a particular direction.',
+          'What had once been there was no longer there.',
+          'What was there now would not be there soon.',
+          'Tempus edax rerum — time, devourer of all things.',
+          'The forms had thought time was something they moved through.',
+          'They had been wrong.',
+          'Time was something that moved through them.',
+          'And now, for the first time, they could feel it eating.',
+          'The work was the same work. The stones absorbed by the Square still scored.',
+          'The pool held by the Circle still cleansed.',
+          'The Triangle still pointed.',
+          'But now every move cost something else, too —',
+          'every step meant one more thing gone from the world,',
+          'one more thing they would not be able to reach later.',
+          'They learned to move faster.',
+          'They did not have another choice.',
         ],
       },
     ];
@@ -1450,7 +1502,7 @@ export class GameScreen {
     }
     saveProgress(this.progress);
 
-    const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV'];
+    const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII'];
     const winRoman  = ROMAN[id - 1]     || id;
     const nextRoman = ROMAN[nextId - 1] || nextId;
 
